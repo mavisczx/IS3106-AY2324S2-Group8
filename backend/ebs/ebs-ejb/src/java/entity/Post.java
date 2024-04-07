@@ -40,6 +40,9 @@ public class Post implements Serializable {
     @ManyToOne
     private Post prevPost; //If the current post was a reply to another post( This is the attribute pertaining to the previous post)
 
+    public Post() {
+    }
+
     public Long getId() {
         return id;
     }

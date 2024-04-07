@@ -47,6 +47,19 @@ public class Student implements Serializable {
     @OneToMany(fetch = FetchType.EAGER) //unidirectional, no need map
     private List<Event> eventsJoined = new ArrayList<>();
 
+    public Student() {
+    }
+
+    public Student(String username, String name, String email, String contact, String exchangeUni, String originUni, String password) {
+        this.username = username;
+        this.password = password;
+        this.contact = contact;
+        this.name = name;
+        this.email = email;
+        this.exchangeUni = exchangeUni;
+        this.originUni = originUni;
+    }
+
     public Long getId() {
         return id;
     }

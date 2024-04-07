@@ -43,10 +43,13 @@ public class Thread implements Serializable {
     private Thread parentThread;
     //if the current thread is a subThread, this attribute pertains to the Parent Thread
     @OneToMany(mappedBy = "prevPost") // NOT SURE
-    private List<Post> postsInThread;
+    private List<Post> postsInThread = new ArrayList<>();
 
     @OneToOne(mappedBy = "eventThread")
     private Event eventCreated;
+
+    public Thread() {
+    }
 
     public Long getId() {
         return id;

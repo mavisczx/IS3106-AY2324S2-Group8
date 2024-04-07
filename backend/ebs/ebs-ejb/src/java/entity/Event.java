@@ -38,15 +38,33 @@ public class Event implements Serializable {
     private Date eventDate;
     @Temporal(TemporalType.DATE)
     private Date deadline;
+    private String eventCategory;
+    private String eventPrice;
 
     @ManyToOne
-    private Student eventCreator;
+    private Student studentCreator;
+
+    @ManyToOne
+    private Admin adminCreator;
 
     @OneToOne
     private Thread eventThread;
 
     @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER) //unidirectional, no need map, when event deleted, students also cleared
     private List<Student> studentsJoined = new ArrayList<>();
+
+    public Event() {
+    }
+
+    public Event(String eventTitle, Date eventDate, String eventLocation, String eventDescription, String eventCategory, Date deadline, String eventPrice) {
+        this.eventTitle = eventTitle;
+        this.eventDescription = eventDescription;
+        this.eventLocation = eventLocation;
+        this.eventCategory = eventCategory;
+        this.eventDate = eventDate;
+        this.deadline = deadline;
+        this.eventPrice = eventPrice;
+    }
 
     public Long getId() {
         return id;
@@ -154,15 +172,23 @@ public class Event implements Serializable {
     /**
      * @return the eventCreator
      */
-    public Student getEventCreator() {
-        return eventCreator;
+    public Student getStudentCreator() {
+        return studentCreator;
     }
 
     /**
      * @param eventCreator the eventCreator to set
      */
-    public void setEventCreator(Student eventCreator) {
-        this.eventCreator = eventCreator;
+    public void setStudentCreator(Student studentCreator) {
+        this.studentCreator = studentCreator;
+    }
+
+    public Admin getAdminCreator() {
+        return adminCreator;
+    }
+
+    public void setAdminCreator(Admin adminCreator) {
+        this.adminCreator = adminCreator;
     }
 
     /**
@@ -191,6 +217,22 @@ public class Event implements Serializable {
      */
     public void setStudentsJoined(List<Student> studentsJoined) {
         this.studentsJoined = studentsJoined;
+    }
+
+    public String getEventCategory() {
+        return eventCategory;
+    }
+
+    public void setEventCategory(String eventCategory) {
+        this.eventCategory = eventCategory;
+    }
+
+    public String getEventPrice() {
+        return eventPrice;
+    }
+
+    public void setEventPrice(String eventPrice) {
+        this.eventPrice = eventPrice;
     }
 
 }
