@@ -28,6 +28,8 @@ public class ApplicationConfig extends javax.ws.rs.core.Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(webservices.restful.AdminResource.class);
+        resources.add(webservices.restful.AuthenticationEndpoint.class);
+        resources.add(webservices.restful.AuthenticationFilter.class);
         resources.add(webservices.restful.CORSFilter.class);
         resources.add(webservices.restful.EventResource.class);
         resources.add(webservices.restful.StudentResource.class);

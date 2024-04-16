@@ -122,42 +122,42 @@ public class EventSession implements EventSessionLocal {
 
     @Override
     public List<Event> searchEventsByTitle(String title) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventTitle) = :inTitle");
+        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventTitle) LIKE :inTitle");
         query.setParameter("inTitle", "%" + title.toLowerCase() + "%");
         return query.getResultList();
     }
 
     @Override
     public List<Event> searchEventByDate(Date eventDate) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE e.eventDate = :inDate");
+        Query query = em.createQuery("SELECT e FROM Event e WHERE e.eventDate LIKE :inDate");
         query.setParameter("inDate", eventDate);
         return query.getResultList();
     }
 
     @Override
     public List<Event> searchEventByDeadline(Date deadline) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE e.deadline = :inDeadline");
+        Query query = em.createQuery("SELECT e FROM Event e WHERE e.deadline LIKE :inDeadline");
         query.setParameter("inDeadline", deadline);
         return query.getResultList();
     }
 
     @Override
     public List<Event> searchEventByLocation(String location) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventLocation) = :inLocation");
+        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventLocation) LIKE :inLocation");
         query.setParameter("inLocation", "%" + location.toLowerCase() + "%");
         return query.getResultList();
     }
 
     @Override
     public List<Event> searchEventByCategory(String category) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventCategory) = :inCategory");
+        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventCategory) LIKE :inCategory");
         query.setParameter("inCategory", "%" + category.toLowerCase() + "%");
         return query.getResultList();
     }
 
     @Override
     public List<Event> searchEventByPrice(String price) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventPrice) = :inPrice");
+        Query query = em.createQuery("SELECT e FROM Event e WHERE LOWER(e.eventPrice) LIKE :inPrice");
         query.setParameter("inPrice", "%" + price.toLowerCase() + "%");
         return query.getResultList();
     }
