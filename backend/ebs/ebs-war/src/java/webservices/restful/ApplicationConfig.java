@@ -22,12 +22,17 @@ public class ApplicationConfig extends javax.ws.rs.core.Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Do not modify addRestResourceClasses() method. It is automatically
+     * populated with all resources defined in the project. If required, comment
+     * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(webservices.restful.AdminResource.class);
+        resources.add(webservices.restful.AuthenticationEndpoint.class);
+        resources.add(webservices.restful.AuthenticationFilter.class);
+        resources.add(webservices.restful.CORSFilter.class);
+        resources.add(webservices.restful.EventResource.class);
+        resources.add(webservices.restful.StudentResource.class);
     }
-    
+
 }
