@@ -7,6 +7,9 @@ import { Icon } from "@iconify/react";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Index from "./containers/Index";
+import Login from "./containers/Authentication/Login";
+import Register from "./containers/Authentication/Register";
+import Profile from "./containers/Profile";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Index />} />
+          <Route path="/profile" element = {<Profile/>}/>
         </Routes>
       </div>
     </div>
