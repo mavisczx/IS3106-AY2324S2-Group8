@@ -8,6 +8,7 @@ package webservices.restful;
 import entity.Admin;
 import entity.Event;
 import entity.Student;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,8 +24,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import session.EventSessionLocal;
 import session.StudentSessionLocal;
 import util.exception.EventNotFoundException;
@@ -72,9 +75,13 @@ public class StudentResource {
     }
 
     @GET
-    @Path("/{studentId}")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveStudentById(@PathParam("studentId") Long studentId) {
+    public Response retrieveStudentById(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             Student student = studentSession.retrieveStudentById(studentId);
 
@@ -98,9 +105,13 @@ public class StudentResource {
     }
 
     @PUT
-    @Path("/{studentId}")
+    @Secured
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateStudentProfile(@PathParam("studentId") Long studentId, Student studentToUpdate) {
+    public Response updateStudentProfile(Student studentToUpdate, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             studentToUpdate.setId(studentId);
             studentSession.updateStudentProfile(studentToUpdate);
@@ -111,9 +122,13 @@ public class StudentResource {
     }
 
     @PUT
-    @Path("/changePassword/{studentId}}")
-    public Response changePassword(@PathParam("studentId") Long studentId,
-            Student s) {
+    @Secured
+    @Path("/changePassword")
+    public Response changePassword(Student s, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             studentSession.changePassword(studentId, s.getPassword());
             return Response.ok("Password changed successfully").build();
@@ -123,9 +138,14 @@ public class StudentResource {
     }
 
     @GET
-    @Path("/{studentId}/eventsCreated")
+    @Secured
+    @Path("/eventsCreated")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllEventsCreated(@PathParam("studentId") Long studentId) {
+    public Response listAllEventsCreated(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             List<Event> events = studentSession.listAllEventsCreated(studentId);
             for (Event e : events) {
@@ -151,9 +171,14 @@ public class StudentResource {
     }
 
     @GET
-    @Path("/{studentId}/eventsRegistered")
+    @Secured
+    @Path("/eventsRegistered")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewAllEventsRegistered(@PathParam("studentId") Long studentId) {
+    public Response viewAllEventsRegistered(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             List<Event> events = studentSession.viewAllEventsRegistered(studentId);
             for (Event e : events) {
@@ -179,9 +204,13 @@ public class StudentResource {
     }
 
     @POST
-    @Path("/{eventId}/register/{studentId}")
-    public Response registerForEvent(@PathParam("eventId") Long eventId,
-            @PathParam("studentId") Long studentId) {
+    @Secured
+    @Path("/register/{eventId}")
+    public Response registerForEvent(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             studentSession.registerForEvent(eventId, studentId);
             return Response.ok("Student registered for event successfully").build();
@@ -191,9 +220,13 @@ public class StudentResource {
     }
 
     @DELETE
-    @Path("/{eventId}/unregister/{studentId}")
-    public Response unregisterForEvent(@PathParam("eventId") Long eventId,
-            @PathParam("studentId") Long studentId) {
+    @Secured
+    @Path("/unregister/{eventId}")
+    public Response unregisterForEvent(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             studentSession.unregisterForEvent(eventId, studentId);
             return Response.ok("Student unregistered from event successfully").build();
@@ -203,10 +236,14 @@ public class StudentResource {
     }
 
     @GET
-    @Path("/checkRegistration/{eventId}/{studentId}")
+    @Secured
+    @Path("/checkRegistration/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response checkRegistrationForEvent(@PathParam("eventId") Long eventId,
-            @PathParam("studentId") Long studentId) {
+    public Response checkRegistrationForEvent(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             boolean isRegistered = studentSession.checkRegistrationForEvent(eventId, studentId);
             return Response.ok(isRegistered).build();
@@ -216,10 +253,13 @@ public class StudentResource {
     }
 
     @GET
-    @Path("/checkEventOwner/{eventId}/{studentId}}")
+    @Secured
+    @Path("/checkEventOwner/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response isEventOwner(@PathParam("eventId") Long eventId,
-            @PathParam("studentId") Long studentId) {
+    public Response isEventOwner(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
 
         try {
             boolean isOwner = eventSessionLocal.isStudentEventOwner(eventId, studentId);
