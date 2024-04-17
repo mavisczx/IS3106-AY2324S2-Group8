@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import Api from "../../helpers/Api";
+import ApiAuth from "../../helpers/ApiAuth";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault(); // Prevent the default form submission behavior
     try {
       const credentials = { email, password };
-      const token = await Api.login(credentials);
+      const token = await ApiAuth.authenticateStudent(credentials);
       localStorage.setItem("token", token); // Store the token in local storage
       // Redirect to the home page after successful login
       window.location.href = "/"; // Replace "/home" with your desired home route
@@ -42,11 +42,6 @@ const Login = () => {
         }}
       >
         <div style={{ textAlign: "center" }}>
-          <img
-            src={logo}
-            alt="Event Management System Logo"
-            style={{ maxWidth: "40%", height: "auto" }}
-          />
           <h2 style={{ marginTop: "0px" }}>
             <strong>Event Management System</strong>
           </h2>
