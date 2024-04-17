@@ -30,6 +30,7 @@ public class AdminSession implements AdminSessionLocal {
         Admin adminToCreate = new Admin(username, name, email, contact, password);
 
         em.persist(adminToCreate);
+        em.flush();
     }
 
     @Override

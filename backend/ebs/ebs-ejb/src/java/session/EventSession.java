@@ -8,6 +8,7 @@ import entity.Admin;
 import entity.Event;
 import entity.Student;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import util.exception.AdminNotFoundException;
 import util.exception.EventNotFoundException;
 import util.exception.StudentNotFoundException;
@@ -38,7 +40,21 @@ public class EventSession implements EventSessionLocal {
     @Override
     public void studentCreateEvent(Long creatorId, String eventTitle, Date eventDate, String eventLocation, String eventDescription, String eventCategory, Date deadline, String eventPrice) throws StudentNotFoundException {
         Student student = studentSessionLocal.retrieveStudentById(creatorId);
-        Event eventToCreate = new Event(eventTitle, eventDate, eventLocation, eventDescription, eventCategory, deadline, eventPrice);
+        Calendar eDate = Calendar.getInstance();
+        eDate.setTime(eventDate);
+        eDate.set(Calendar.HOUR_OF_DAY, 0);
+        eDate.set(Calendar.MINUTE, 0);
+        eDate.set(Calendar.SECOND, 0);
+        eDate.set(Calendar.MILLISECOND, 0);
+
+        Calendar deadlineDate = Calendar.getInstance();
+        deadlineDate.setTime(deadline);
+        deadlineDate.set(Calendar.HOUR_OF_DAY, 0);
+        deadlineDate.set(Calendar.MINUTE, 0);
+        deadlineDate.set(Calendar.SECOND, 0);
+        deadlineDate.set(Calendar.MILLISECOND, 0);
+
+        Event eventToCreate = new Event(eventTitle, eDate.getTime(), eventLocation, eventDescription, eventCategory, deadlineDate.getTime(), eventPrice);
 
         student.getEventsCreated().add(eventToCreate);
         eventToCreate.setStudentCreator(student);
@@ -49,7 +65,22 @@ public class EventSession implements EventSessionLocal {
     @Override
     public void adminCreateEvent(Long creatorId, String eventTitle, Date eventDate, String eventLocation, String eventDescription, String eventCategory, Date deadline, String eventPrice) throws AdminNotFoundException {
         Admin admin = adminSessionLocal.retrieveAdminById(creatorId);
-        Event eventToCreate = new Event(eventTitle, eventDate, eventLocation, eventDescription, eventCategory, deadline, eventPrice);
+
+        Calendar eDate = Calendar.getInstance();
+        eDate.setTime(eventDate);
+        eDate.set(Calendar.HOUR_OF_DAY, 0);
+        eDate.set(Calendar.MINUTE, 0);
+        eDate.set(Calendar.SECOND, 0);
+        eDate.set(Calendar.MILLISECOND, 0);
+
+        Calendar deadlineDate = Calendar.getInstance();
+        deadlineDate.setTime(deadline);
+        deadlineDate.set(Calendar.HOUR_OF_DAY, 0);
+        deadlineDate.set(Calendar.MINUTE, 0);
+        deadlineDate.set(Calendar.SECOND, 0);
+        deadlineDate.set(Calendar.MILLISECOND, 0);
+
+        Event eventToCreate = new Event(eventTitle, eDate.getTime(), eventLocation, eventDescription, eventCategory, deadlineDate.getTime(), eventPrice);
 
         admin.getEventsCreated().add(eventToCreate);
         eventToCreate.setAdminCreator(admin);
@@ -58,8 +89,25 @@ public class EventSession implements EventSessionLocal {
     }
 
     @Override
-    public boolean eventOwner(Long eventId, Long studentId) throws EventNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isStudentEventOwner(Long eventId, Long studentId) throws EventNotFoundException {
+        Event event = getEventById(eventId);
+        Student creatorId = event.getStudentCreator();
+        if (studentId.equals(creatorId.getId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isAdminEventOwner(Long eventId, Long adminId) throws EventNotFoundException {
+        Event event = getEventById(eventId);
+        Admin creatorId = event.getAdminCreator();
+        if (adminId.equals(creatorId.getId())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -128,9 +176,24 @@ public class EventSession implements EventSessionLocal {
     }
 
     @Override
-    public List<Event> searchEventByDate(Date eventDate) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE e.eventDate LIKE :inDate");
-        query.setParameter("inDate", eventDate);
+    public List<Event> searchEventByDate(Date startDate, Date endDate) {
+        Calendar start = Calendar.getInstance();
+        start.setTime(startDate);
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(endDate);
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+        Query query = em.createQuery("SELECT e FROM Event e WHERE e.eventDate BETWEEN :startDate AND :endDate");
+        query.setParameter("startDate", start.getTime(), TemporalType.DATE);
+        query.setParameter("endDate", end.getTime(), TemporalType.DATE);
         return query.getResultList();
     }
 
