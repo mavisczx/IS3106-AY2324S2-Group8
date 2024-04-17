@@ -9,6 +9,7 @@ import entity.Admin;
 import entity.Event;
 import entity.Student;
 import entity.Thread;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,8 +23,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import session.AdminSessionLocal;
 import util.exception.AdminExistsException;
 import util.exception.AdminNotFoundException;
@@ -55,6 +58,7 @@ public class AdminResource {
     }
 
     @POST
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAdmin(Admin a) {
 
@@ -67,11 +71,14 @@ public class AdminResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAdminById(@PathParam("id") long id) {
+    public Response retrieveAdminById(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long aId = Long.parseLong(userId);
         try {
-            Admin admin = adminSession.retrieveAdminById(id);
+            Admin admin = adminSession.retrieveAdminById(aId);
 
             admin.setEventsCreated(new ArrayList<>());
             admin.setPostsCreated(new ArrayList<>());
@@ -84,11 +91,15 @@ public class AdminResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Secured
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("id") long id, Admin admin) {
+    public Response updateUser(Admin admin, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long aId = Long.parseLong(userId);
+
         try {
-            admin.setId(id);
+            admin.setId(aId);
             adminSession.updateAdminProfile(admin);
             return Response.ok().build();
         } catch (AdminNotFoundException e) {
@@ -97,11 +108,16 @@ public class AdminResource {
     }
 
     @GET
-    @Path("/passwordChange/{id}")
+    @Secured
+    @Path("/passwordChange")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changePassword(@PathParam("id") long id, Admin a) {
+    public Response changePassword(Admin a, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long aId = Long.parseLong(userId);
+
         try {
-            adminSession.changePassword(id, a.getPassword());
+            adminSession.changePassword(aId, a.getPassword());
             return Response.ok().build();
         } catch (AdminNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Admin not found").build();
@@ -109,11 +125,16 @@ public class AdminResource {
     }
 
     @GET
-    @Path("/createdEvents/{id}")
+    @Secured
+    @Path("/createdEvents")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCreatedEvents(@PathParam("id") long id) {
+    public Response getCreatedEvents(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long aId = Long.parseLong(userId);
+
         try {
-            List<Event> eventList = adminSession.listAllEventsCreated(id);
+            List<Event> eventList = adminSession.listAllEventsCreated(aId);
 
             for (Event e : eventList) {
                 e.setAdminCreator(null);
