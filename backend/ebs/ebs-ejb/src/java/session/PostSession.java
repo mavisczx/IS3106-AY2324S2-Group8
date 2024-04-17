@@ -36,8 +36,9 @@ public void deletePost(Long postId) throws PostNotFoundException{
 @Override
 public void updatePost(Long postId) throws PostNotFoundException {
    Post post = retrievePostById(postId);
-   //update parameters
-   em.persist(post);
+        post.setPostDescription(post.getPostDescription());
+        post.setTags(post.getTags());
+        post.setImageURL(post.getImageURL());
 }
 
 @Override
