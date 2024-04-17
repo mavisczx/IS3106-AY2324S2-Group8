@@ -9,6 +9,7 @@ import entity.Admin;
 import entity.Event;
 import entity.Student;
 import entity.Thread;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,9 +27,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import session.EventSessionLocal;
 import util.exception.AdminNotFoundException;
 import util.exception.EventNotFoundException;
@@ -51,10 +54,14 @@ public class EventResource {
     }
 
     @POST
-    @Path("/student/{creatorId}")
+    @Secured
+    @Path("/student")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response studentCreateEvent(@PathParam("creatorId") Long creatorId,
-            Event e) {
+    public Response studentCreateEvent(Event e, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long creatorId = Long.parseLong(userId);
+
         try {
             eventSession.studentCreateEvent(creatorId, e.getEventTitle(), e.getEventDate(), e.getEventLocation(),
                     e.getEventDescription(), e.getEventCategory(), e.getDeadline(), e.getEventPrice());
@@ -65,10 +72,14 @@ public class EventResource {
     }
 
     @POST
-    @Path("/admin/{creatorId}")
+    @Secured
+    @Path("/admin")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response adminCreateEvent(@PathParam("creatorId") Long creatorId,
-            Event e) {
+    public Response adminCreateEvent(Event e, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long creatorId = Long.parseLong(userId);
+
         try {
             eventSession.adminCreateEvent(creatorId, e.getEventTitle(), e.getEventDate(), e.getEventLocation(),
                     e.getEventDescription(), e.getEventCategory(), e.getDeadline(), e.getEventPrice());
@@ -79,10 +90,14 @@ public class EventResource {
     }
 
     @GET
-    @Path("/studentOwner/{eventId}/{studentId}")
+    @Secured
+    @Path("/studentOwner/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response isStudentEventOwner(@PathParam("eventId") Long eventId,
-            @PathParam("studentId") Long studentId) {
+    public Response isStudentEventOwner(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
         try {
             boolean isOwner = eventSession.isStudentEventOwner(eventId, studentId);
             return Response.ok(isOwner).build();
@@ -92,12 +107,16 @@ public class EventResource {
     }
 
     @GET
-    @Path("/adminOwner/{eventId}/{AdminId}")
+    @Secured
+    @Path("/adminOwner/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response isAdminEventOwner(@PathParam("eventId") Long eventId,
-            @PathParam("AdminId") Long AdminId) {
+    public Response isAdminEventOwner(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long adminId = Long.parseLong(userId);
+
         try {
-            boolean isOwner = eventSession.isAdminEventOwner(eventId, AdminId);
+            boolean isOwner = eventSession.isAdminEventOwner(eventId, adminId);
             return Response.ok(isOwner).build();
         } catch (EventNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Event not found").build();
@@ -105,6 +124,7 @@ public class EventResource {
     }
 
     @GET
+    @Secured
     @Path("/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEventById(@PathParam("eventId") Long eventId) {
@@ -134,6 +154,7 @@ public class EventResource {
     }
 
     @PUT
+    @Secured
     @Path("/{eventId}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editEvent(@PathParam("eventId") Long eventId, Event eventToUpdate) {
@@ -147,6 +168,7 @@ public class EventResource {
     }
 
     @DELETE
+    @Secured
     @Path("/student/{eventId}")
     public Response studentDeleteEvent(@PathParam("eventId") Long eventId) {
         try {
@@ -158,6 +180,7 @@ public class EventResource {
     }
 
     @DELETE
+    @Secured
     @Path("/admin/{eventId}")
     public Response adminDeleteEvent(@PathParam("eventId") Long eventId) {
         try {
@@ -169,6 +192,7 @@ public class EventResource {
     }
 
     @GET
+    @Secured
     @Path("/{eventId}/registered")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewAllRegistered(@PathParam("eventId") Long eventId) {
