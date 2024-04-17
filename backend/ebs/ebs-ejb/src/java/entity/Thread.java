@@ -50,6 +50,12 @@ public class Thread implements Serializable {
 
     public Thread() {
     }
+    
+    public Thread(String title, String desc, ArrayList<String> tags) {
+        this.title = title;
+        this.desc = desc;
+        this.tags = tags;
+    }
 
     public Long getId() {
         return id;
