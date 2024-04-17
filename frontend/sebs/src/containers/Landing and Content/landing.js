@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import ApiAuth from "../../helpers/ApiAuth";
+import ApiPost from "../../helpers/ApiPost";
+import ApiThread from "../../helpers/ApiThread";
 import { Link } from "react-router-dom";
 
 const landing = () => {
