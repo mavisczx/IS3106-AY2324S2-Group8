@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
 import ApiAuth from "../../helpers/ApiAuth";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  return <div> placeholder until code gets fixed </div>;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -13,10 +13,8 @@ const Login = () => {
     try {
       const credentials = { email, password };
       const token = await ApiAuth.authenticateStudent(credentials);
-      //const token = await Api.login(credentials);
       localStorage.setItem("token", token); // Store the token in local storage
-      // Redirect to the home page after successful login
-      window.location.href = "/"; // Replace "/home" with your desired home route
+      window.location.href = "/";
     } catch (error) {
       console.error("Login failed:", error.message);
       setError("Invalid email or password.");
@@ -24,70 +22,68 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#f4f6f9",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "500px",
-          padding: "20px",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-          backgroundColor: "white",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div style={{ textAlign: "center" }}>
-          <h2 style={{ marginTop: "0px" }}>
-            <strong>Event Management System</strong>
-          </h2>
+    <div className="flex justify-center items-center h-screen bg-white-100">
+      <div className="max-w-lg p-10 border border-gray-300 rounded-lg bg-black shadow-lg">
+        <div className="text-center">
+          <div className="p-2.5 mt-1 flex items-center">
+            <Icon
+              icon="ic:baseline-people"
+              className="text-xl rounded-md text-orange-500"
+            />
+            <h1 className="font-bold text-stone-200 text-3xl ml-3">
+              ExchangeBuddy
+            </h1>
+          </div>
         </div>
-        <h4 style={{ textAlign: "center", marginBottom: "10px" }}>Login</h4>
-        <form onSubmit={handleLogin} style={{ marginBottom: "20px" }}>
-          <div style={{ marginBottom: "20px" }}>
+        <h4 className="text-center mb-2 text-white">Login</h4>
+        <form onSubmit={handleLogin} className="mb-6">
+          <div className="mb-4">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              style={{ width: "100%", padding: "10px" }}
+              className="w-full p-3 border border-gray-300 rounded"
               required
             />
           </div>
-          <div style={{ marginBottom: "20px" }}>
+          <div className="mb-4">
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              style={{ width: "100%", padding: "10px" }}
+              className="w-full p-3 border border-gray-300 rounded"
               required
             />
           </div>
-          {error && (
-            <div style={{ color: "red", marginBottom: "20px" }}>{error}</div>
-          )}
+          {error && <div className="text-red-500 mb-4">{error}</div>}
           <button
             type="submit"
-            style={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-            }}
+            className="w-full p-3 bg-orange-600 text-white rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
           >
             Login
           </button>
         </form>
-        <p style={{ textAlign: "center", marginTop: "20px" }}>
-          Don't have an account? <Link to="/register">Register here</Link>.
+        <p className="text-center mt-2 text-white">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="text-orange-600 hover:text-orange-800"
+          >
+            Register here
+          </Link>
+          .
+        </p>
+        <p className="text-center mt-2 text-white">
+          Login as admin instead?{" "}
+          <Link
+            to="/adminlogin"
+            className="text-orange-600 hover:text-orange-800"
+          >
+            Login Here
+          </Link>
+          .
         </p>
       </div>
     </div>
