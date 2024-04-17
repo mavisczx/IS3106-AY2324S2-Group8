@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import util.exception.AdminExistsException;
 import util.exception.AdminNotFoundException;
 import util.exception.InvalidLoginException;
 
@@ -26,11 +27,18 @@ public class AdminSession implements AdminSessionLocal {
     private EntityManager em;
 
     @Override
-    public void createAdmin(String username, String name, String email, String contact, String password) {
+    public void createAdmin(String username, String name, String email, String contact, String password)
+            throws AdminExistsException {
         Admin adminToCreate = new Admin(username, name, email, contact, password);
 
-        em.persist(adminToCreate);
-        em.flush();
+        Query query = em.createQuery("SELECT a FROM Admin a WHERE a.email = :inEmail");
+        query.setParameter("inEmail", email);
+
+        if (query.getResultList().isEmpty()) {
+            em.persist(adminToCreate);
+        } else {
+            throw new AdminExistsException("An account with this email has already been created!");
+        }
     }
 
     @Override

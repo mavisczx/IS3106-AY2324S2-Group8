@@ -8,6 +8,7 @@ import entity.Admin;
 import entity.Event;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.AdminExistsException;
 import util.exception.AdminNotFoundException;
 import util.exception.InvalidLoginException;
 
@@ -18,7 +19,7 @@ import util.exception.InvalidLoginException;
 @Local
 public interface AdminSessionLocal {
 
-    public void createAdmin(String username, String name, String email, String contact, String password);
+    public void createAdmin(String username, String name, String email, String contact, String password) throws AdminExistsException;
 
     public Admin login(String email, String password) throws InvalidLoginException;
 
