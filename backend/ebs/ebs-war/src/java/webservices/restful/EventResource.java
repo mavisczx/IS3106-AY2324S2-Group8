@@ -91,40 +91,6 @@ public class EventResource {
 
     @GET
     @Secured
-    @Path("/studentOwner/{eventId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response isStudentEventOwner(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
-        Principal principal = securityContext.getUserPrincipal();
-        String userId = principal.getName();
-        Long studentId = Long.parseLong(userId);
-
-        try {
-            boolean isOwner = eventSession.isStudentEventOwner(eventId, studentId);
-            return Response.ok(isOwner).build();
-        } catch (EventNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Event not found").build();
-        }
-    }
-
-    @GET
-    @Secured
-    @Path("/adminOwner/{eventId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response isAdminEventOwner(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
-        Principal principal = securityContext.getUserPrincipal();
-        String userId = principal.getName();
-        Long adminId = Long.parseLong(userId);
-
-        try {
-            boolean isOwner = eventSession.isAdminEventOwner(eventId, adminId);
-            return Response.ok(isOwner).build();
-        } catch (EventNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Event not found").build();
-        }
-    }
-
-    @GET
-    @Secured
     @Path("/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEventById(@PathParam("eventId") Long eventId) {
@@ -193,7 +159,7 @@ public class EventResource {
 
     @GET
     @Secured
-    @Path("/{eventId}/registered")
+    @Path("/registered/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewAllRegistered(@PathParam("eventId") Long eventId) {
         try {

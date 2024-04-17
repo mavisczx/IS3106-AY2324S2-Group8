@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
@@ -28,8 +29,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import session.AdminSessionLocal;
+import session.EventSessionLocal;
 import util.exception.AdminExistsException;
 import util.exception.AdminNotFoundException;
+import util.exception.EventNotFoundException;
 
 /**
  * REST Web Service
@@ -38,6 +41,9 @@ import util.exception.AdminNotFoundException;
  */
 @Path("admin")
 public class AdminResource {
+
+    @EJB
+    private EventSessionLocal eventSessionLocal;
 
     AdminSessionLocal adminSession = lookupAdminSessionLocal();
 
@@ -93,7 +99,7 @@ public class AdminResource {
     @PUT
     @Secured
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(Admin admin, @Context SecurityContext securityContext) {
+    public Response updateAdmin(Admin admin, @Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         String userId = principal.getName();
         Long aId = Long.parseLong(userId);
@@ -107,7 +113,7 @@ public class AdminResource {
         }
     }
 
-    @GET
+    @PUT
     @Secured
     @Path("/passwordChange")
     @Produces(MediaType.APPLICATION_JSON)
@@ -158,6 +164,23 @@ public class AdminResource {
             return Response.ok(eventList).build();
         } catch (AdminNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Admin not found").build();
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/checkEventOwner/{eventId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response isAdminEventOwner(@PathParam("eventId") Long eventId, @Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long adminId = Long.parseLong(userId);
+
+        try {
+            boolean isOwner = eventSessionLocal.isAdminEventOwner(eventId, adminId);
+            return Response.ok(isOwner).build();
+        } catch (EventNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Event not found").build();
         }
     }
 
