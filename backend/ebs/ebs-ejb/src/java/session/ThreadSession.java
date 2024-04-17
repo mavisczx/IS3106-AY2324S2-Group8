@@ -36,8 +36,9 @@ public class ThreadSession implements ThreadSessionLocal {
     @Override
     public void updateThread(Long threadId) throws ThreadNotFoundException {
        Thread thread = retrieveThreadById(threadId);
-       //update parameters
-       em.persist(thread);
+         thread.setTitle( thread.getTitle());
+         thread.setDesc( thread.getDesc());
+         thread.setTags( thread.getTags());
     }
     
     @Override
