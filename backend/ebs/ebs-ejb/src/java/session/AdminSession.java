@@ -43,7 +43,7 @@ public class AdminSession implements AdminSessionLocal {
 
     @Override
     public Admin login(String email, String password) throws InvalidLoginException {
-        Query query = em.createQuery("SELECT a FROM Admin a WHERE s.email = :inEmail");
+        Query query = em.createQuery("SELECT a FROM Admin a WHERE a.email = :inEmail");
         query.setParameter("inEmail", email);
 
         try {

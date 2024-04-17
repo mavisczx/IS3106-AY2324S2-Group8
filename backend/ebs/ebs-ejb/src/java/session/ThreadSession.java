@@ -49,7 +49,7 @@ public class ThreadSession implements ThreadSessionLocal {
        Thread thread = retrieveThreadById(threadId);
        
          thread.setTitle( thread.getTitle());
-         thread.setDesc( thread.getDesc());
+         thread.setDescription( thread.getDescription());
          thread.setTags( thread.getTags());
     }
     
@@ -79,7 +79,7 @@ public class ThreadSession implements ThreadSessionLocal {
     public Student retrieveStudentByThread(Long threadId) throws ThreadNotFoundException {
     
         Thread thread = retrieveThreadById(threadId);
-      Student creatorStudent = thread.getThreadCreator();
+      Student creatorStudent = thread.getStudentThreadCreator();
       
       return creatorStudent;
     }

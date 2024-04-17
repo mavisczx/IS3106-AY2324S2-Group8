@@ -29,20 +29,24 @@ public class Thread implements Serializable {
     private Long id;
 
     private String title;
-    private String desc; // Description of the Thread and what it entails, what the rules are, etc.
+    private String description; // Description of the Thread and what it entails, what the rules are, etc.
     private ArrayList<String> tags;
     private int postCount;
     private int shareCount;
 
     @ManyToOne
-    private Student threadCreator;
+    private Student studentThreadCreator;
+
+    @ManyToOne
+    private Admin adminThreadCreator;
+
     @OneToMany(mappedBy = "parentThread", fetch = FetchType.EAGER)
     private List<Thread> subThreads = new ArrayList<>();
     //If a student wishes to divulge in a subtopic of the thread, He/She can create a subThread.
     @ManyToOne
     private Thread parentThread;
     //if the current thread is a subThread, this attribute pertains to the Parent Thread
-    @OneToMany(mappedBy = "prevPost") // NOT SURE
+    @OneToMany
     private List<Post> postsInThread = new ArrayList<>();
 
     @OneToOne(mappedBy = "eventThread")
@@ -50,10 +54,10 @@ public class Thread implements Serializable {
 
     public Thread() {
     }
-    
+
     public Thread(String title, String desc, ArrayList<String> tags) {
         this.title = title;
-        this.desc = desc;
+        this.description = desc;
         this.tags = tags;
     }
 
@@ -105,17 +109,17 @@ public class Thread implements Serializable {
     }
 
     /**
-     * @return the desc
+     * @return the description
      */
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * @param desc the desc to set
+     * @param description the description to set
      */
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -161,17 +165,17 @@ public class Thread implements Serializable {
     }
 
     /**
-     * @return the threadCreator
+     * @return the studentThreadCreator
      */
-    public Student getThreadCreator() {
-        return threadCreator;
+    public Student getStudentThreadCreator() {
+        return studentThreadCreator;
     }
 
     /**
-     * @param threadCreator the threadCreator to set
+     * @param studentThreadCreator the studentThreadCreator to set
      */
-    public void setThreadCreator(Student threadCreator) {
-        this.threadCreator = threadCreator;
+    public void setStudentThreadCreator(Student studentThreadCreator) {
+        this.studentThreadCreator = studentThreadCreator;
     }
 
     /**
@@ -228,6 +232,14 @@ public class Thread implements Serializable {
      */
     public void setEventCreated(Event eventCreated) {
         this.eventCreated = eventCreated;
+    }
+
+    public Admin getAdminThreadCreator() {
+        return adminThreadCreator;
+    }
+
+    public void setAdminThreadCreator(Admin adminThreadCreator) {
+        this.adminThreadCreator = adminThreadCreator;
     }
 
 }

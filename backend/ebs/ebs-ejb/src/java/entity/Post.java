@@ -34,7 +34,11 @@ public class Post implements Serializable {
     private boolean ifReported; // To check if the post has been reported by another stu
 
     @ManyToOne
-    private Student postCreator;
+    private Student studentPostCreator;
+
+    @ManyToOne
+    private Admin adminPostCreator;
+
     @ManyToMany
     private List<Post> replies = new ArrayList<>();
     @ManyToOne
@@ -42,13 +46,13 @@ public class Post implements Serializable {
 
     public Post() {
     }
-    
+
     public Post(String postDescription, ArrayList<String> tags, ArrayList<String> imageURL) {
         this.postDescription = postDescription;
         this.tags = tags;
         this.imageURL = imageURL;
     }
-  
+
     public Long getId() {
         return id;
     }
@@ -153,17 +157,17 @@ public class Post implements Serializable {
     }
 
     /**
-     * @return the postCreator
+     * @return the studentPostCreator
      */
-    public Student getPostCreator() {
-        return postCreator;
+    public Student getStudentPostCreator() {
+        return studentPostCreator;
     }
 
     /**
-     * @param postCreator the postCreator to set
+     * @param studentPostCreator the studentPostCreator to set
      */
-    public void setPostCreator(Student postCreator) {
-        this.postCreator = postCreator;
+    public void setStudentPostCreator(Student studentPostCreator) {
+        this.studentPostCreator = studentPostCreator;
     }
 
     /**
@@ -206,6 +210,14 @@ public class Post implements Serializable {
      */
     public void setPostDescription(String postDescription) {
         this.postDescription = postDescription;
+    }
+
+    public Admin getAdminPostCreator() {
+        return adminPostCreator;
+    }
+
+    public void setAdminPostCreator(Admin adminPostCreator) {
+        this.adminPostCreator = adminPostCreator;
     }
 
 }
