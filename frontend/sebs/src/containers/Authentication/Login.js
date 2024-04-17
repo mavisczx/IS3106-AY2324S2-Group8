@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import ApiAuth from "../../helpers/ApiAuth";
 import { Link } from "react-router-dom";
 
-
 const Login = () => {
-  return <div> placeholder until code gets fixed </div>
-  /*const [email, setEmail] = useState("");
+  return <div> placeholder until code gets fixed </div>;
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
@@ -93,7 +92,6 @@ const Login = () => {
       </div>
     </div>
   );
-  */
 };
 
 export default Login;
