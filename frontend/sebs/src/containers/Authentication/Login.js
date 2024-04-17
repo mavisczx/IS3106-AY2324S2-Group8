@@ -2,8 +2,10 @@ import React, { useState } from "react";
 //import Api from "../../helpers/Api";
 import { Link } from "react-router-dom";
 
+
 const Login = () => {
-  const [email, setEmail] = useState("");
+  return <div> placeholder until code gets fixed </div>
+  /*const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
@@ -11,7 +13,7 @@ const Login = () => {
     e.preventDefault(); // Prevent the default form submission behavior
     try {
       const credentials = { email, password };
-      const token = await Api.login(credentials);
+      //const token = await Api.login(credentials);
       localStorage.setItem("token", token); // Store the token in local storage
       // Redirect to the home page after successful login
       window.location.href = "/"; // Replace "/home" with your desired home route
@@ -95,6 +97,7 @@ const Login = () => {
       </div>
     </div>
   );
+  */
 };
 
 export default Login;
