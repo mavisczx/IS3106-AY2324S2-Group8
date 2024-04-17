@@ -56,6 +56,15 @@ const ApiPost= {
       method: "GET",
     });
   },
+  
+  searchAllPost() {
+    return fetch(`${SERVER_PREFIX}/post/all`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
 
 };
 
