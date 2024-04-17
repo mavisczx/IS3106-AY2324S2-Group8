@@ -4,10 +4,17 @@ import ApiThread from "../../helpers/ApiThread";
 import ApiPost from "../../helpers/ApiThread";
 
 const CreateThread = () => {
+//Assuming these are the parameters to creating a thread
   
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [tags, setTags] = useState([]);
+
+  /* 
+   * no images or any further content
+   * since that is done via the posts in the thread
+   *
+   */
   
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,6 +30,7 @@ const CreateThread = () => {
 
   const handleImageUpload = (e) => {
     setImages(e.target.files);
+    
   };
 
   const handleSubmit = async (e) => {
@@ -33,6 +41,7 @@ const CreateThread = () => {
     try {
       const token = localStorage.getItem("authToken");
       const formData = new FormData();
+      
       formData.append("description", desc);
       formData.append("tags", tags);
 
@@ -52,8 +61,10 @@ const CreateThread = () => {
   };
 
   return (
+    
     <div className="create-thread-page">
       <h1>Create a New Thread</h1>
+    
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="description">Description:</label>
