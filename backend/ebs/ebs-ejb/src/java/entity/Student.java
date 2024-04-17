@@ -93,191 +93,98 @@ public class Student implements Serializable {
         return "entity.Student[ id=" + id + " ]";
     }
 
-    /**
-     * @return the username
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * @param username the username to set
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * @param password the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * @return the exchangeUni
-     */
-    public String getExchangeUni() {
-        return exchangeUni;
-    }
-
-    /**
-     * @param exchangeUni the exchangeUni to set
-     */
-    public void setExchangeUni(String exchangeUni) {
-        this.exchangeUni = exchangeUni;
-    }
-
-    /**
-     * @return the originUni
-     */
-    public String getOriginUni() {
-        return originUni;
-    }
-
-    /**
-     * @param originUni the originUni to set
-     */
-    public void setOriginUni(String originUni) {
-        this.originUni = originUni;
-    }
-
-    /**
-     * @return the postsCreated
-     */
-    public List<Post> getPostsCreated() {
-        return postsCreated;
-    }
-
-    /**
-     * @param postsCreated the postsCreated to set
-     */
-    public void setPostsCreated(ArrayList<Post> postsCreated) {
-        this.setPostsCreated(postsCreated);
-    }
-
-    /**
-     * @return the threadsCreated
-     */
-    public List<Thread> getThreadsCreated() {
-        return threadsCreated;
-    }
-
-    /**
-     * @param threadsCreated the threadsCreated to set
-     */
-    public void setThreadsCreated(ArrayList<Thread> threadsCreated) {
-        this.setThreadsCreated(threadsCreated);
-    }
-
-    /**
-     * @return the profilePhoto
-     */
     public String getProfilePhoto() {
         return profilePhoto;
     }
 
-    /**
-     * @param profilePhoto the profilePhoto to set
-     */
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
 
-    /**
-     * @return the eventsJoined
-     */
-    public List<Event> getEventsJoined() {
-        return eventsJoined;
-    }
-
-    /**
-     * @param eventsJoined the eventsJoined to set
-     */
-    public void setEventsJoined(ArrayList<Event> eventsJoined) {
-        this.setEventsJoined(eventsJoined);
-    }
-
-    /**
-     * @param postsCreated the postsCreated to set
-     */
-    public void setPostsCreated(List<Post> postsCreated) {
-        this.postsCreated = postsCreated;
-    }
-
-    /**
-     * @param threadsCreated the threadsCreated to set
-     */
-    public void setThreadsCreated(List<Thread> threadsCreated) {
-        this.threadsCreated = threadsCreated;
-    }
-
-    /**
-     * @return the eventsCreated
-     */
-    public List<Event> getEventsCreated() {
-        return eventsCreated;
-    }
-
-    /**
-     * @param eventsCreated the eventsCreated to set
-     */
-    public void setEventsCreated(List<Event> eventsCreated) {
-        this.eventsCreated = eventsCreated;
-    }
-
-    /**
-     * @return the contact
-     */
     public String getContact() {
         return contact;
     }
 
-    /**
-     * @param contact the contact to set
-     */
     public void setContact(String contact) {
         this.contact = contact;
     }
 
-    /**
-     * @param eventsJoined the eventsJoined to set
-     */
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getExchangeUni() {
+        return exchangeUni;
+    }
+
+    public void setExchangeUni(String exchangeUni) {
+        this.exchangeUni = exchangeUni;
+    }
+
+    public String getOriginUni() {
+        return originUni;
+    }
+
+    public void setOriginUni(String originUni) {
+        this.originUni = originUni;
+    }
+
+    public List<Post> getPostsCreated() {
+        return postsCreated;
+    }
+
+    public void setPostsCreated(List<Post> postsCreated) {
+        this.postsCreated = postsCreated;
+    }
+
+    public List<Thread> getThreadsCreated() {
+        return threadsCreated;
+    }
+
+    public void setThreadsCreated(List<Thread> threadsCreated) {
+        this.threadsCreated = threadsCreated;
+    }
+
+    public List<Event> getEventsCreated() {
+        return eventsCreated;
+    }
+
+    public void setEventsCreated(List<Event> eventsCreated) {
+        this.eventsCreated = eventsCreated;
+    }
+
+    public List<Event> getEventsJoined() {
+        return eventsJoined;
+    }
+
     public void setEventsJoined(List<Event> eventsJoined) {
         this.eventsJoined = eventsJoined;
     }

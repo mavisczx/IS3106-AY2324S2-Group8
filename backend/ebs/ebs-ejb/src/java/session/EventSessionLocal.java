@@ -24,7 +24,9 @@ public interface EventSessionLocal {
 
     public void adminCreateEvent(Long creatorId, String eventTitle, Date eventDate, String eventLocation, String eventDescription, String eventCategory, Date deadline, String eventPrice) throws AdminNotFoundException;
 
-    public boolean eventOwner(Long eventId, Long studentId) throws EventNotFoundException;
+    public boolean isStudentEventOwner(Long eventId, Long studentId) throws EventNotFoundException;
+
+    public boolean isAdminEventOwner(Long eventId, Long studentId) throws EventNotFoundException;
 
     public Event getEventById(Long eventId) throws EventNotFoundException;
 
@@ -38,7 +40,7 @@ public interface EventSessionLocal {
 
     public List<Event> searchEventsByTitle(String title);
 
-    public List<Event> searchEventByDate(Date eventDate);
+    public List<Event> searchEventByDate(Date startDate, Date endDate);
 
     public List<Event> searchEventByDeadline(Date deadline);
 
