@@ -42,6 +42,12 @@ public class Post implements Serializable {
 
     public Post() {
     }
+    
+    public Post(String postDescription, ArrayList<String> tags, ArrayList<String> imageURL) {
+        this.postDescription = postDescription;
+        this.tags = tags;
+        this.imageURL = imageURL;
+    }
 
     public Long getId() {
         return id;
