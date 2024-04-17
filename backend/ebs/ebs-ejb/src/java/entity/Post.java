@@ -48,6 +48,7 @@ public class Post implements Serializable {
         this.tags = tags;
         this.imageURL = imageURL;
     }
+  
     public Long getId() {
         return id;
     }

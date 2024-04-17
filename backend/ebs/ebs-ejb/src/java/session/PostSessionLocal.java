@@ -18,7 +18,7 @@ import util.exception.StudentNotFoundException;
  */
 public interface PostSessionLocal {
 
-public void createPost(String postDescription, ArrayList<String> tags, ArrayList<String> imageURL);
+public void createPost(Long studentId, String postDescription, ArrayList<String> tags, ArrayList<String> imageURL) throws StudentNotFoundException;
 
 public void deletePost(Long postId) throws PostNotFoundException;
 
@@ -29,5 +29,7 @@ public void sharePost(Long postId) throws PostNotFoundException;
 public void likePost(Long postId)throws PostNotFoundException;
 
 public Post retrievePostById(Long postId) throws PostNotFoundException;
+
+ public Boolean isPostReported(Long postId) throws PostNotFoundException;
 
 }

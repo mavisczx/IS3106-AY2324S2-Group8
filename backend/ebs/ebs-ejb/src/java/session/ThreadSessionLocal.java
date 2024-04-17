@@ -16,7 +16,7 @@ import util.exception.StudentNotFoundException;
  */
 
 public interface ThreadSessionLocal {
-    public void createThread(String title, String desc, ArrayList<String> tags);
+     public void createThread(Long studentId, String title, String desc, ArrayList<String> tags) throws StudentNotFoundException;
       
       public void deleteThread(Long threadId) throws ThreadNotFoundException;
 
