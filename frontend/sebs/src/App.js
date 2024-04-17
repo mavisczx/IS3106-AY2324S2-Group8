@@ -16,10 +16,8 @@ function App() {
       <Sidebar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div className="content-wrapper w-full m-10">
         <Routes>
-          <Route path="/index" element={<Index />} />
-          <Route path="/login" element={<Index />} />
-          <Route path="/register" element={<Index />} />
-
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<Index />} />
         </Routes>
       </div>
