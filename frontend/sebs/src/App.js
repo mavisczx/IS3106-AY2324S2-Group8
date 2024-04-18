@@ -27,7 +27,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/createevent" element={<CreateEvent />} />
+          <Route path="/createevent" element={<CreateEvent/>} />
           <Route path="/" element={<Index />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
