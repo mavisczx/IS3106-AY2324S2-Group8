@@ -18,6 +18,10 @@ import Landing from "./containers/Landing";
 import CreateAdmin from "./containers/AdminPages/CreateAdmin";
 import SearchEvents from "./containers/Events/SearchEvents";
 import CreatePost from "./containers/Post/CreatePost";
+import EventDetails from "./containers/Events/EventDetails";
+import CreatedEvents from "./containers/Events/CreatedEvents";
+import RegisteredEvents from "./containers/Events/RegisteredEvents";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -89,7 +93,11 @@ function App() {
             }
           />
           <Route path="/searchevents" element={<SearchEvents />} />
+
           <Route path="/createpost" element={<CreatePost/>} />
+          <Route path="/eventdetails/:id" element={<EventDetails />} />
+          <Route path="/createdevents" element={<CreatedEvents />} />
+          <Route path="/registeredevents" element={<RegisteredEvents />} />
         </Routes>
       </div>
     </div>

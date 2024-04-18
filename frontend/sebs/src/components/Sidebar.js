@@ -8,7 +8,7 @@ function SidebarLink({ name, icon, onClick, link }) {
   const location = useLocation();
   return (
     <Link onClick={onClick} to={link}>
-      <div className={location.pathname === link && "bg-orange-600"}>
+      <div className={location.pathname === link ? "bg-orange-600" : ""}>
         <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-orange-600 text-white">
           <i className="bi bi-house-door-fill"></i>
 
@@ -26,7 +26,7 @@ function SidebarLink({ name, icon, onClick, link }) {
 function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
   return (
     <div
-      class="sidebar sticky top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-stone-900"
+      className="sidebar sticky top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-stone-900"
       key={loggedIn}
     >
       <Link to="/">
@@ -48,10 +48,23 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
         <div>
           <SidebarLink name="Profile" icon="mdi:account" link="/profile" />
           <SidebarLink name="Add Event" icon="mdi:plus" link="/createevent" />
+          <SidebarLink
+            name="Created Events"
+            icon="mdi:clipboard-list"
+            link="/createdevents"
+          />
           <SidebarLink name="Search" icon="mdi:search" link="/" />
-
           <SidebarLink name="Questions" icon="mdi:question-mark" link="/" />
-          <SidebarLink name="Events" icon="mdi:event" link="/searchevents" />
+          <SidebarLink
+            name="Search Events"
+            icon="mdi:event"
+            link="/searchevents"
+          />
+          <SidebarLink
+            name="Registered Events"
+            icon="mdi:heart-outline"
+            link="/registeredevents"
+          />
           <SidebarLink name="Chat" icon="mdi:bubble" link="/" />
           {isAdmin && (
             <SidebarLink

@@ -47,6 +47,7 @@ const CreateEvent = () => {
         eventDate: moment(eventData.eventDate).format("YYYY-MM-DDTHH:mm:ss"),
         deadline: moment(eventData.deadline).format("YYYY-MM-DDTHH:mm:ss"),
       };
+      console.log(formattedEventData);
       await ApiEvent.studentCreateEvent(formattedEventData, token);
       toast.success("🎉 Event added successfully!");
     } catch (error) {
@@ -63,22 +64,22 @@ const CreateEvent = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="w-full max-w-xl p-8 bg-black bg-opacity-80 rounded-lg shadow-lg">
+      <div className="w-full max-w-3xl p-6 bg-black bg-opacity-80 rounded-lg shadow-lg">
         <h2 className="text-center text-3xl font-bold text-white mb-6">
           <div className="p-2.5 mt-1 flex items-center justify-center">
             <Icon
               icon="ic:baseline-school"
               className="text-xl rounded-md text-orange-500"
             />
-            <h1 className="font-bold text-stone-200 text-3xl ml-3">
+            <h1 className="font-bold text-stone-200 text-2xl ml-3">
               ExchangeBuddy
             </h1>
           </div>
-          <h1 className="text-center font-bold text-white text-2xl ml-3">
+          <h1 className="text-center font-bold text-white text-xl ml-3">
             Create Event
           </h1>
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-1">
           <div>
             <label className="block text-white text-sm font-bold mb-2">
               Event Title:
@@ -97,6 +98,7 @@ const CreateEvent = () => {
               Event Date:
             </label>
             <DatePicker
+              dateFormat="dd/MM/yyyy"
               selected={eventData.eventDate}
               onChange={(date) => handleChange("eventDate", date)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
@@ -140,11 +142,12 @@ const CreateEvent = () => {
               required
             >
               <option value="">Select Category</option>
-              <option value="conferences">Conferences</option>
+              <option value="attractions">Attractions</option>
               <option value="festivals">Festivals</option>
               <option value="workshops">Workshops</option>
               <option value="concerts">Concerts</option>
               <option value="theatre">Theatre</option>
+              <option value="food">Food</option>
               <option value="others">Others</option>
             </select>
           </div>
@@ -167,15 +170,16 @@ const CreateEvent = () => {
               Registration Deadline:
             </label>
             <DatePicker
+              dateFormat="dd/MM/yyyy"
               selected={eventData.deadline}
               onChange={(date) => handleChange("deadline", date)}
-              className="form-input w-full px-3 py-2 border border-gray-300 rounded"
+              className="form-input w-full px-3 py-2 border border-gray-300 rounded mb-4"
               required
             />
           </div>
           <button
             type="submit"
-            className="mt-4 w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
+            className="mt-6 w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
           >
             Add Event
           </button>
