@@ -13,12 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author chewy
  */
 @Entity
+@Table(name = "websiteAdmin")
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,13 +34,13 @@ public class Admin implements Serializable {
     private String name;
     private String email;
 
-    @OneToMany(mappedBy = "postCreator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "adminPostCreator", fetch = FetchType.EAGER)
     private List<Post> postsCreated = new ArrayList<>();
 
-    @OneToMany(mappedBy = "threadCreator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "adminThreadCreator", fetch = FetchType.EAGER)
     private List<Thread> threadsCreated = new ArrayList<>();
 
-    @OneToMany(mappedBy = "eventCreator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "adminCreator", fetch = FetchType.EAGER)
     private List<Event> eventsCreated = new ArrayList<>();
 
     public Admin() {

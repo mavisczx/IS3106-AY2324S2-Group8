@@ -37,7 +37,7 @@ function Sidebar({ loggedIn, setLoggedIn }) {
               className="text-xl rounded-md text-orange-500"
             />
             <h1 class="font-bold text-stone-200 text-[15px] ml-3">
-              exchangemates
+              ExchangeBuddy
             </h1>
           </div>
           <div class="my-2 bg-stone-600 h-[1px]"></div>
@@ -54,7 +54,7 @@ function Sidebar({ loggedIn, setLoggedIn }) {
 
           <SidebarLink
             name="Log Out"
-            icon=""
+            icon="mdi:logout"
             onClick={() => {
               //localStorage.removeItem('token');
               setLoggedIn(false);

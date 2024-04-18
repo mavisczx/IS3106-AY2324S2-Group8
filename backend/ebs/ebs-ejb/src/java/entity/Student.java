@@ -35,13 +35,13 @@ public class Student implements Serializable {
     private String exchangeUni; //Singaporean Uni that the Student currently attends
     private String originUni; //Foreign Uni that the Student currently is from originall
 
-    @OneToMany(mappedBy = "postCreator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "studentPostCreator", fetch = FetchType.EAGER)
     private List<Post> postsCreated = new ArrayList<>();
 
-    @OneToMany(mappedBy = "threadCreator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "studentThreadCreator", fetch = FetchType.EAGER)
     private List<Thread> threadsCreated = new ArrayList<>();
 
-    @OneToMany(mappedBy = "eventCreator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "studentCreator", fetch = FetchType.EAGER)
     private List<Event> eventsCreated = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER) //unidirectional, no need map

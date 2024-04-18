@@ -158,7 +158,7 @@ public class AdminResource {
                 thread.setParentThread(null);
                 thread.setPostsInThread(new ArrayList<>());
                 thread.setSubThreads(new ArrayList<>());
-                thread.setThreadCreator(null);
+                thread.setStudentThreadCreator(null);
             }
 
             return Response.ok(eventList).build();

@@ -31,8 +31,10 @@ public void createPost(Long studentId, String postDescription, ArrayList<String>
    Student student = studentSessionLocal.retrieveStudentById(studentId);
    
     Post post = new Post(postDescription, tags, imageURL);
+    //adding post to Students list of Posts
     student.getPostsCreated().add(post);
-  em.persist(post);
+    
+    em.persist(post);
 }
 
 @Override
@@ -64,8 +66,12 @@ public void sharePost(Long postId) throws PostNotFoundException {
     post.setShareCount(shareCount);
     
     // figure out how to actually send the 'msg'
+    //Current idea: generate link to send on other platforms 
+    
 
 }
+
+    
 @Override
 public void likePost(Long postId) throws PostNotFoundException {
     
@@ -84,6 +90,7 @@ public Post retrievePostById(Long postId) throws PostNotFoundException {
   
   if (post != null) {
     return post;
+      
   } else {
        throw new PostNotFoundException("Error: Post does not Exist!");
            }
