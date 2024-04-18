@@ -100,6 +100,7 @@ public class StudentResource {
     @Path("/checkUsername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response checkUsernameTaken(@PathParam("username") String username) {
+        
         boolean isTaken = studentSession.checkUsernameTaken(username);
         return Response.ok(isTaken).build();
     }

@@ -89,9 +89,12 @@ public class StudentSession implements StudentSessionLocal {
     public void updateStudentProfile(Student studentToUpdate) throws StudentNotFoundException { // see what we want to update
         Student student = retrieveStudentById(studentToUpdate.getId());
 
+        student.setName(studentToUpdate.getName());
         student.setContact(studentToUpdate.getContact());
         student.setUsername(studentToUpdate.getUsername());
         student.setProfilePhoto(studentToUpdate.getProfilePhoto());
+        student.setOriginUni(studentToUpdate.getOriginUni());
+        student.setExchangeUni(studentToUpdate.getExchangeUni());
     }
 
     @Override

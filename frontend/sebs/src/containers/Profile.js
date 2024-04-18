@@ -11,19 +11,24 @@ import CustomDialog from "../components/CustomDialog";
 
 import { Icon } from "@iconify/react";
 
+import ApiStudent from "../helpers/ApiStudent";
+
 
 const ProfileForm = ({ userInfo, setUserInfo, setProfileDialog, updateUser }) => {
+
+    const id = localStorage.getItem("token");
 
     const [formInfo, setFormInfo] = useState(userInfo);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         e.target.setCustomValidity('')
-
+        //console.log("Setting form info...")
         setFormInfo({
             ...formInfo,
             [name]: value
         });
+        //console.log(formInfo)
     };
 
     const checkValidUsername = (email) => {
@@ -36,41 +41,51 @@ const ProfileForm = ({ userInfo, setUserInfo, setProfileDialog, updateUser }) =>
         // Validate the form for username
 
         if (checkValidUsername(formInfo.email) === false && formInfo.email !== userInfo.email) {
-              // Set custom validity to trigger the browser-native popup
-              const inputElement = e.target[2];
-              inputElement.setCustomValidity('Email already taken');
-              inputElement.reportValidity();
+            // Set custom validity to trigger the browser-native popup
+            const inputElement = e.target[2];
+            inputElement.setCustomValidity('Email already taken');
+            inputElement.reportValidity();
 
-            } else {
-                //Api.updateUser(formInfo.id, formInfo)
-                //.then((res) => console.log(res))
-                //.then(() => updateUser())
+        } else {
 
-                // Reset form fields
-                setProfileDialog(false);
-            }
-          
-
+            // Reset form fields
+            //console.log(formInfo)
+            setUserInfo(formInfo)
+            updateUser(formInfo);
+            setProfileDialog(false);
+        }
 
 
-        
+
+
+
 
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <div className="space-y-2">
-                    <div className="flex flex-row space-x-2">
-                        <label>Name:</label>
-                        <input className="px-1 border"
-                            type="text"
-                            name="name"
-                            value={formInfo.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="flex flex-row space-x-2">
+                <div className="flex flex-row space-x-2">
+                    <label>Name:</label>
+                    <input className="px-1 border"
+                        type="text"
+                        name="name"
+                        value={formInfo.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <label>Userame:</label>
+                    <input className="px-1 border"
+                        type="text"
+                        name="username"
+                        value={formInfo.username}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="flex flex-row space-x-2">
 
                     <label>Contact:</label>
                     <input className="px-1 border"
@@ -78,10 +93,31 @@ const ProfileForm = ({ userInfo, setUserInfo, setProfileDialog, updateUser }) =>
                         name="contact"
                         value={formInfo.contact}
                         onChange={handleChange}
-                        
+
                     />
                 </div>
+                <div className="flex flex-row space-x-2">
 
+                    <label>Origin University:</label>
+                    <input className="px-1 border"
+                        type="text"
+                        name="originUni"
+                        value={formInfo.originUni}
+                        onChange={handleChange}
+
+                    />
+                </div>
+                <div className="flex flex-row space-x-2">
+
+                    <label>Exchange University:</label>
+                    <input className="px-1 border"
+                        type="text"
+                        name="exchangeUni"
+                        value={formInfo.exchangeUni}
+                        onChange={handleChange}
+
+                    />
+                </div>
                 <div className="flex flex-row space-x-2">
                     <label>Email:</label>
                     <input className="px-1 border"
@@ -90,7 +126,7 @@ const ProfileForm = ({ userInfo, setUserInfo, setProfileDialog, updateUser }) =>
                         value={formInfo.email}
                         onChange={handleChange}
                         required
-                        id = "email"
+                        id="email"
                     />
                 </div>
 
@@ -110,23 +146,23 @@ const ProfileForm = ({ userInfo, setUserInfo, setProfileDialog, updateUser }) =>
 
 function Profile() {
 
-    //const id = localStorage.getItem("token").split("_")[0];
+    const id = localStorage.getItem("token");
 
     const [userType, setUserType] = useState("student") //can also be admin
 
     const [userInfo, setUserInfo] = useState({
-        contact: "12345",
-        email: "dummy@dummy.com",
-        exchangeUni: "National University of Singapore 2",
-        originUni: "National University of Singapore",
+        contact: "",
+        email: "",
+        exchangeUni: "",
+        originUni: "",
         id: -1,
-        name: "dummy",
-        password: "dummy",
+        name: "",
+        password: "",
         profilePhoto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNiWy0rcwErKtx6GbzcswtRJBjDTJVxgdjrWTVOUMcKw&s",
-        postsCreated: ["dummy"],
-        threadsCreated: ["dummy", "dummy"],
+        postsCreated: [],
+        threadsCreated: [],
         eventsCreated: [],
-        eventsJoined: ["dummy"]
+        eventsJoined: []
     });
 
     const [imgDialog, setImgDialog] = useState(false)
@@ -136,13 +172,52 @@ function Profile() {
 
     const [currentFile, setCurrentFile] = useState();
 
-    const updateUser = () => {
+    const updateUser = (userInfo) => {
         // Insert API call here...
+        if (userType === "student") {
+            console.log(id)
+
+            if (userInfo.id !== -1) {
+                console.log("Updating with...")
+                console.log(userInfo)
+                ApiStudent.updateStudentProfile(userInfo, id)
+                    .then((resp) => { return resp.text() })
+                    .then((resp) => {
+                        console.log(resp)
+                        ApiStudent.retrieveStudentById(id)
+                            .then((res) => {
+                                //console.log(id)
+                                return res.json()
+                            })
+                            .then((user) => {
+                                //console.log(user)
+                                //console.log(user.originUni)
+                                setUserInfo(user)
+
+                            }
+                            )
+                    }
+                    )
+            }
+            ApiStudent.retrieveStudentById(id)
+                .then((res) => {
+                    //console.log(id)
+                    return res.json()
+                })
+                .then((user) => {
+                    //console.log(user)
+                    //console.log(user.originUni)
+                    setUserInfo(user)
+
+                }
+                )
+
+        }
     }
 
-    
+
     useEffect(() => {
-        updateUser();
+        updateUser(userInfo);
 
     }, [])
 
@@ -157,18 +232,12 @@ function Profile() {
 
         reader.onload = () => {
             const base64String = reader.result;
-            /*
-            Api.uploadPFP(id, base64String).then(
-                (resp) => {
-                    console.log(resp);
-                    toast.success("Profile Picture Updated!");
-                    setCurrentFile(null);
-                    updateUser();
-                    setImgDialog(false);
 
-                }
-            )
-            */
+            let tempUserInfo = userInfo
+            tempUserInfo.profilePhoto = base64String
+            setUserInfo(userInfo)
+            updateUser(tempUserInfo)
+
         };
 
         reader.readAsDataURL(currentFile);
@@ -222,7 +291,9 @@ function Profile() {
                     <div class="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto pb-2">
                         <div class="flex justify-center">
 
-                            <img src={userInfo.profilePhoto} alt="" class="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110" />
+                            <img src={userInfo.profilePhoto != "" ? userInfo.profilePhoto : 
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNiWy0rcwErKtx6GbzcswtRJBjDTJVxgdjrWTVOUMcKw&s" } 
+                            alt="" class="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110" />
                             {/*<span class="absolute top-0 transform translate-x-10 translate-y-7 w-3.5 h-3.5">
                             <Icon icon="lucide:edit" className = "text-2xl" />
                         </span>*/}
@@ -230,35 +301,43 @@ function Profile() {
 
                         <div class="mt-16 flex flex-col items-center">
                             <h1 class="font-bold text-center text-3xl text-gray-900">{userInfo.name}</h1>
-                            {userType === "admin" && <b className = "text-red-600"> (ADMIN) </b>}
+                            <b> {userInfo.username} </b>
+                            {userType === "admin" && <b className="text-red-600"> (ADMIN) </b>}
                             <p class="text-center text-sm text-gray-400 font-medium">
                                 <div className="flex flex-row items-center space-x-1">
                                     <Icon icon="ic:baseline-email" className="mt-1" />
                                     <span>{userInfo.email}</span>
                                 </div>
-                                </p>
-                            { (userInfo.contact !== "" && userInfo.contact !== undefined) &&
+                            </p>
+                            {(userInfo.contact !== "" && userInfo.contact !== undefined) &&
                                 <p class="text-center text-sm text-gray-400 font-medium">
-                                <div className="flex flex-row items-center space-x-1">
-                                    <Icon icon="ic:baseline-phone" className="mt-1" />
-                                    <span>{userInfo.contact}</span>
-                                </div>
+                                    <div className="flex flex-row items-center space-x-1">
+                                        <Icon icon="ic:baseline-phone" className="mt-1" />
+                                        <span>{userInfo.contact}</span>
+                                    </div>
                                 </p>}
-                                <br/>
+                            <br />
 
-                            {userType === "student"  &&
-                            <div class = "flex-col flex justify-between space-y-4">
-                                <p className = "text-sm text-gray-700"> <b>{userInfo.name} is from:</b> <br/>{userInfo.originUni}</p>
-                                <p className = "text-sm text-gray-700"> <b>Now on exchange at:</b> <br/>{userInfo.exchangeUni}</p>
-                            </div>
+                            {userType === "student" &&
+                                <div class="flex-col flex justify-between space-y-4">
+                                    {
+                                        userInfo.originUni !== undefined &&
+
+                                        <p className="text-sm text-gray-700"> <b>{userInfo.name} is from:</b> <br />{userInfo.originUni}</p>
+                                    }
+                                    {
+                                        userInfo.originUni !== undefined &&
+                                        <p className="text-sm text-gray-700"> <b>Now on exchange at:</b> <br />{userInfo.exchangeUni}</p>}
+                                        <br/>
+                                </div>
                             }
 
                             <div class="flex flex-col text-center text-xs text-gray-400 font-medium justify-around">
-                                <div class = "flex flex-row justify-around space-x-4">
+                                <div class="flex flex-row justify-around space-x-4">
                                     <div>{userInfo.postsCreated.length} post{userInfo.postsCreated.length != 1 && "s"} created</div>
                                     <div>{userInfo.threadsCreated.length} thread{userInfo.threadsCreated.length != 1 && "s"} created</div>
                                 </div>
-                                <div class = "flex flex-row justify-around space-x-4">
+                                <div class="flex flex-row justify-around space-x-4">
                                     <div>{userInfo.eventsCreated.length} event{userInfo.eventsCreated.length != 1 && "s"} created</div>
                                     {userType == "student" && <div>{userInfo.eventsJoined.length} event{userInfo.eventsJoined.length != 1 && "s"} joined</div>}
                                 </div>
