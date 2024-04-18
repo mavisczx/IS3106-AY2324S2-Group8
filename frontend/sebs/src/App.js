@@ -10,12 +10,14 @@ import Index from "./containers/Index";
 import Login from "./containers/Authentication/Login";
 import Register from "./containers/Authentication/Register";
 import Profile from "./containers/Profile";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <div className="bg-stone-300 min-h-screen min-v-screen flex">
+      <ToastContainer theme="dark" />
       <Sidebar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div className="content-wrapper w-full m-10">
         <Routes>
