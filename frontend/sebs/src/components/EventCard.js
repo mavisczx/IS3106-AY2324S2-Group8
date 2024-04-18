@@ -96,18 +96,18 @@ function EventCard({ event }) {
         </Link>
         <p className="text-gray-500 text-sm flex items-center">
           <Icon icon="ic:baseline-people" />
-          &nbsp;{/* Add a space here */}
+          &nbsp;
           {eventSize} Joined
         </p>
 
         <p className="text-gray-500 text-sm flex items-center">
           <Icon icon="mdi:location" />
-          &nbsp;{/* Add a space here */}
+          &nbsp;
           {eventLocation}
         </p>
         <p className="text-gray-500 text-sm flex items-center">
           <Icon icon="tabler:currency-dollar-singapore" />
-          &nbsp;{/* Add a space here */}
+          &nbsp;
           {eventPrice}
         </p>
       </div>

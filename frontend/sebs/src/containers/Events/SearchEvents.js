@@ -77,7 +77,7 @@ function SearchEvents() {
   return (
     <div>
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold">Search Events</h1>
+        <h1 className="text-3xl font-bold">Find Events</h1>
       </div>
       <form
         className="flex flex-col md:flex-row gap-3 items-center justify-center"
@@ -112,12 +112,12 @@ function SearchEvents() {
             }}
           />
         ) : searchType === "eventDate" ? (
-          <div>
+          <div className="flex">
             <DatePicker
               placeholderText="Start Date"
               dateFormat="dd/MM/yyyy"
               id="startDate"
-              className="w-full md:w-55 px-3 h-10 rounded-l border-2 border-orange-300 focus:outline-none focus:border-orange-500"
+              className="w-full md:w-40 px-3 h-10 rounded-l border-2 border-orange-300 focus:outline-none focus:border-orange-500"
               required
               selected={startDate}
               onChange={(e) => {
@@ -129,7 +129,7 @@ function SearchEvents() {
               dateFormat="dd/MM/yyyy"
               selected={endDate}
               id="endDate"
-              className="w-full md:w-55 ml-3 px-3 h-10 rounded-l border-2 border-orange-300 focus:outline-none focus:border-orange-500"
+              className="w-full md:w-40 ml-3 px-3 h-10 rounded-l border-2 border-orange-300 focus:outline-none focus:border-orange-500"
               required
               onChange={(e) => {
                 setEndDate(e);
@@ -156,7 +156,7 @@ function SearchEvents() {
         )}
         <button
           type="submit"
-          className="bg-orange-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1"
+          className="ml-5 bg-orange-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1"
         >
           Search
         </button>
