@@ -26,7 +26,6 @@ const Register = () => {
       toast.success("Registration successful. Please log in.", {
         autoClose: 1500,
         onClose: () => {
-          // Navigate after the toast closes
           window.location.hash = "#/login";
         },
       });
