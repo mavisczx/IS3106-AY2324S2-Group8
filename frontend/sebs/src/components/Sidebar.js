@@ -23,7 +23,7 @@ function SidebarLink({ name, icon, onClick, link }) {
   );
 }
 
-function Sidebar({ loggedIn, setLoggedIn }) {
+function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
   return (
     <div
       class="sidebar sticky top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-stone-900"
@@ -53,6 +53,13 @@ function Sidebar({ loggedIn, setLoggedIn }) {
           <SidebarLink name="Questions" icon="mdi:question-mark" link="/" />
           <SidebarLink name="Events" icon="mdi:event" link="/" />
           <SidebarLink name="Chat" icon="mdi:bubble" link="/" />
+          {isAdmin && (
+            <SidebarLink
+              name="Create Admin"
+              icon="mdi:plus"
+              link="/createadmin"
+            />
+          )}
 
           <SidebarLink
             name="Log Out"

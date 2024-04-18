@@ -15,9 +15,11 @@ import Profile from "./containers/Profile";
 import AdminLogin from "./containers/Authentication/AdminLogin";
 import CreateEvent from "./containers/Events/CreateEvent";
 import Landing from "./containers/Landing";
+import CreateAdmin from "./containers/AdminPages/CreateAdmin";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,11 +29,21 @@ function App() {
   return (
     <div className="bg-stone-300 min-h-screen min-v-screen flex">
       <ToastContainer theme="dark" />
-      <Sidebar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Sidebar
+        loggedIn={loggedIn}
+        setLoggedIn={setLoggedIn}
+        isAdmin={isAdmin}
+        setIsAdmin={setIsAdmin}
+      />
       <div className="content-wrapper w-full m-10">
         <Routes>
           <Route path="/register" element={<Register />} />
-          <Route path="/adminlogin" element={<AdminLogin />} />
+          <Route
+            path="/adminlogin"
+            element={
+              <AdminLogin setLoggedIn={setLoggedIn} setIsAdmin={setIsAdmin} />
+            }
+          />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route path="/landing" element={<Landing />} />
           <Route
@@ -56,6 +68,19 @@ function App() {
               ) : (
                 <div>
                   You need to be logged in to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/createadmin"
+            element={
+              loggedIn && isAdmin ? (
+                <CreateAdmin />
+              ) : (
+                <div>
+                  You need to be logged in / be an admin to access this page.{" "}
                   <Link to="/login">Login</Link>
                 </div>
               )

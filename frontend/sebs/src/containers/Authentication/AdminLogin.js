@@ -4,7 +4,7 @@ import ApiAuth from "../../helpers/ApiAuth";
 import { Link } from "react-router-dom";
 import buddyImage from "./buddy.jpg"; // Make sure the path to the image is correct
 
-const AdminLogin = ({ setLoggedIn }) => {
+const AdminLogin = ({ setLoggedIn, setIsAdmin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -22,6 +22,7 @@ const AdminLogin = ({ setLoggedIn }) => {
       const token = await response.json(); // Assuming the token is returned in JSON format
       localStorage.setItem("token", token["token"]); // Store the token in local storage
       setLoggedIn(true); // Update logged in state
+      setIsAdmin(true); // Update admin state
       //window.location.href = "/"; // Redirect to the home page for admin
     } catch (error) {
       setError("Invalid Email or Password.");
