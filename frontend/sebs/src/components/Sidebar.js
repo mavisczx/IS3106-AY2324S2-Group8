@@ -55,7 +55,7 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
           />
           <SidebarLink name="Search" icon="mdi:search" link="/" />
           <SidebarLink name="Questions" icon="mdi:question-mark" link="/" />
-          <SidebarLink name="Events" icon="mdi:event" link="/" />
+          <SidebarLink name="Events" icon="mdi:event" link="/searchevents" />
           <SidebarLink name="Chat" icon="mdi:bubble" link="/" />
           {isAdmin && (
             <SidebarLink

@@ -119,6 +119,19 @@ public class EventResource {
         }
     }
 
+    @GET
+    @Path("/eventSize/{eventId}")
+    public int getEventSize(@PathParam("eventId") Long eventId) {
+        try {
+            Event event = eventSession.getEventById(eventId);
+            int size = event.getStudentsJoined().size();
+
+            return size;
+        } catch (EventNotFoundException e) {
+            return 0;
+        }
+    }
+
     @PUT
     @Secured
     @Path("/{eventId}")
