@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Icon } from "@iconify/react";
 import ApiPost from "../../helpers/ApiPost";
-import createEventBg from "../Events/createevent.jpg"; // Ensure the path is correct
+import createPostBg from "../Post/CreatePost.jpg"; // Ensure the path is correct
 
 const CreatePost = () => {
   const [postData, setPostData] = useState({
@@ -41,7 +41,7 @@ const CreatePost = () => {
     <div
       className="flex justify-center items-center h-screen bg-white-100 -m-10"
       style={{
-        backgroundImage: `url(${createEventBg})`,
+        backgroundImage: `url(${createPostBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
