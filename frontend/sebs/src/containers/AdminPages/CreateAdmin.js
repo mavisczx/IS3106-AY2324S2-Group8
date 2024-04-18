@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import ApiAdmin from "../../helpers/ApiAdmin";
 import createAdmin from "./createAdmin.jpg";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateAdmin = () => {
   const [username, setUsername] = useState("");

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ApiEvent from "../../helpers/ApiEvent";
+import ApiStudent from "../../helpers/ApiStudent";
 import moment from "moment";
 import workshop_image from "../../Images/workshop.jpg";
 import concert_image from "../../Images/concert.jpg";
@@ -9,10 +10,24 @@ import theatre_image from "../../Images/theatre.jpg";
 import other_image from "../../Images/other.jpg";
 import food_image from "../../Images/food.jpg";
 import attraction_image from "../../Images/attraction.jpg";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function EventDetails() {
   const { id } = useParams();
   const [event, setEvent] = useState({});
+  const [owner, setOwner] = useState(false);
+  const [registered, setRegistered] = useState(false);
+
+  const categoryImages = {
+    attractions: attraction_image,
+    festivals: festival_image,
+    workshops: workshop_image,
+    concerts: concert_image,
+    theatre: theatre_image,
+    others: other_image,
+    food: food_image,
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -26,20 +41,90 @@ function EventDetails() {
           data.deadline = moment(data.deadline).format("DD/MM/YYYY");
           setEvent(data);
         });
+        checkStatus(id);
       } else {
         console.error("Error fetching event");
       }
     });
   }, [id]);
 
-  const categoryImages = {
-    attractions: attraction_image,
-    festivals: festival_image,
-    workshops: workshop_image,
-    concerts: concert_image,
-    theatre: theatre_image,
-    others: other_image,
-    food: food_image,
+  const checkRegister = () => {
+    if (moment(event.eventDate, "DD/MM/YYYY").toDate() < new Date()) {
+      toast.error("Event date has passed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+      return;
+    } else if (moment(event.deadline, "DD/MM/YYYY").toDate() < new Date()) {
+      toast.error("Registration deadline has passed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+      return;
+    }
+
+    handleRegister(id);
+    checkStatus(id);
+  };
+
+  const handleRegister = (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      ApiStudent.registerForEvent(id, token).then((res) => {
+        if (res.ok) {
+          toast.success("Registered for event successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
+        } else if (res.status === 404) {
+          toast.error("Error registering for event", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error registering for event", error);
+    }
+  };
+
+  const checkStatus = (id) => {
+    const token = localStorage.getItem("token");
+    ApiStudent.isEventOwner(id, token).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          if (data) {
+            setOwner(true);
+          } else {
+            setOwner(false);
+          }
+        });
+      } else {
+        setOwner(false);
+      }
+    });
+
+    ApiStudent.checkRegistrationForEvent(id, token).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          if (data) {
+            setRegistered(true);
+          } else {
+            setRegistered(false);
+          }
+        });
+      } else {
+        setRegistered(false);
+      }
+    });
   };
 
   return (
@@ -77,9 +162,25 @@ function EventDetails() {
 
             {/* Registration Button and Deadline */}
             <div className="mt-4 flex justify-between items-center">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Register
-              </button>
+              {owner && (
+                <div className="bg-orange-400 text-white font-bold py-2 px-4 rounded">
+                  <p>Owner</p>
+                </div>
+              )}
+              {registered && !owner && (
+                <div className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                  <p>Registered</p>
+                </div>
+              )}
+              {!registered && !owner && (
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => checkRegister()}
+                >
+                  Register
+                </button>
+              )}
+
               <span className="inline-block bg-red-200 text-red-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">
                 Deadline: {event.deadline}
               </span>
