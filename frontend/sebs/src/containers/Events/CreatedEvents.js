@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ApiStudent from "../../helpers/ApiStudent";
 import { toast } from "react-toastify";
+import EventCard from "../../components/EventCard";
 
 const CreatedEvents = () => {
   const [events, setEvents] = useState([]);
