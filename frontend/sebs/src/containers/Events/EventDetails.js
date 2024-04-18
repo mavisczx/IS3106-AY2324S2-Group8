@@ -1,17 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import ApiEvent from "../../helpers/ApiEvent";
+import moment from "moment";
+import workshop_image from "../../Images/workshop.jpg";
+import concert_image from "../../Images/concert.jpg";
+import festival_image from "../../Images/festival.jpg";
+import theatre_image from "../../Images/theatre.jpg";
+import other_image from "../../Images/other.jpg";
+import food_image from "../../Images/food.jpg";
+import attraction_image from "../../Images/attraction.jpg";
 
-const EventDetails = () => {
-  // Simulated event data
-  const event = {
-    title: "Soir de Fêtes with The Horns Are Unique Jazz Ensemble",
-    date: new Date().toDateString(), // Example date
-    location: "The Jazz Loft, Singapore",
-    image: "https://via.placeholder.com/500x300",
-    description:
-      "Join us for a night of fantastic jazz music featuring renowned artists and ensembles. It's an evening you won't want to miss!",
-    price: "SGD 50",
-    deadline: "December 25, 2023", // Example deadline
-    category: "Jazz Concert", // Example category
+function EventDetails() {
+  const { id } = useParams();
+  const [event, setEvent] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    ApiEvent.getEventById(id, token).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          const { eventDate, deadline } = data;
+          data.eventDate = eventDate.substring(0, eventDate.length - 5);
+          data.eventDate = moment(data.eventDate).format("DD/MM/YYYY");
+          data.deadline = deadline.substring(0, deadline.length - 5);
+          data.deadline = moment(data.deadline).format("DD/MM/YYYY");
+          setEvent(data);
+        });
+      } else {
+        console.error("Error fetching event");
+      }
+    });
+  }, [id]);
+
+  const categoryImages = {
+    attractions: attraction_image,
+    festivals: festival_image,
+    workshops: workshop_image,
+    concerts: concert_image,
+    theatre: theatre_image,
+    others: other_image,
+    food: food_image,
   };
 
   return (
@@ -21,27 +49,29 @@ const EventDetails = () => {
           {/* Event Image */}
           <img
             className="w-full object-cover h-96 rounded-lg shadow-md"
-            src={event.image}
+            src={categoryImages[event.eventCategory]}
             alt="Event"
           />
 
           {/* Event Content */}
           <div className="mt-4">
-            <h1 className="text-3xl font-bold leading-tight">{event.title}</h1>
-            <p className="mt-2 text-gray-600">{event.description}</p>
+            <h1 className="text-3xl font-bold leading-tight">
+              {event.eventTitle}
+            </h1>
+            <p className="mt-2 text-gray-600">{event.eventDescription}</p>
 
             <div className="mt-4">
               <span className="inline-block bg-indigo-200 text-indigo-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">
-                Date: {event.date}
+                Date: {event.eventDate}
               </span>
               <span className="inline-block bg-green-200 text-green-800 text-xs px-2 ml-2 rounded-full uppercase font-semibold tracking-wide">
-                Location: {event.location}
+                Location: {event.eventLocation}
               </span>
               <span className="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 ml-2 rounded-full uppercase font-semibold tracking-wide">
-                Price: {event.price}
+                Price: {event.eventPrice}
               </span>
               <span className="inline-block bg-purple-200 text-purple-800 text-xs px-2 ml-2 rounded-full uppercase font-semibold tracking-wide">
-                Category: {event.category}
+                Category: {event.eventCategory}
               </span>
             </div>
 
@@ -59,6 +89,6 @@ const EventDetails = () => {
       </div>
     </div>
   );
-};
+}
 
 export default EventDetails;

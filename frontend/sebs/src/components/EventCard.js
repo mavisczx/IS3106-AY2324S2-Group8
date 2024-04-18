@@ -61,9 +61,9 @@ function EventCard({ event }) {
 
   return (
     <div className="rounded overflow-hidden shadow-lg">
-      <Link to="/eventdetails"></Link>
+      <Link to={`/eventdetails/${id}`}></Link>
       <div className="relative">
-        <Link to="/eventdetails">
+        <Link to={`/eventdetails/${id}`}>
           <img
             className="w-full"
             src={categoryImages[eventCategory]}
@@ -85,7 +85,7 @@ function EventCard({ event }) {
       </div>
       <div className="px-6 py-4 bg-stone-100">
         <Link
-          href="/eventdetails"
+          to={`/eventdetails/${id}`}
           className="font-semibold text-lg inline-block hover:text-orange-600 transition duration-500 ease-in-out"
         >
           {eventTitle}

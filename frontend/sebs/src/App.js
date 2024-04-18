@@ -90,7 +90,7 @@ function App() {
             }
           />
           <Route path="/searchevents" element={<SearchEvents />} />
-          <Route path="/eventdetails" element={<EventDetails />} />
+          <Route path="/eventdetails/:id" element={<EventDetails />} />
           <Route path="/createdevents" element={<CreatedEvents />} />
         </Routes>
       </div>

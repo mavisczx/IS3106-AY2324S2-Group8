@@ -168,8 +168,8 @@ function SearchEvents() {
           Reset
         </button>
       </form>
-      <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
-        <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
+      <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
           {events.map((e) => {
             return <EventCard key={e.id} event={e} />;
           })}
