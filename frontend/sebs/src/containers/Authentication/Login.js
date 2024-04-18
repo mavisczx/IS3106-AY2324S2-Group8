@@ -15,8 +15,7 @@ const Login = ({ setLoggedIn }) => {
       const credentials = { email, password };
       const token = await ApiAuth.authenticateStudent(credentials);
       localStorage.setItem("token", token);
-      setLoggedIn(true); // Update the state in App component
-      window.location.href = "/"; // Redirect to the home page
+      setLoggedIn(true);
     } catch (error) {
       console.error("Login failed:", error.message);
       setError("Invalid email or password.");
