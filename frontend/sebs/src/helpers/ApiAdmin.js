@@ -1,10 +1,11 @@
 const SERVER_PREFIX = "http://localhost:8080/ebs-war/webresources";
 
 const ApiAdmin = {
-  createAdmin(data) {
+  createAdmin(data, token) {
     return fetch(`${SERVER_PREFIX}/admin`, {
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       method: "POST",

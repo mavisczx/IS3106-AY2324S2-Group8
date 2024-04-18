@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import ApiAdmin from "../../helpers/ApiAdmin";
+import createAdmin from "./createAdmin.jpg";
+import { toast } from "react-toastify";
 
 const CreateAdmin = () => {
   const [username, setUsername] = useState("");
@@ -8,27 +10,40 @@ const CreateAdmin = () => {
   const [password, setPassword] = useState("");
   const [contact, setContact] = useState("");
   const [name, setName] = useState("");
+  const createAdminForm = useRef(null);
 
   const handleSubmit = (e) => {
+    const token = localStorage.getItem("token");
     e.preventDefault();
     try {
-      ApiAdmin.createAdmin({ username, email, password, contact, name }).then(
-        (response) => {
-          if (response.ok) {
-            console.log("Admin created successfully");
-          } else {
-            console.error("Create admin failed:", response.error);
-          }
+      ApiAdmin.createAdmin(
+        { username, email, password, contact, name },
+        token
+      ).then((response) => {
+        if (response.ok) {
+          toast.success("🎉 Admin created successfully!");
+          createAdminForm.current.reset();
+        } else {
+          toast.error("❌ Error adding admin, account may already exist");
         }
-      );
+      });
     } catch (error) {
-      console.error("Create admin failed:", error.message);
+      toast.error("Create admin failed:", error.message);
     }
   };
 
   return (
-    <div className="flex-initial justify-center items-center bg-white-100">
-      <div className="max-w-md mx-auto mt-10 p-6 bg-black rounded-lg shadow-md">
+    <div
+      className="flex h-screen -m-10 justify-center items-center"
+      style={{
+        backgroundImage: `linear-gradient(
+          rgba(255, 255, 255, 0.55),
+          rgba(255, 255, 255, 0.55)), url(${createAdmin})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="w-full max-w-md mx-auto p-6 bg-black bg-opacity-90 rounded-lg shadow-md">
         <div className="text-center">
           <div className="p-2 mb-2 flex items-center">
             <Icon
@@ -40,7 +55,7 @@ const CreateAdmin = () => {
             </h1>
           </div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={createAdminForm}>
           <div className="mb-4">
             <label
               className="block text-stone-300 text-sm font-bold mb-2"
