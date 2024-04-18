@@ -47,6 +47,7 @@ function Sidebar({ loggedIn, setLoggedIn }) {
       {loggedIn ? (
         <div>
           <SidebarLink name="Add Event" icon="mdi:plus" link="/createevent" />
+          <SidebarLink name="Profile" icon="mdi:account" link="/profile" />
           <SidebarLink name="Search" icon="mdi:search" link="/" />
 
           <SidebarLink name="Questions" icon="mdi:question-mark" link="/" />
@@ -66,7 +67,11 @@ function Sidebar({ loggedIn, setLoggedIn }) {
       ) : (
         <div>
           <SidebarLink name="Log In" icon="mdi:login" link="/login" />
-          <SidebarLink name="Sign Up" icon="mdi:account-plus" link="/register" />
+          <SidebarLink
+            name="Sign Up"
+            icon="mdi:account-plus"
+            link="/register"
+          />
         </div>
       )}
     </div>
