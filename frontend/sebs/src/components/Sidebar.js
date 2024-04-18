@@ -46,7 +46,7 @@ function Sidebar({ loggedIn, setLoggedIn }) {
 
       {loggedIn ? (
         <div>
-          <SidebarLink name="Add Event" icon="mdi:plusbox" link="/" />
+          <SidebarLink name="Add Event" icon="mdi:plus" link="/createevent" />
           <SidebarLink name="Search" icon="mdi:search" link="/" />
 
           <SidebarLink name="Questions" icon="mdi:question-mark" link="/" />
@@ -57,7 +57,7 @@ function Sidebar({ loggedIn, setLoggedIn }) {
             name="Log Out"
             icon="mdi:logout"
             onClick={() => {
-              localStorage.removeItem('token');
+              localStorage.removeItem("token");
               setLoggedIn(false);
             }}
             link="/login"
