@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import "./Searchbar.css";
+//import "./Searchbar.css";
 
 
 function Searchbar() {
@@ -18,12 +18,13 @@ function Searchbar() {
 
   return (
     <div className={`searchbar ${isExpanded ? "expanded" : ""}`}>
-      <div className="searchbar-container">
+      <div >
         <input
           type="text"
           placeholder="Search..."
           value={searchTerm}
           onChange={handleSearch}
+          className="px-2 border rounded"
         />
         <button className="searchbar-button" onClick={handleExpand}>
           
