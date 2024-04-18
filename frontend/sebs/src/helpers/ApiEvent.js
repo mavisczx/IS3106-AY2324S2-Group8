@@ -35,6 +35,12 @@ const ApiEvent = {
     });
   },
 
+  getEventSize(eId) {
+    return fetch(`${SERVER_PREFIX}/event/eventSize/${eId}`, {
+      method: "GET",
+    });
+  },
+
   editEvent(eId, data, token) {
     return fetch(`${SERVER_PREFIX}/event/${eId}`, {
       headers: {

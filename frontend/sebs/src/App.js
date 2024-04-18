@@ -16,6 +16,7 @@ import AdminLogin from "./containers/Authentication/AdminLogin";
 import CreateEvent from "./containers/Events/CreateEvent";
 import Landing from "./containers/Landing";
 import CreateAdmin from "./containers/AdminPages/CreateAdmin";
+import SearchEvents from "./containers/Events/SearchEvents";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -86,6 +87,7 @@ function App() {
               )
             }
           />
+          <Route path="/searchevents" element={<SearchEvents />} />
         </Routes>
       </div>
     </div>
