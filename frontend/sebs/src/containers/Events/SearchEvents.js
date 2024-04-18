@@ -146,11 +146,12 @@ function SearchEvents() {
             required
           >
             <option value="">Select Category</option>
-            <option value="conferences">Conferences</option>
+            <option value="attractions">Attractions</option>
             <option value="festivals">Festivals</option>
             <option value="workshops">Workshops</option>
             <option value="concerts">Concerts</option>
             <option value="theatre">Theatre</option>
+            <option value="food">Food</option>
             <option value="others">Others</option>
           </select>
         )}

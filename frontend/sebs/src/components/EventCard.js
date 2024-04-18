@@ -6,7 +6,6 @@ import moment from "moment-timezone";
 import { Icon } from "@iconify/react";
 import workshop_image from "../Images/workshop.jpg";
 import concert_image from "../Images/concert.jpg";
-import conference_image from "../Images/conference.jpg";
 import festival_image from "../Images/festival.jpg";
 import theatre_image from "../Images/theatre.jpg";
 import other_image from "../Images/other.jpg";
@@ -43,7 +42,6 @@ function EventCard({ event }) {
   };
 
   const formatDate = (dateString) => {
-    console.log(dateString);
     if (!dateString) return "";
     const formattedDate = moment
       .tz(dateString, "YYYY-MM-DDTHH:mm:ssz[UTC]", "UTC")
@@ -52,7 +50,7 @@ function EventCard({ event }) {
   };
 
   const categoryImages = {
-    attraction: attraction_image,
+    attractions: attraction_image,
     festivals: festival_image,
     workshops: workshop_image,
     concerts: concert_image,
@@ -63,10 +61,9 @@ function EventCard({ event }) {
 
   return (
     <div className="rounded overflow-hidden shadow-lg">
-      <Link to="/eventdetails"></Link> {/*put the link to details page */}
+      <Link to="/eventdetails"></Link>
       <div className="relative">
         <Link to="/eventdetails">
-          {/*put the link to details page */}
           <img
             className="w-full"
             src={categoryImages[eventCategory]}
@@ -91,7 +88,6 @@ function EventCard({ event }) {
           href="/eventdetails"
           className="font-semibold text-lg inline-block hover:text-orange-600 transition duration-500 ease-in-out"
         >
-          {/*put the link to details page */}
           {eventTitle}
         </Link>
         <p className="text-gray-500 text-sm flex items-center">
