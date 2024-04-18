@@ -20,9 +20,9 @@ function SearchEvents() {
           for (const event of data) {
             const { eventDate, deadline } = event;
             event.eventDate = eventDate.substring(0, eventDate.length - 5);
-            event.eventDate = moment(events.eventDate).format("DD/MM/YYYY");
+            event.eventDate = moment(event.eventDate).format("DD/MM/YYYY");
             event.deadline = deadline.substring(0, deadline.length - 5);
-            event.deadline = moment(events.deadline).format("DD/MM/YYYY");
+            event.deadline = moment(event.deadline).format("DD/MM/YYYY");
           }
           setEvents(data);
         });
