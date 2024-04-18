@@ -4,6 +4,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { Icon } from "@iconify/react";
 import ApiEvent from "../../helpers/ApiEvent";
 import createEventBg from "./createevent.jpg"; // Ensure the path is correct
 
@@ -64,7 +65,18 @@ const CreateEvent = () => {
     >
       <div className="w-full max-w-xl p-8 bg-black bg-opacity-80 rounded-lg shadow-lg">
         <h2 className="text-center text-3xl font-bold text-white mb-6">
-          Create Event
+          <div className="p-2.5 mt-1 flex items-center justify-center">
+            <Icon
+              icon="ic:baseline-school"
+              className="text-xl rounded-md text-orange-500"
+            />
+            <h1 className="font-bold text-stone-200 text-3xl ml-3">
+              ExchangeBuddy
+            </h1>
+          </div>
+          <h1 className="text-center font-bold text-white text-2xl ml-3">
+            Create Event
+          </h1>
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
