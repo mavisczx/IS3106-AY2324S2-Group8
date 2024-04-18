@@ -15,17 +15,14 @@ import { Icon } from "@iconify/react";
 
 import { Link } from "react-router-dom";
 
-//the same as landing, but incase thread has a diff layout
+   
 function ThreadLanding(){
 return (
 
     <div className="landing">
         <div className="landing__navWraper">
             <Searchbar />
-            <Link
-            to="/ThreadLanding"
-            className="text-orange-600 hover:text-orange-800"
-          >
+            <Link to="/Landing" className="text-orange-600 hover:text-orange-800" > View Posts </Link>
 
         </div>
         <div className="landing__timeline">
