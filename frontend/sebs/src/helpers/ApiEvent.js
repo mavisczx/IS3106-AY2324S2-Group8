@@ -109,7 +109,7 @@ const ApiEvent = {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      method: "GET",
+      method: "PUT",
       body: JSON.stringify(data),
     });
   },

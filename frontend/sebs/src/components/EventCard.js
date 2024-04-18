@@ -9,6 +9,8 @@ import conference_image from "../Images/conference.jpg";
 import festival_image from "../Images/festival.jpg";
 import theatre_image from "../Images/theatre.jpg";
 import other_image from "../Images/other.jpg";
+import food_image from "../Images/food.jpg";
+import attraction_image from "../Images/attraction.jpg";
 
 function EventCard({ event }) {
   const {
@@ -40,12 +42,13 @@ function EventCard({ event }) {
   };
 
   const categoryImages = {
-    conferences: conference_image,
+    attraction: attraction_image,
     festivals: festival_image,
     workshops: workshop_image,
     concerts: concert_image,
     theatre: theatre_image,
     others: other_image,
+    food: food_image,
   };
 
   return (
