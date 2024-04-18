@@ -48,6 +48,11 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
         <div>
           <SidebarLink name="Profile" icon="mdi:account" link="/profile" />
           <SidebarLink name="Add Event" icon="mdi:plus" link="/createevent" />
+          <SidebarLink
+            name="Created Events"
+            icon="mdi:clipboard-list"
+            link="/createdevents"
+          />
           <SidebarLink name="Search" icon="mdi:search" link="/" />
 
           <SidebarLink name="Questions" icon="mdi:question-mark" link="/" />

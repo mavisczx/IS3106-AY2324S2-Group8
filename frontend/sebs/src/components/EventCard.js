@@ -41,7 +41,6 @@ function EventCard({ event }) {
   };
 
   const formatDate = (dateString) => {
-    console.log(dateString);
     if (!dateString) return "";
     const formattedDate = moment
       .tz(dateString, "YYYY-MM-DDTHH:mm:ssz[UTC]", "UTC")
