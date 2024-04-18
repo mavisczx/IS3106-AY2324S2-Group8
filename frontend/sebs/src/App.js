@@ -16,6 +16,7 @@ import AdminLogin from "./containers/Authentication/AdminLogin";
 import CreateEvent from "./containers/Events/CreateEvent";
 import Landing from "./containers/Landing";
 import CreateAdmin from "./containers/AdminPages/CreateAdmin";
+import CreatedEvents from "./containers/Events/CreatedEvents";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -81,6 +82,19 @@ function App() {
               ) : (
                 <div>
                   You need to be logged in / be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/createdevents"
+            element={
+              loggedIn ? (
+                <CreatedEvents />
+              ) : (
+                <div>
+                  You need to be logged in to access this page.{" "}
                   <Link to="/login">Login</Link>
                 </div>
               )
