@@ -24,7 +24,7 @@ function App() {
       <div className="content-wrapper w-full m-10">
         <Routes>
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Index />} />
           <Route path="/profile" element={<Profile />} />

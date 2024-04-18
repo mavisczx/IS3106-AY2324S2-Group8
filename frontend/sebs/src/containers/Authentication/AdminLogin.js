@@ -4,7 +4,7 @@ import ApiAuth from "../../helpers/ApiAuth";
 import { Link } from "react-router-dom";
 import buddyImage from "./buddy.jpg"; // Make sure the path to the image is correct
 
-const Login = ({ setLoggedIn }) => {
+const AdminLogin = ({ setLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const Login = ({ setLoggedIn }) => {
     setError(null); // Clear any previous errors
     try {
       const credentials = { email, password };
-      const response = await ApiAuth.authenticateStudent(credentials);
+      const response = await ApiAuth.authenticateAdmin(credentials);
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || "Authorization");
@@ -22,9 +22,9 @@ const Login = ({ setLoggedIn }) => {
       const token = await response.json(); // Assuming the token is returned in JSON format
       localStorage.setItem("token", JSON.stringify(token)); // Store the token in local storage
       setLoggedIn(true); // Update logged in state
-      //window.location.href = "/"; // Redirect to the home page
+      //window.location.href = "/"; // Redirect to the home page for admin
     } catch (error) {
-      setError("Invalid Email or Password."); // Set a user-friendly error message
+      setError("Invalid Email or Password.");
       console.error("Login failed:", error.message);
     }
   };
@@ -51,7 +51,7 @@ const Login = ({ setLoggedIn }) => {
             </h1>
           </div>
         </div>
-        <h1 className="text-center font-bold mb-2 text-white">Login</h1>
+        <h1 className="text-center font-bold mb-2 text-white">Admin Login</h1>
         <form onSubmit={handleLogin} className="mb-6">
           <div className="mb-4">
             <input
@@ -82,21 +82,8 @@ const Login = ({ setLoggedIn }) => {
           </button>
         </form>
         <p className="text-center mt-2 text-white">
-          Don't have an account?{" "}
-          <Link
-            to="/register"
-            className="text-orange-600 hover:text-orange-800"
-          >
-            Register here
-          </Link>
-          .
-        </p>
-        <p className="text-center mt-2 text-white">
-          Login as admin instead?{" "}
-          <Link
-            to="/adminlogin"
-            className="text-orange-600 hover:text-orange-800"
-          >
+          Login as user instead?{" "}
+          <Link to="/login" className="text-orange-600 hover:text-orange-800">
             Login Here
           </Link>
           .
@@ -106,4 +93,4 @@ const Login = ({ setLoggedIn }) => {
   );
 };
 
-export default Login;
+export default AdminLogin;
