@@ -26,3 +26,9 @@ replay_pid*
 /backend/ebs/nbproject/private/
 /backend/ebs/ebs-war/nbproject/private/
 /backend/ebs/ebs-ejb/nbproject/private/
+/backend/ebs/ebs-ejb/build/
+/backend/ebs/build/
+/backend/ebs/ebs-war/build/
+/backend/ebs/ebs-ejb/dist/
+/backend/ebs/ebs-war/dist/
+/backend/ebs/dist/
