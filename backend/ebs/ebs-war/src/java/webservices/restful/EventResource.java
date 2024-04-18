@@ -278,7 +278,7 @@ public class EventResource {
         }
     }
 
-    @GET
+    @PUT
     @Path("/searchDate")
     @Produces(MediaType.APPLICATION_JSON)
     public Response searchEventDate(Event e) {

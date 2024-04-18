@@ -10,6 +10,8 @@ import conference_image from "../Images/conference.jpg";
 import festival_image from "../Images/festival.jpg";
 import theatre_image from "../Images/theatre.jpg";
 import other_image from "../Images/other.jpg";
+import food_image from "../Images/food.jpg";
+import attraction_image from "../Images/attraction.jpg";
 
 function EventCard({ event }) {
   const {
@@ -50,12 +52,13 @@ function EventCard({ event }) {
   };
 
   const categoryImages = {
-    conferences: conference_image,
+    attraction: attraction_image,
     festivals: festival_image,
     workshops: workshop_image,
     concerts: concert_image,
     theatre: theatre_image,
     others: other_image,
+    food: food_image,
   };
 
   return (
@@ -93,18 +96,18 @@ function EventCard({ event }) {
         </Link>
         <p className="text-gray-500 text-sm flex items-center">
           <Icon icon="ic:baseline-people" />
-          &nbsp;{/* Add a space here */}
+          &nbsp;
           {eventSize} Joined
         </p>
 
         <p className="text-gray-500 text-sm flex items-center">
           <Icon icon="mdi:location" />
-          &nbsp;{/* Add a space here */}
+          &nbsp;
           {eventLocation}
         </p>
         <p className="text-gray-500 text-sm flex items-center">
           <Icon icon="tabler:currency-dollar-singapore" />
-          &nbsp;{/* Add a space here */}
+          &nbsp;
           {eventPrice}
         </p>
       </div>
