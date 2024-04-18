@@ -18,6 +18,11 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setLoggedIn(!!token); // Convert truth or false value to boolean
+  }, []);
+
   return (
     <div className="bg-stone-300 min-h-screen min-v-screen flex">
       <ToastContainer theme="dark" />
@@ -27,9 +32,33 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/createevent" element={<CreateEvent/>} />
+          <Route
+            path="/createevent"
+            element={
+              loggedIn ? (
+                <CreateEvent />
+              ) : (
+                <div>
+                  You need to be logged in to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
           <Route path="/" element={<Index />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              loggedIn ? (
+                <Profile />
+              ) : (
+                <div>
+                  You need to be logged in to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
         </Routes>
       </div>
     </div>
