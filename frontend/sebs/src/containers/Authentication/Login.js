@@ -2,30 +2,46 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import ApiAuth from "../../helpers/ApiAuth";
 import { Link } from "react-router-dom";
+import buddyImage from "./buddy.jpg"; // Make sure the path to the image is correct
 
-const Login = () => {
+const Login = ({ setLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
+    setError(null); // Clear any previous errors
     try {
       const credentials = { email, password };
-      const token = await ApiAuth.authenticateStudent(credentials);
-      localStorage.setItem("token", token); // Store the token in local storage
-      window.location.href = "/";
+      const response = await ApiAuth.authenticateStudent(credentials);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Authorization");
+      }
+      const token = await response.json(); // Assuming the token is returned in JSON format
+      localStorage.setItem("token", token["token"]); // Store the token in local storage
+      setLoggedIn(true); // Update logged in state
+      //window.location.href = "/"; // Redirect to the home page
     } catch (error) {
+      setError("Invalid Email or Password."); // Set a user-friendly error message
       console.error("Login failed:", error.message);
-      setError("Invalid email or password.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-white-100">
-      <div className="max-w-lg p-10 border border-gray-300 rounded-lg bg-black shadow-lg">
+    <div
+      className="flex justify-center items-center h-screen bg-white-100 -m-10"
+      style={{
+        backgroundImage: `url(${buddyImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="max-w-xl p-12 rounded-lg bg-black bg-opacity-80 shadow-lg">
         <div className="text-center">
-          <div className="p-2.5 mt-1 flex items-center">
+          <div className="p-2.5 mt-1 flex items-center justify-center">
             <Icon
               icon="ic:baseline-people"
               className="text-xl rounded-md text-orange-500"
@@ -35,7 +51,7 @@ const Login = () => {
             </h1>
           </div>
         </div>
-        <h4 className="text-center mb-2 text-white">Login</h4>
+        <h1 className="text-center font-bold mb-2 text-white">Login</h1>
         <form onSubmit={handleLogin} className="mb-6">
           <div className="mb-4">
             <input
