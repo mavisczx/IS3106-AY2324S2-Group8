@@ -20,7 +20,7 @@ const Login = ({ setLoggedIn }) => {
         throw new Error(errorText || "Authorization");
       }
       const token = await response.json(); // Assuming the token is returned in JSON format
-      localStorage.setItem("token", JSON.stringify(token)); // Store the token in local storage
+      localStorage.setItem("token", token["token"]); // Store the token in local storage
       setLoggedIn(true); // Update logged in state
       //window.location.href = "/"; // Redirect to the home page
     } catch (error) {

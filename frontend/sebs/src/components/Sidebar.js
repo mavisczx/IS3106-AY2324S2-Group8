@@ -56,7 +56,7 @@ function Sidebar({ loggedIn, setLoggedIn }) {
             name="Log Out"
             icon="mdi:logout"
             onClick={() => {
-              //localStorage.removeItem('token');
+              localStorage.removeItem('token');
               setLoggedIn(false);
             }}
             link="/login"
