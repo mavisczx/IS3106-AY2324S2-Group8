@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Button from "../components/Button";
 import CustomDialog from "../components/CustomDialog";
-//import "./Landing.css";
+import "./Landing.css";
 import Searchbar from "./Searchbar/Searchbar";
 import Timeline from "./Timeline/Timeline";
 import { Icon } from "@iconify/react";
@@ -16,15 +16,14 @@ import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
    
-function Landing(){
+function ThreadLanding(){
 return (
 
     <div className="landing">
         <div className="landing__navWraper">
             <Searchbar />
-            <div className= "swapToThreads">
-            <Link to="/ThreadLanding" className="text-orange-600 hover:text-orange-800"> View Threads </Link>
-            </div>
+            <Link to="/Landing" className="text-orange-600 hover:text-orange-800" > View Posts </Link>
+
         </div>
         <div className="landing__timeline">
             <Timeline />
@@ -35,4 +34,4 @@ return (
 }
 
 
-export default Landing;
+export default ThreadLanding;

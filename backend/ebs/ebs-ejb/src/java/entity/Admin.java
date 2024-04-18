@@ -31,7 +31,8 @@ public class Admin implements Serializable {
     private Long id;
     private String username;
     private String password;
-    @Lob @Column
+    @Lob
+    @Column
     private String profilePhoto;
     private String contact; //any other details like telegram handle!
     private String name;
@@ -49,7 +50,7 @@ public class Admin implements Serializable {
     public Admin() {
     }
 
-    public Admin(String username, String password, String contact, String name, String email) {
+    public Admin(String username, String name, String email, String contact, String password) {
         this.username = username;
         this.password = password;
         this.contact = contact;
