@@ -5,15 +5,15 @@ import ApiThread from "../../helpers/ApiThread";
 import { Link } from "react-router-dom";
 
 const landing = () => {
-    const[post, setPost] = useState();
-    const[thread, setThread] = useState();
+    const[post, setPost] = UseState();
+    const[thread, setThread] = UseState();
 
-    React.useEffect(() => {
+    React.UseEffect(() => {
         const fetchPosts = async () => {
           try {
             const response = await ApiPost.retrieveAllPosts();
             const data = await response.json();
-            setPosts(data);
+          //  setPost(data);
           } catch (error) {
             console.error("Error fetching posts:", error);
           }
@@ -47,7 +47,7 @@ const landing = () => {
     
           <main className="main">
             <div className="posts-container">
-              {posts.map((post) => (
+              {post.map((post) => (
                 <div key={post.id} className="post-card">
                   <div className="post-header">
                     <div className="user-info">
