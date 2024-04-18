@@ -15,9 +15,11 @@ import Profile from "./containers/Profile";
 import AdminLogin from "./containers/Authentication/AdminLogin";
 import CreateEvent from "./containers/Events/CreateEvent";
 import Landing from "./containers/Landing";
+import ThreadLanding from "./containers/ThreadLanding";
 import CreateAdmin from "./containers/AdminPages/CreateAdmin";
 import SearchEvents from "./containers/Events/SearchEvents";
 import CreatePost from "./containers/Post/CreatePost";
+import CreateThread from "./containers/Thread/CreateThread";
 import EventDetails from "./containers/Events/EventDetails";
 import CreatedEvents from "./containers/Events/CreatedEvents";
 import RegisteredEvents from "./containers/Events/RegisteredEvents";
@@ -95,6 +97,8 @@ function App() {
           <Route path="/searchevents" element={<SearchEvents />} />
 
           <Route path="/createpost" element={<CreatePost/>} />
+          <Route path="/createthread" element={<CreateThread/>} />
+          <Route path="/threadlanding" element={<ThreadLanding/>} />
           <Route path="/eventdetails/:id" element={<EventDetails />} />
           <Route path="/createdevents" element={<CreatedEvents />} />
           <Route path="/registeredevents" element={<RegisteredEvents />} />
