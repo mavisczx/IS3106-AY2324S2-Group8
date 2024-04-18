@@ -19,10 +19,10 @@ function App() {
       <Sidebar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div className="content-wrapper w-full m-10">
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Index />} />
-          <Route path="/profile" element = {<Profile/>}/>
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </div>
