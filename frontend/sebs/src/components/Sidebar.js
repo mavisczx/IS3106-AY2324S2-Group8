@@ -65,8 +65,8 @@ function Sidebar({ loggedIn, setLoggedIn }) {
         </div>
       ) : (
         <div>
-          <SidebarLink name="Log In" icon="" link="/login" />
-          <SidebarLink name="Sign Up" icon="" link="/register" />
+          <SidebarLink name="Log In" icon="mdi:login" link="/login" />
+          <SidebarLink name="Sign Up" icon="mdi:account-plus" link="/register" />
         </div>
       )}
     </div>
