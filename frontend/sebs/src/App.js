@@ -10,7 +10,9 @@ import Index from "./containers/Index";
 import Login from "./containers/Authentication/Login";
 import Register from "./containers/Authentication/Register";
 import Profile from "./containers/Profile";
+import AdminLogin from "./containers/Authentication/AdminLogin";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,6 +24,7 @@ function App() {
       <div className="content-wrapper w-full m-10">
         <Routes>
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+          <Route path="/admin" element={<AdminLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Index />} />
           <Route path="/profile" element={<Profile />} />
