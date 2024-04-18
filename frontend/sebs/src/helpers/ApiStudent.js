@@ -33,7 +33,7 @@ const ApiStudent = {
   },
 
   updateStudentProfile(data, token) {
-    return fetch(`${SERVER_PREFIX}/admin`, {
+    return fetch(`${SERVER_PREFIX}/student`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
