@@ -4,7 +4,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
-import ApiEvent from "../../helpers/ApiStudent";
+import ApiEvent from "../../helpers/ApiEvent";
 import createEventBg from "./createevent.jpg"; // Ensure the path is correct
 
 const CreateEvent = () => {
