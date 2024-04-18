@@ -47,6 +47,7 @@ const CreateEvent = () => {
         eventDate: moment(eventData.eventDate).format("YYYY-MM-DDTHH:mm:ss"),
         deadline: moment(eventData.deadline).format("YYYY-MM-DDTHH:mm:ss"),
       };
+      console.log(formattedEventData);
       await ApiEvent.studentCreateEvent(formattedEventData, token);
       toast.success("🎉 Event added successfully!");
     } catch (error) {
@@ -97,6 +98,7 @@ const CreateEvent = () => {
               Event Date:
             </label>
             <DatePicker
+              dateFormat="dd/MM/yyyy"
               selected={eventData.eventDate}
               onChange={(date) => handleChange("eventDate", date)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
@@ -140,11 +142,12 @@ const CreateEvent = () => {
               required
             >
               <option value="">Select Category</option>
-              <option value="conferences">Conferences</option>
+              <option value="attractions">Attractions</option>
               <option value="festivals">Festivals</option>
               <option value="workshops">Workshops</option>
               <option value="concerts">Concerts</option>
               <option value="theatre">Theatre</option>
+              <option value="food">Food</option>
               <option value="others">Others</option>
             </select>
           </div>
@@ -167,6 +170,7 @@ const CreateEvent = () => {
               Registration Deadline:
             </label>
             <DatePicker
+              dateFormat="dd/MM/yyyy"
               selected={eventData.deadline}
               onChange={(date) => handleChange("deadline", date)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
