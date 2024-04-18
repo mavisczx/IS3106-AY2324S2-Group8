@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Timeline.css";
+//import "./Timeline.css";
 
 import Post from '../Post/Post';
 
@@ -39,13 +39,13 @@ function Timeline() {
   ]);
 
   return (
-    <div className="timeline">
-        <div className="timeline__posts">
+    <div >
+        <div >
           <Post
-           user={posts.user}
-           postImage={posts.postImage}
-           likes={posts.likes}
-           timestamp={posts.timestamp}
+           user={"Dummy"}
+           postImage={"https://i.ytimg.com/vi/kLApiN_QFTk/maxresdefault.jpg"}
+           likes={11}
+           timestamp={"1:00"}
           />
         </div>
     </div>
