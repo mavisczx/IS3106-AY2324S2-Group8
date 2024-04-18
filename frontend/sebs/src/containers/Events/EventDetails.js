@@ -30,6 +30,10 @@ function EventDetails() {
   };
 
   useEffect(() => {
+    reloadData();
+  }, []);
+
+  const reloadData = () => {
     const token = localStorage.getItem("token");
     ApiEvent.getEventById(id, token).then((response) => {
       if (response.ok) {
@@ -46,7 +50,7 @@ function EventDetails() {
         console.error("Error fetching event");
       }
     });
-  }, [id]);
+  };
 
   const checkRegister = () => {
     if (moment(event.eventDate, "DD/MM/YYYY").toDate() < new Date()) {
@@ -68,7 +72,6 @@ function EventDetails() {
     }
 
     handleRegister(id);
-    checkStatus(id);
   };
 
   const handleRegister = (id) => {
@@ -82,6 +85,7 @@ function EventDetails() {
             hideProgressBar: false,
             closeOnClick: true,
           });
+          reloadData();
         } else if (res.status === 404) {
           toast.error("Error registering for event", {
             position: "top-right",
@@ -127,6 +131,34 @@ function EventDetails() {
     });
   };
 
+  const handleDelete = () => {
+    const token = localStorage.getItem("token");
+    if (window.confirm(`Do you want to unregister from event?`)) {
+      try {
+        ApiStudent.unregisterForEvent(id, token).then((res) => {
+          if (res.ok) {
+            toast.success("Unregistered from event successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+            });
+            reloadData();
+          } else if (res.status === 404) {
+            toast.error("Error unregistering from event", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+            });
+          }
+        });
+      } catch (error) {
+        console.error("Error unregistering from event", error);
+      }
+    }
+  };
+
   return (
     <div className="bg-white text-gray-800 min-h-screen -m-10">
       <div className="flex flex-col justify-center items-center">
@@ -168,9 +200,12 @@ function EventDetails() {
                 </div>
               )}
               {registered && !owner && (
-                <div className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => handleDelete()}
+                >
                   <p>Registered</p>
-                </div>
+                </button>
               )}
               {!registered && !owner && (
                 <button
