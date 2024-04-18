@@ -22,7 +22,7 @@ const Login = ({ setLoggedIn }) => {
       const token = await response.json(); // Assuming the token is returned in JSON format
       localStorage.setItem("token", token["token"]); // Store the token in local storage
       setLoggedIn(true); // Update logged in state
-      window.location.href = "/landing"; // Redirect to the home page
+      window.location.hash = "/landing"; // Redirect to the home page
     } catch (error) {
       setError("Invalid Email or Password."); // Set a user-friendly error message
       console.error("Login failed:", error.message);
