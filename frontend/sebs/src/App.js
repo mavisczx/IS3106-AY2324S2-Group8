@@ -17,6 +17,7 @@ import CreateEvent from "./containers/Events/CreateEvent";
 import Landing from "./containers/Landing";
 import CreateAdmin from "./containers/AdminPages/CreateAdmin";
 import SearchEvents from "./containers/Events/SearchEvents";
+import CreatePost from "./containers/Post/CreatePost";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -88,6 +89,7 @@ function App() {
             }
           />
           <Route path="/searchevents" element={<SearchEvents />} />
+          <Route path="/createpost" element={<CreatePost/>} />
         </Routes>
       </div>
     </div>
