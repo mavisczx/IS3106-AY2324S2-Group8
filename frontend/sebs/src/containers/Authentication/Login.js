@@ -11,14 +11,20 @@ const Login = ({ setLoggedIn }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
+    setError(null); // Clear any previous errors
     try {
       const credentials = { email, password };
-      const token = await ApiAuth.authenticateStudent(credentials);
-      localStorage.setItem("token", token);
-      setLoggedIn(true);
+      const response = await ApiAuth.authenticateStudent(credentials);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Authorization");
+      }
+      const token = await response.json(); // Assuming the token is returned in JSON format
+      localStorage.setItem("token", JSON.stringify(token)); // Store the token in local storage
+      setLoggedIn(true); // Update logged in state
     } catch (error) {
+      setError("Invalid Email or Password."); // Set a user-friendly error message
       console.error("Login failed:", error.message);
-      setError("Invalid email or password.");
     }
   };
 
@@ -32,7 +38,7 @@ const Login = ({ setLoggedIn }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="max-w-xl p-12  rounded-lg bg-black bg-opacity-80 shadow-lg">
+      <div className="max-w-xl p-12 rounded-lg bg-black bg-opacity-80 shadow-lg">
         <div className="text-center">
           <div className="p-2.5 mt-1 flex items-center justify-center">
             <Icon
