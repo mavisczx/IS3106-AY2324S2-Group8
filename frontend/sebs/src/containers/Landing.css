@@ -9,6 +9,7 @@
   .landing__navWraper {
     position: fixed;
     margin-top: 5px;
+    color: #fdf6f4;
   
   }
   
@@ -39,4 +40,17 @@
     transform-style: preserve-3d;
     transform: perspective(1000px) ;
   
+
+  }
+
+  .swapToThreads {
+    margin-left: 250px;
+    margin-top: 10px;
+
+  }
+
+  .swapToPosts {
+    margin-left: 250px;
+    margin-top: 10px;
+
   }
