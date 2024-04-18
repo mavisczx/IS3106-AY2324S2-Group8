@@ -23,10 +23,13 @@ const Register = () => {
 
     try {
       await ApiStudent.createStudent(formData);
-      window.location.href = "/login";
-      // toast.success("Registration successful. Please log in.", {
-      //   theme: "dark",
-      // });
+      toast.success("Registration successful. Please log in.", {
+        autoClose: 1500,
+        onClose: () => {
+          // Navigate after the toast closes
+          window.location.hash = "#/login";
+        },
+      });
     } catch (error) {
       console.error("Registration failed:", error.message);
       setError("Registration failed. Please try again.");
