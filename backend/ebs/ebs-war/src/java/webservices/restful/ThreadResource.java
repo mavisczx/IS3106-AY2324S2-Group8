@@ -267,4 +267,20 @@ public class ThreadResource {
                     .type(MediaType.APPLICATION_JSON).build();
         }
     }
+
+    @GET
+    @Secured
+    @Path("/creatorName/{threadId}")
+    public String getThreadCreatorName(@PathParam("threadId") Long threadId) {
+        try {
+            Thread t = threadSession.retrieveThreadById(threadId);
+            if (t.getAdminThreadCreator() != null) {
+                return t.getAdminThreadCreator().getUsername();
+            } else {
+                return t.getStudentThreadCreator().getUsername();
+            }
+        } catch (ThreadNotFoundException ex) {
+            return "error";
+        }
+    }
 }

@@ -47,7 +47,7 @@ public class Event implements Serializable {
     @ManyToOne
     private Admin adminCreator;
 
-    @OneToOne
+    @OneToOne(mappedBy = "eventCreated")
     private Thread eventThread;
 
     @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER) //unidirectional, no need map, when event deleted, students also cleared
