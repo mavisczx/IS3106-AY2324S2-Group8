@@ -30,6 +30,8 @@ import AdminSearchEvents from "./containers/AdminPages/AdminSearchEvents";
 import AdminEventDetails from "./containers/AdminPages/AdminEventDetails";
 import AdminLanding from "./containers/AdminPages/AdminLanding";
 import AdminCreateThread from "./containers/AdminPages/AdminCreateThread";
+import PostsinThreads from "./containers/Post/PostsinThreads";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -198,6 +200,7 @@ function App() {
           <Route path="/eventdetails/:id" element={<EventDetails />} />
           <Route path="/createdevents" element={<CreatedEvents />} />
           <Route path="/registeredevents" element={<RegisteredEvents />} />
+          <Route path="/postsinthread/:id" element={<PostsinThreads />} />
         </Routes>
       </div>
     </div>
