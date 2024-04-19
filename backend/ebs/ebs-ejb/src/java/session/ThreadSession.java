@@ -151,4 +151,11 @@ public class ThreadSession implements ThreadSessionLocal {
         return t.getPostsInThread();
     }
 
+         @Override
+    public List<Thread> searchThreadByTags(String Tag) {
+        Query query = em.createQuery("SELECT e FROM Thread e WHERE LOWER(e.tag) LIKE :inTag");
+        query.setParameter("inTag", "%" + Tag.toLowerCase() + "%");
+        return query.getResultList();
+    }
+
 }
