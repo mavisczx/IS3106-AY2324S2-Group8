@@ -65,7 +65,7 @@ public class EventSession implements EventSessionLocal {
         student.getEventsCreated().add(eventToCreate);
         eventToCreate.setStudentCreator(student);
 
-        Thread eventThread = new Thread(eventTitle, "Discussion about" + eventDescription, "event");
+        Thread eventThread = new Thread(eventTitle, "Discussion about " + eventTitle, "event");
         eventToCreate.setEventThread(eventThread);
 
         eventThread.setCreationDate(eventDate);
@@ -100,7 +100,7 @@ public class EventSession implements EventSessionLocal {
 
         admin.getEventsCreated().add(eventToCreate);
         eventToCreate.setAdminCreator(admin);
-        Thread eventThread = new Thread(eventTitle, "Discussion about" + eventDescription, "event");
+        Thread eventThread = new Thread(eventTitle, "Discussion about " + eventTitle, "event");
         eventToCreate.setEventThread(eventThread);
         eventThread.setEventCreated(eventToCreate);
         eventThread.setCreationDate(eventDate);
