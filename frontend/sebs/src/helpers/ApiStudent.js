@@ -22,6 +22,46 @@ const ApiStudent = {
     });
   },
 
+  getThreadSize(token) {
+    return fetch(`${SERVER_PREFIX}/student/threadSize`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
+  getCreatedEventSize(token) {
+    return fetch(`${SERVER_PREFIX}/student/createdEventSize`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
+  getJoinedEventsSize(token) {
+    return fetch(`${SERVER_PREFIX}/student/joinedEventsSize`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
+  getPostSize(token) {
+    return fetch(`${SERVER_PREFIX}/student/postSize`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
   checkUsernameTaken(username) {
     return fetch(`${SERVER_PREFIX}/student/checkUsername/${username}`, {
       headers: {
