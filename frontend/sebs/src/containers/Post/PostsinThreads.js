@@ -48,9 +48,17 @@ function PostsinThreads() {
     }
 
     try {
-      await ApiPost.studentCreatePost(id, postDescription, token);
-      toast.success("🎉 Post created successfully!");
-      reloadPosts();
+      ApiPost.studentCreatePost(id, { postDescription }, token).then(
+        (response) => {
+          if (response.ok) {
+            toast.success("🎉 Post created successfully!");
+            setIsDialogOpen(false);
+            reloadPosts();
+          } else {
+            toast.error("❌ Error creating post: " + response.statusText);
+          }
+        }
+      );
     } catch (error) {
       toast.error("❌ Error creating post: " + error.message);
     }

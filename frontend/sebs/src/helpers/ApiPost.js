@@ -4,7 +4,6 @@ const ApiPost = {
   studentCreatePost(tId, data, token) {
     return fetch(`${SERVER_PREFIX}/post/${tId}`, {
       headers: {
-        Accept: "application/json",
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
@@ -50,6 +49,15 @@ const ApiPost = {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
+  getPostCreatorName(pId, token) {
+    return fetch(`${SERVER_PREFIX}/post/creatorName/${pId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
       method: "GET",
     });
