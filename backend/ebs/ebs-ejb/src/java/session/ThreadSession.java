@@ -5,6 +5,7 @@ import entity.Post;
 import entity.Thread;
 import entity.Student;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -40,6 +41,7 @@ public class ThreadSession implements ThreadSessionLocal {
         Student student = studentSessionLocal.retrieveStudentById(studentId);
 
         Thread thread = new Thread(title, description, tag);
+        thread.setCreationDate(new Date());
         thread.setStudentThreadCreator(student);
         student.getThreadsCreated().add(thread);
 
@@ -51,6 +53,7 @@ public class ThreadSession implements ThreadSessionLocal {
         Admin admin = adminSessionLocal.retrieveAdminById(adminId);
 
         Thread thread = new Thread(title, description, tag);
+        thread.setCreationDate(new Date());
         thread.setAdminThreadCreator(admin);
         admin.getThreadsCreated().add(thread);
 
