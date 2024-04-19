@@ -333,6 +333,20 @@ public class EventResource {
         return Response.ok(events).build();
     }
 
+    @GET
+    @Secured
+    @Path("/getThread/{eventId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long getThreadId(@PathParam("eventId") Long eventId) {
+        try {
+            Event event = eventSession.getEventById(eventId);
+            Thread t = event.getEventThread();
+            return t.getId();
+        } catch (Exception e) {
+            return new Long(0);
+        }
+    }
+
     private EventSessionLocal lookupEventSessionLocal() {
         try {
             javax.naming.Context c = new InitialContext();
@@ -342,4 +356,5 @@ public class EventResource {
             throw new RuntimeException(ne);
         }
     }
+
 }

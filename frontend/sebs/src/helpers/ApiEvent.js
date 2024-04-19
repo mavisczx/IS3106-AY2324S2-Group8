@@ -41,6 +41,15 @@ const ApiEvent = {
     });
   },
 
+  getThreadId(eId, token) {
+    return fetch(`${SERVER_PREFIX}/event/getThread/${eId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: "GET",
+    });
+  },
+
   editEvent(eId, data, token) {
     return fetch(`${SERVER_PREFIX}/event/${eId}`, {
       headers: {

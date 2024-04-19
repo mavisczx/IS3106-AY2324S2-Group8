@@ -23,9 +23,11 @@ function EventCard({ event }) {
     eventPrice,
   } = event;
   const [eventSize, setEventSize] = useState(0);
+  const [threadId, setThreadId] = useState(0);
 
   useEffect(() => {
     getEventSize();
+    getThreadId();
   }, []);
 
   const getEventSize = () => {
@@ -36,6 +38,19 @@ function EventCard({ event }) {
         });
       } else {
         console.error("Error fetching event size");
+      }
+    });
+  };
+
+  const getThreadId = () => {
+    const token = localStorage.getItem("token");
+    ApiEvent.getThreadId(id, token).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setThreadId(data);
+        });
+      } else {
+        console.error("Error fetching thread id");
       }
     });
   };
@@ -108,11 +123,10 @@ function EventCard({ event }) {
         {/* Button to link to the corresponding thread */}
         <div className="text-left mt-4">
           <Link
-            to={`/eventdetails/${id}/thread`}
+            to={`/postsinthread/${threadId}`}
             className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
           >
             🧵Go to Thread
-
           </Link>
         </div>
       </div>
