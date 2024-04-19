@@ -156,6 +156,12 @@ function Profile() {
     eventsJoined: [],
   });
 
+  //This is why we can't have nice things
+  const [createdEventsSize, setCreatedEventsSize] = useState("0")
+  const [threadSize, setThreadSize] = useState("0")
+  const [joinedEventsSize, setJoinedEventsSize] = useState("0")
+  const [postsSize, setPostsSize] = useState("0")
+
   const [imgDialog, setImgDialog] = useState(false);
 
   const [profileDialog, setProfileDialog] = useState(false);
@@ -198,7 +204,28 @@ function Profile() {
           //console.log(user.originUni)
           setUserInfo(user);
         });
+
     }
+    ApiStudent.getCreatedEventSize(id).then(
+        (res) => {return res.text()}).then((value) => {
+            setCreatedEventsSize(value)
+        }
+    )
+    ApiStudent.getJoinedEventsSize(id).then(
+        (res) => {return res.text()}).then((value) =>{
+            setJoinedEventsSize(value)
+        }
+    )
+    ApiStudent.getThreadSize(id).then(
+        (res) => {return res.text()}).then((value) =>{
+            setThreadSize(value)
+        }
+    )
+    ApiStudent.getPostSize(id).then(
+        (res) => {return res.text()}).then((value) =>{
+            setPostsSize(value)
+        }
+    )
   };
 
   useEffect(() => {
@@ -332,23 +359,23 @@ function Profile() {
                 <div class="flex flex-col text-center text-xs text-gray-400 font-medium justify-around">
                   <div class="flex flex-row justify-around space-x-4">
                     <div>
-                      {userInfo.postsCreated.length} post
-                      {userInfo.postsCreated.length != 1 && "s"} created
+                      {postsSize} post
+                      {postsSize != "1" && "s"} created
                     </div>
                     <div>
-                      {userInfo.threadsCreated.length} thread
-                      {userInfo.threadsCreated.length != 1 && "s"} created
+                      {threadSize} thread
+                      {threadSize != "1" && "s"} created
                     </div>
                   </div>
                   <div class="flex flex-row justify-around space-x-4">
                     <div>
-                      {userInfo.eventsCreated.length} event
-                      {userInfo.eventsCreated.length != 1 && "s"} created
+                      {createdEventsSize} event
+                      {createdEventsSize != "1" && "s"} created
                     </div>
                     {userType == "student" && (
                       <div>
-                        {userInfo.eventsJoined.length} event
-                        {userInfo.eventsJoined.length != 1 && "s"} joined
+                        {joinedEventsSize} event
+                        {joinedEventsSize != "1" && "s"} joined
                       </div>
                     )}
                   </div>
