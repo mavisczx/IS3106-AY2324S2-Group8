@@ -138,8 +138,56 @@ public class ThreadResource {
     }
 
     @GET
+    @Path("{threadId}")
     @Secured
-    @Path("/post")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Thread getThreadById(@PathParam("threadId") Long threadId, @Context SecurityContext securityContext) {
+        try {
+            Thread t = threadSession.retrieveThreadById(threadId);
+
+            if (t.getEventCreated() != null) {
+                Event e = t.getEventCreated();
+                if (e.getAdminCreator() != null) {
+                    Admin a = e.getAdminCreator();
+                    a.setEventsCreated(new ArrayList<>());
+                    a.setPostsCreated(new ArrayList<>());
+                    a.setThreadsCreated(new ArrayList<>());
+                } else {
+                    Student s = e.getStudentCreator();
+                    s.setEventsCreated(new ArrayList<>());
+                    s.setEventsJoined(new ArrayList<>());
+                    s.setPostsCreated(new ArrayList<>());
+                    s.setThreadsCreated(new ArrayList<>());
+                }
+
+                e.setEventThread(null);
+                e.setStudentsJoined(new ArrayList<>());
+            }
+
+            if (t.getAdminThreadCreator() != null) {
+                Admin a = t.getAdminThreadCreator();
+                a.setEventsCreated(new ArrayList<>());
+                a.setPostsCreated(new ArrayList<>());
+                a.setThreadsCreated(new ArrayList<>());
+            } else {
+                Student s = t.getStudentThreadCreator();
+                s.setEventsCreated(new ArrayList<>());
+                s.setEventsJoined(new ArrayList<>());
+                s.setPostsCreated(new ArrayList<>());
+                s.setThreadsCreated(new ArrayList<>());
+            }
+
+            t.setPostsInThread(new ArrayList<>());
+
+            return t;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/allThreads")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Thread> getThreads(@Context SecurityContext securityContext) {
         List<Thread> threadList = threadSession.getAllThreads();
