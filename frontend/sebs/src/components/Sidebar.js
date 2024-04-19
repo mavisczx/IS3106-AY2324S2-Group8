@@ -72,7 +72,7 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
           <SidebarLink
             name="Threads"
             icon="mdi:plus"
-            link="/thredlanding"
+            link="/threadlanding"
             isCollapsed={isCollapsed}
           />
           <SidebarLink
