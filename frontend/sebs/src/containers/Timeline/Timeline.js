@@ -1,54 +1,55 @@
-import React, { useState } from "react";
-//import "./Timeline.css";
-
-import Post from '../Post/Post';
-
+import React, { useState, useEffect } from 'react';
+import ApiThread from '../../helpers/ApiThread';
+import Thread from '../Thread/Thread';
 
 function Timeline() {
+  const [threads, setThreads] = useState([]);
+  const [selectedThread, setSelectedThread] = useState(null);
 
-  const [posts] = useState([
-    //these are just sample posts to see how they would look
-    {
-      user: "username_",
-      postImage:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-      likes: 54,
-      timestamp: "2d",
-    },
-    {
-      user: "johndoe",
-      postImage:
-        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80",
-      likes: 432,
-      timestamp: "2d",
-    },
-    {
-      user: "mariussss",
-      postImage:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-      likes: 140,
-      timestamp: "2d",
-    },
-    {
-      user: "kobee_18",
-      postImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGCAaQ5u1TMTij5ELPWi5-VPtlSqELw-R6lj0EpYmNcGt56kOQaCokzS0IK81MOSphlkw&usqp=CAU",
-      likes: 14,
-      timestamp: "2d",
-    },
-  ]);
+  useEffect(() => {
+    // Fetch all threads from the API
+    ApiThread.getAllThread().then((response) => {
+      setThreads(response.data);
+    });
+  }, []);
+
+  const toggleThread = (threadId) => {
+    if (selectedThread === threadId) {
+      setSelectedThread(null);
+    } else {
+      setSelectedThread(threadId);
+    }
+  };
 
   return (
-    <div >
-        <div >
-          <Post
-           user={"Dummy"}
-           postImage={"https://i.ytimg.com/vi/kLApiN_QFTk/maxresdefault.jpg"}
-           likes={11}
-           timestamp={"1:00"}
-          />
+    <div className="bg-gray-900 text-white">
+    
+        
+          
+        <div className="space-y-4">
+          {threads.map((thread) => (
+            <div key={thread.id}>
+              <div
+                className="bg-gray-800 rounded-lg shadow-md p-2 cursor-pointer "
+                onClick={() => toggleThread(thread.id)}
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="bg-orange-500 rounded-full w-2 h-2 flex items-center justify-center">
+                    <i className="fas fa-comment-alt text-white"></i>
+                  </div>
+                  <h2 className="text-lg font-bold">{thread.title}</h2>
+                </div>
+                <p className="text-gray-400 mt-2">{thread.description}</p>
+              </div>
+              {selectedThread === thread.id && (
+                <Thread thread={thread} />
+              )}
+
+            </div>
+          ))}
         </div>
-    </div>
+      </div>
+  
   );
 }
 
