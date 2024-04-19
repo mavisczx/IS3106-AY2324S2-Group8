@@ -32,4 +32,6 @@ public Post retrievePostById(Long postId) throws PostNotFoundException;
 
  public Boolean isPostReported(Long postId) throws PostNotFoundException;
 
+public List<Post> getAllPost();
+
 }
