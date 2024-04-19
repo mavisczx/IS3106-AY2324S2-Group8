@@ -155,7 +155,9 @@ public class EventSession implements EventSessionLocal {
         }
 
         Thread t = event.getEventThread();
-        threadSessionLocal.studentDeleteThread(t.getId(), studentCreator.getId());
+        if (t != null) {
+            threadSessionLocal.studentDeleteThread(t.getId(), studentCreator.getId());
+        }
 
         event.setStudentsJoined(new ArrayList<Student>());
         em.remove(event);
@@ -174,7 +176,9 @@ public class EventSession implements EventSessionLocal {
         }
 
         Thread t = event.getEventThread();
-        threadSessionLocal.adminDeleteThread(t.getId(), adminCreator.getId());
+        if (t != null) {
+            threadSessionLocal.adminDeleteThread(t.getId(), adminCreator.getId());
+        }
 
         event.setStudentsJoined(new ArrayList<Student>());
         em.remove(event);
