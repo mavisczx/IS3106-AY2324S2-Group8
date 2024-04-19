@@ -5,6 +5,7 @@ import java.util.List;
 import util.exception.AdminNotFoundException;
 import util.exception.PostNotFoundException;
 import util.exception.StudentNotFoundException;
+import util.exception.ThreadNotFoundException;
 
 /**
  *
@@ -12,9 +13,9 @@ import util.exception.StudentNotFoundException;
  */
 public interface PostSessionLocal {
 
-    public void studentCreatePost(Long studentId, String postDescription) throws StudentNotFoundException;
+    public void studentCreatePost(Long studentId, Long threadId, String postDescription) throws StudentNotFoundException, ThreadNotFoundException;
 
-    public void adminCreatePost(Long adminId, String postDescription) throws AdminNotFoundException;
+    public void adminCreatePost(Long adminId, Long threadId, String postDescription) throws AdminNotFoundException, ThreadNotFoundException;
 
     public void adminDeletePost(Long postId, Long adminId) throws PostNotFoundException, AdminNotFoundException;
 

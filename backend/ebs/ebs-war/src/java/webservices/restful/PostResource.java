@@ -63,17 +63,18 @@ public class PostResource {
     }
 
     @POST
+    @Path("{threadId}")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response studentCreatePost(Post post, @Context SecurityContext securityContext) {
+    public Response studentCreatePost(@PathParam("threadId") Long threadId, Post post, @Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         String userId = principal.getName();
         Long studentId = Long.parseLong(userId);
 
         try {
-            postSession.studentCreatePost(studentId, post.getPostDescription());
+            postSession.studentCreatePost(studentId, threadId, post.getPostDescription());
             return Response.ok().build();
-        } catch (StudentNotFoundException ex) {
+        } catch (Exception e) {
             JsonObject exception = Json.createObjectBuilder()
                     .add("error", "Not found")
                     .build();
@@ -83,18 +84,18 @@ public class PostResource {
     }
 
     @POST
-    @Path("/admin")
+    @Path("/admin/{threadId")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response adminCreatePost(Post post, @Context SecurityContext securityContext) {
+    public Response adminCreatePost(@PathParam("threadId") Long threadId, Post post, @Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         String userId = principal.getName();
         Long adminId = Long.parseLong(userId);
 
         try {
-            postSession.adminCreatePost(adminId, post.getPostDescription());
+            postSession.adminCreatePost(adminId, threadId, post.getPostDescription());
             return Response.ok().build();
-        } catch (AdminNotFoundException ex) {
+        } catch (Exception e) {
             JsonObject exception = Json.createObjectBuilder()
                     .add("error", "Not found")
                     .build();

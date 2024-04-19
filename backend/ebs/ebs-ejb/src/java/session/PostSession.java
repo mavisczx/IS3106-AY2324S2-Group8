@@ -4,6 +4,7 @@ import entity.Admin;
 import entity.Post;
 import entity.Student;
 import entity.Thread;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ import javax.persistence.Query;
 import util.exception.AdminNotFoundException;
 import util.exception.PostNotFoundException;
 import util.exception.StudentNotFoundException;
+import util.exception.ThreadNotFoundException;
 
 /**
  *
@@ -20,6 +22,9 @@ import util.exception.StudentNotFoundException;
  */
 @Stateless
 public class PostSession implements PostSessionLocal {
+
+    @EJB
+    private ThreadSessionLocal threadSessionLocal;
 
     @PersistenceContext
     private EntityManager em;
@@ -31,11 +36,17 @@ public class PostSession implements PostSessionLocal {
     private AdminSessionLocal adminSessionLocal;
 
     @Override
-    public void studentCreatePost(Long studentId, String postDescription) throws StudentNotFoundException {
+    public void studentCreatePost(Long studentId, Long threadId, String postDescription) throws StudentNotFoundException, ThreadNotFoundException {
         Student student = studentSessionLocal.retrieveStudentById(studentId);
+        Thread thread = threadSessionLocal.retrieveThreadById(threadId);
 
         Post post = new Post(postDescription);
         //adding post to Students list of Posts
+        post.setCreationDate(new Date());
+
+        post.setPostThread(thread);
+        thread.getPostsInThread().add(post);
+
         post.setStudentPostCreator(student);
         student.getPostsCreated().add(post);
 
@@ -43,13 +54,19 @@ public class PostSession implements PostSessionLocal {
     }
 
     @Override
-    public void adminCreatePost(Long adminId, String postDescription) throws AdminNotFoundException {
+    public void adminCreatePost(Long adminId, Long threadId, String postDescription) throws AdminNotFoundException, ThreadNotFoundException {
         Admin admin = adminSessionLocal.retrieveAdminById(adminId);
+        Thread thread = threadSessionLocal.retrieveThreadById(threadId);
 
         Post post = new Post(postDescription);
         //adding post to Students list of Posts
         admin.getPostsCreated().add(post);
         post.setAdminPostCreator(admin);
+
+        post.setCreationDate(new Date());
+
+        post.setPostThread(thread);
+        thread.getPostsInThread().add(post);
         em.persist(post);
     }
 
