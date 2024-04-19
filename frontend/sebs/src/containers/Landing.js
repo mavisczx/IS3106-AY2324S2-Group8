@@ -22,8 +22,7 @@ return (
     <div className="landing">
         <div className="landing__navWraper">
             <Searchbar />
-            <div className= "swapToThreads">
-            <Link to="/ThreadLanding" className="text-orange-600 hover:text-orange-800"> View Threads </Link>
+
             </div>
         </div>
         <div className="landing__timeline">
