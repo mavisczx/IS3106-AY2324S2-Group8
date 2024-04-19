@@ -31,9 +31,9 @@ const CreatePost = () => {
 
     try {
       await ApiPost.createPost(postData, token);
-      toast.success("🎉 Post createdsuccessfully!");
+      toast.success("🎉 Post created successfully!");
     } catch (error) {
-      toast.error("❌ Post creating event: " + error.message);
+      toast.error("❌ Error creating post: " + error.message);
     }
   };
 
@@ -62,16 +62,15 @@ const CreatePost = () => {
           </h1>
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <div>
             <label className="block text-white text-sm font-bold mb-2">
               Post Description:
             </label>
             <input
-              type= "text"
+              type="text"
               name="postDescription"
               value={postData.postDescription}
-              onChange={(e) => handleChange("postDescription",e.target.value)}
+              onChange={(e) => handleChange("postDescription", e.target.value)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
