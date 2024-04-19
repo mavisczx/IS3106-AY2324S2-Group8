@@ -32,10 +32,6 @@ public class Post implements Serializable {
     private Long id;
 
     private String postDescription; //Post Description
-    private String tag;
-    @Lob
-    @Column
-    private String imageURL;
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
     private int likeCount;
@@ -47,13 +43,14 @@ public class Post implements Serializable {
     @ManyToOne
     private Admin adminPostCreator;
 
+    @ManyToOne
+    private Thread postThread;
+
     public Post() {
     }
 
-    public Post(String postDescription, String tag, String imageURL) {
+    public Post(String postDescription) {
         this.postDescription = postDescription;
-        this.tag = tag;
-        this.imageURL = imageURL;
     }
 
     public Long getId() {
@@ -87,34 +84,6 @@ public class Post implements Serializable {
     @Override
     public String toString() {
         return "entity.Post[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the tag
-     */
-    public String getTag() {
-        return tag;
-    }
-
-    /**
-     * @param tag the tag to set
-     */
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    /**
-     * @return the imageURL
-     */
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    /**
-     * @param imageURL the imageURL to set
-     */
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
     }
 
     /**
@@ -187,6 +156,14 @@ public class Post implements Serializable {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Thread getPostThread() {
+        return postThread;
+    }
+
+    public void setPostThread(Thread postThread) {
+        this.postThread = postThread;
     }
 
 }

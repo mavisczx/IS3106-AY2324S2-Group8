@@ -7,7 +7,9 @@ package webservices.restful;
 
 import entity.Admin;
 import entity.Event;
+import entity.Post;
 import entity.Student;
+import entity.Thread;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -335,6 +338,82 @@ public class StudentResource {
             return Response.ok(isOwner).build();
         } catch (EventNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Event or Student not found").build();
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/postsCreated")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response viewAllPostsCreated(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
+        try {
+            Student student = studentSession.retrieveStudentById(studentId);
+            List<Post> posts = student.getPostsCreated();
+            for (Post p : posts) {
+                entity.Thread t = p.getPostThread();
+                t.setAdminThreadCreator(null);
+                t.setStudentThreadCreator(null);
+                t.setPostsInThread(new ArrayList<>());
+                t.setEventCreated(null);
+
+                Student s = p.getStudentPostCreator();
+                s.setEventsCreated(new ArrayList<>());
+                s.setEventsJoined(new ArrayList<>());
+                s.setPostsCreated(new ArrayList<>());
+                s.setThreadsCreated(new ArrayList<>());
+
+            }
+            GenericEntity<List<Post>> entity = new GenericEntity<List<Post>>(posts) {
+            };
+            return Response.status(200).entity(entity).build();
+        } catch (StudentNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Student not found").build();
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/threadsCreated")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response viewAllThreadsCreated(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+
+        try {
+            Student student = studentSession.retrieveStudentById(studentId);
+            List<Thread> threads = student.getThreadsCreated();
+            for (Thread t : threads) {
+                if (t.getEventCreated() != null) {
+                    Event e = t.getEventCreated();
+
+                    Student s = e.getStudentCreator();
+                    s.setEventsCreated(new ArrayList<>());
+                    s.setEventsJoined(new ArrayList<>());
+                    s.setPostsCreated(new ArrayList<>());
+                    s.setThreadsCreated(new ArrayList<>());
+
+                    e.setEventThread(null);
+                    e.setStudentsJoined(new ArrayList<>());
+                }
+
+                Student s = t.getStudentThreadCreator();
+                s.setEventsCreated(new ArrayList<>());
+                s.setEventsJoined(new ArrayList<>());
+                s.setPostsCreated(new ArrayList<>());
+                s.setThreadsCreated(new ArrayList<>());
+
+                t.setPostsInThread(new ArrayList<>());
+            }
+            GenericEntity<List<Thread>> entity = new GenericEntity<List<Thread>>(threads) {
+            };
+            return Response.status(200).entity(entity).build();
+        } catch (StudentNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Student not found").build();
         }
     }
 }

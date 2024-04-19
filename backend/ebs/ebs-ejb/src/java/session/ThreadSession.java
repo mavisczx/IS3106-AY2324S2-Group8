@@ -1,13 +1,18 @@
 package session;
 
 import entity.Admin;
+import entity.Post;
 import entity.Thread;
 import entity.Student;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import util.exception.AdminNotFoundException;
+import util.exception.PostNotFoundException;
 import util.exception.ThreadNotFoundException;
 import util.exception.StudentNotFoundException;
 
@@ -17,6 +22,9 @@ import util.exception.StudentNotFoundException;
  */
 @Stateless
 public class ThreadSession implements ThreadSessionLocal {
+
+    @EJB
+    private PostSessionLocal postSessionLocal;
 
     @PersistenceContext
     private EntityManager em;
@@ -32,6 +40,7 @@ public class ThreadSession implements ThreadSessionLocal {
         Student student = studentSessionLocal.retrieveStudentById(studentId);
 
         Thread thread = new Thread(title, description, tag);
+        thread.setStudentThreadCreator(student);
         student.getThreadsCreated().add(thread);
 
         em.persist(thread);
@@ -42,15 +51,51 @@ public class ThreadSession implements ThreadSessionLocal {
         Admin admin = adminSessionLocal.retrieveAdminById(adminId);
 
         Thread thread = new Thread(title, description, tag);
+        thread.setAdminThreadCreator(admin);
         admin.getThreadsCreated().add(thread);
 
         em.persist(thread);
     }
 
     @Override
-    public void deleteThread(Long threadId) throws ThreadNotFoundException {
-        Thread thread = retrieveThreadById(threadId);
+    public void adminDeleteThread(Long threadId, Long adminId) throws ThreadNotFoundException, AdminNotFoundException, PostNotFoundException, StudentNotFoundException {
 
+        Thread thread = retrieveThreadById(threadId);
+        Admin admin = adminSessionLocal.retrieveAdminById(adminId);
+        List<Post> posts = thread.getPostsInThread();
+        for (int i = 0; i < posts.size(); i++) {
+            Post p = posts.get(i);
+            if (p.getAdminPostCreator() != null) {
+                postSessionLocal.adminDeletePost(p.getId(), p.getAdminPostCreator().getId());
+            } else {
+                postSessionLocal.studentDeletePost(p.getId(), p.getStudentPostCreator().getId());
+            }
+        }
+
+        admin.getThreadsCreated().remove(thread);
+        thread.setAdminThreadCreator(null);
+        thread.setPostsInThread(new ArrayList<>());
+        em.remove(thread);
+    }
+
+    @Override
+    public void studentDeleteThread(Long threadId, Long studentId) throws ThreadNotFoundException, AdminNotFoundException, PostNotFoundException, StudentNotFoundException {
+
+        Thread thread = retrieveThreadById(threadId);
+        Student student = studentSessionLocal.retrieveStudentById(studentId);
+        List<Post> posts = thread.getPostsInThread();
+        for (int i = 0; i < posts.size(); i++) {
+            Post p = posts.get(i);
+            if (p.getAdminPostCreator() != null) {
+                postSessionLocal.adminDeletePost(p.getId(), p.getAdminPostCreator().getId());
+            } else {
+                postSessionLocal.studentDeletePost(p.getId(), p.getStudentPostCreator().getId());
+            }
+        }
+
+        student.getPostsCreated().remove(thread);
+        thread.setStudentThreadCreator(null);
+        thread.setPostsInThread(new ArrayList<>());
         em.remove(thread);
     }
 
@@ -84,11 +129,23 @@ public class ThreadSession implements ThreadSessionLocal {
     }
 
     @Override
+    public List<Thread> getAllThreads() {
+        Query query = em.createQuery("SELECT e FROM Thread e");
+        return query.getResultList();
+    }
+
+    @Override
     public Admin retrieveAdminByThread(Long threadId) throws ThreadNotFoundException {
         Thread thread = retrieveThreadById(threadId);
         Admin creatorAdmin = thread.getAdminThreadCreator();
 
         return creatorAdmin;
+    }
+
+    @Override
+    public List<Post> getPostInThreads(Long threadId) throws ThreadNotFoundException {
+        Thread t = retrieveThreadById(threadId);
+        return t.getPostsInThread();
     }
 
 }

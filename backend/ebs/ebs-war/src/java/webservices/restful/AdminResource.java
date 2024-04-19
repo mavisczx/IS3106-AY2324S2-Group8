@@ -7,6 +7,7 @@ package webservices.restful;
 
 import entity.Admin;
 import entity.Event;
+import entity.Post;
 import entity.Student;
 import entity.Thread;
 import java.security.Principal;
@@ -25,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -158,9 +160,7 @@ public class AdminResource {
                 Thread thread = e.getEventThread();
                 if (thread != null) {
                     thread.setEventCreated(null);
-                    thread.setParentThread(null);
                     thread.setPostsInThread(new ArrayList<>());
-                    thread.setSubThreads(new ArrayList<>());
                     thread.setStudentThreadCreator(null);
                 }
             }
@@ -188,4 +188,77 @@ public class AdminResource {
         }
     }
 
+    @GET
+    @Secured
+    @Path("/postsCreated")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response viewAllPostsCreated(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long adminId = Long.parseLong(userId);
+
+        try {
+            Admin admin = adminSession.retrieveAdminById(adminId);
+            List<Post> posts = admin.getPostsCreated();
+            for (Post p : posts) {
+                entity.Thread t = p.getPostThread();
+                t.setAdminThreadCreator(null);
+                t.setStudentThreadCreator(null);
+                t.setPostsInThread(new ArrayList<>());
+                t.setEventCreated(null);
+
+                Admin a = p.getAdminPostCreator();
+                a.setEventsCreated(new ArrayList<>());
+                a.setPostsCreated(new ArrayList<>());
+                a.setThreadsCreated(new ArrayList<>());
+
+            }
+            GenericEntity<List<Post>> entity = new GenericEntity<List<Post>>(posts) {
+            };
+            return Response.status(200).entity(entity).build();
+        } catch (AdminNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Student not found").build();
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/threadsCreated")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response viewAllThreadsCreated(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long adminId = Long.parseLong(userId);
+
+        try {
+            Admin admin = adminSession.retrieveAdminById(adminId);
+            List<Thread> threads = admin.getThreadsCreated();
+            for (Thread t : threads) {
+                if (t.getEventCreated() != null) {
+                    Event e = t.getEventCreated();
+
+                    Admin a = e.getAdminCreator();
+                    a.setEventsCreated(new ArrayList<>());
+                    a.setPostsCreated(new ArrayList<>());
+                    a.setThreadsCreated(new ArrayList<>());
+
+                    e.setEventThread(null);
+                    e.setStudentsJoined(new ArrayList<>());
+                }
+
+                Admin a = t.getAdminThreadCreator();
+                a.setEventsCreated(new ArrayList<>());
+                a.setPostsCreated(new ArrayList<>());
+                a.setThreadsCreated(new ArrayList<>());
+
+                t.setPostsInThread(new ArrayList<>());
+            }
+
+            GenericEntity<List<Thread>> entity = new GenericEntity<List<Thread>>(threads) {
+            };
+            return Response.status(200).entity(entity).build();
+        } catch (AdminNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Student not found").build();
+        }
+    }
 }

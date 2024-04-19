@@ -44,7 +44,7 @@ public class Thread implements Serializable {
     @ManyToOne
     private Admin adminThreadCreator;
 
-    @OneToMany
+    @OneToMany(mappedBy = "postThread")
     private List<Post> postsInThread = new ArrayList<>();
 
     @OneToOne(mappedBy = "eventThread")
