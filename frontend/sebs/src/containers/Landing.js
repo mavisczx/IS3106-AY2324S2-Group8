@@ -15,20 +15,17 @@ import { Icon } from "@iconify/react";
 
 import { Link } from "react-router-dom";
 
-   
-function Landing(){
-return (
 
-    <div className="landing">
+function Landing() {
+  return <div className="landing">
         <div className="landing__navWraper">
             <Searchbar />
             </div>
-        </div>
         <div className="landing__timeline">
             <Timeline />
         </div>
-    </div>
-)
+      </div >
+
 
 }
 
