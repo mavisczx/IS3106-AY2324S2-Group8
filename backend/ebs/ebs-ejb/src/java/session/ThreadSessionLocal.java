@@ -2,6 +2,7 @@ package session;
 import entity.Thread;
 import entity.Student;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -27,4 +28,6 @@ public interface ThreadSessionLocal {
       public Thread retrieveThreadById(Long threadId) throws ThreadNotFoundException;
 
       public Student retrieveStudentByThread(Long threadId) throws ThreadNotFoundException ;
+
+    public List<Thread> getAllThreads();
 }
