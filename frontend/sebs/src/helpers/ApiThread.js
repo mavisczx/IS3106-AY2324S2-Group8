@@ -45,6 +45,15 @@ const ApiThread = {
     });
   },
 
+  getThreadCreatorName(tId, token) {
+    return fetch(`${SERVER_PREFIX}/thread/creatorName/${tId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: "GET",
+    });
+  },
+
   getPostsInThreads(tId, token) {
     return fetch(`${SERVER_PREFIX}/thread/postsInThread/${tId}`, {
       headers: {
