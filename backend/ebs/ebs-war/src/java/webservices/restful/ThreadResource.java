@@ -285,26 +285,5 @@ public class ThreadResource {
         
     }
 
-        @GET
-    @Path("/query")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchThreads(@QueryParam("tag") String tag) {
-        
-            List<Thread> threads = threadSession.searchThreadByTags(tag);
-            for (Thread thread : threads) {
-                    Student s = thread.getStudentThreadCreator();
-                    s.setEventsCreated(new ArrayList<>());
-                    s.setEventsJoined(new ArrayList<>());
-                    s.setPostsCreated(new ArrayList<>());
-                    s.setThreadsCreated(new ArrayList<>());
-                }
-   
-     
-            GenericEntity<List<Thread>> entity = new GenericEntity<List<Thread>>(threads) {
-            };
-            return Response.status(200).entity(
-                    entity
-            ).build();
-        } 
-    }
+
 }
