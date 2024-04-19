@@ -124,6 +124,12 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
                       link="/searchevents"
                       isCollapsed={isCollapsed}
                     />
+                    <SidebarLink
+                      name="Registered Events"
+                      icon="mdi:heart-outline"
+                      link="/registeredevents"
+                      isCollapsed={isCollapsed}
+                    />
                   </div>
                 )}
               </div>
