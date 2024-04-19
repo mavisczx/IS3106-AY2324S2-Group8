@@ -111,7 +111,7 @@ function EventCard({ event }) {
             to={`/eventdetails/${id}/thread`}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            Go to Thread
+            🧵 Go to Thread
           </Link>
         </div>
       </div>
