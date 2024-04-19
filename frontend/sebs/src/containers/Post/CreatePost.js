@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Icon } from "@iconify/react";
 import ApiPost from "../../helpers/ApiPost";
-import createPostBg from "../Post/CreatePost.jpg"; // Ensure the path is correct
+import createPostBg from "../Post/CreatePost.jpg";
 
 const CreatePost = () => {
   const [postData, setPostData] = useState({
