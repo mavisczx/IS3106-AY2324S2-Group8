@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import ApiStudent from "../../helpers/ApiStudent";
+import ApiAdmin from "../../helpers/ApiAdmin";
 import ApiEvent from "../../helpers/ApiEvent";
 import { toast } from "react-toastify";
-import EventCard from "../../components/EventCard";
+import AdminEventCard from "../../components/AdminEventCard";
 import { Icon } from "@iconify/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import CustomDialog from "../../components/CustomDialog";
 
-const CreatedEvents = () => {
+const AdminCreatedEvents = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -26,7 +26,7 @@ const CreatedEvents = () => {
       return;
     }
 
-    ApiStudent.listAllEventsCreated(token)
+    ApiAdmin.getCreatedEvents(token)
       .then((response) => {
         if (!response.ok) throw new Error("Failed to fetch events");
         return response.json();
@@ -44,7 +44,7 @@ const CreatedEvents = () => {
   const handleDeleteEvent = (eventId) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       const token = localStorage.getItem("token");
-      ApiEvent.studentDeleteEvent(eventId, token)
+      ApiEvent.adminDeleteEvent(eventId, token)
         .then((response) => {
           if (!response.ok) throw new Error("Failed to delete the event");
           toast.success("Event deleted successfully!", { autoClose: 1800 });
@@ -97,7 +97,7 @@ const CreatedEvents = () => {
               key={event.id}
               className="relative rounded overflow-hidden shadow-lg"
             >
-              <EventCard event={event} />
+              <AdminEventCard event={event} />
               <button
                 onClick={() => openEditDialog(event)}
                 className="absolute bottom-2 right-16 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded flex items-center justify-center"
@@ -213,4 +213,4 @@ const CreatedEvents = () => {
   );
 };
 
-export default CreatedEvents;
+export default AdminCreatedEvents;

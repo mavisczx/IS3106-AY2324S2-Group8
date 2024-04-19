@@ -6,9 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Icon } from "@iconify/react";
 import ApiEvent from "../../helpers/ApiEvent";
-import createEventBg from "./createevent.jpg"; // Ensure the path is correct
+import createEventBg from "../Events/createevent.jpg"; // Ensure the path is correct
 
-const CreateEvent = () => {
+const AdminCreateEvent = () => {
   const [eventData, setEventData] = useState({
     eventTitle: "",
     eventDate: null,
@@ -19,7 +19,7 @@ const CreateEvent = () => {
     eventPrice: "",
   });
 
-  const studentCreateEventForm = useRef(null);
+  const adminCreateEventForm = useRef(null);
 
   const handleChange = (name, value) => {
     setEventData((prevData) => ({
@@ -50,9 +50,9 @@ const CreateEvent = () => {
         deadline: moment(eventData.deadline).format("YYYY-MM-DDTHH:mm:ss"),
       };
       console.log(formattedEventData);
-      await ApiEvent.studentCreateEvent(formattedEventData, token);
+      await ApiEvent.adminCreateEvent(formattedEventData, token);
       toast.success("🎉 Event added successfully!");
-      studentCreateEventForm.current.reset();
+      adminCreateEventForm.current.reset();
     } catch (error) {
       toast.error("❌ Error adding event: " + error.message);
     }
@@ -85,7 +85,7 @@ const CreateEvent = () => {
         <form
           onSubmit={handleSubmit}
           className="space-y-1"
-          ref={studentCreateEventForm}
+          ref={adminCreateEventForm}
         >
           <div>
             <label className="block text-white text-sm font-bold mb-2">
@@ -196,4 +196,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default AdminCreateEvent;

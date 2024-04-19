@@ -23,7 +23,11 @@ import CreateThread from "./containers/Thread/CreateThread";
 import EventDetails from "./containers/Events/EventDetails";
 import CreatedEvents from "./containers/Events/CreatedEvents";
 import RegisteredEvents from "./containers/Events/RegisteredEvents";
-
+import AdminHome from "./containers/AdminPages/AdminHome";
+import AdminCreateEvent from "./containers/AdminPages/AdminCreateEvent";
+import AdminCreatedEvents from "./containers/AdminPages/AdminCreatedEvents";
+import AdminSearchEvents from "./containers/AdminPages/AdminSearchEvents";
+import AdminEventDetails from "./containers/AdminPages/AdminEventDetails";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -82,13 +86,78 @@ function App() {
             }
           />
           <Route
-            path="/createadmin"
+            path="/admin/home"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminHome />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/admin/createadmin"
             element={
               loggedIn && isAdmin ? (
                 <CreateAdmin />
               ) : (
                 <div>
-                  You need to be logged in / be an admin to access this page.{" "}
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/admin/createevent"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminCreateEvent />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/admin/createdevents"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminCreatedEvents />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/admin/searchevents"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminSearchEvents />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+          <Route
+            path="/admin/eventdetails/:id"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminEventDetails />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
                   <Link to="/login">Login</Link>
                 </div>
               )
@@ -96,9 +165,9 @@ function App() {
           />
           <Route path="/searchevents" element={<SearchEvents />} />
 
-          <Route path="/createpost" element={<CreatePost/>} />
-          <Route path="/createthread" element={<CreateThread/>} />
-          <Route path="/threadlanding" element={<ThreadLanding/>} />
+          <Route path="/createpost" element={<CreatePost />} />
+          <Route path="/createthread" element={<CreateThread />} />
+          <Route path="/threadlanding" element={<ThreadLanding />} />
           <Route path="/eventdetails/:id" element={<EventDetails />} />
           <Route path="/createdevents" element={<CreatedEvents />} />
           <Route path="/registeredevents" element={<RegisteredEvents />} />

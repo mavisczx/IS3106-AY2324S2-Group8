@@ -23,7 +23,7 @@ const AdminLogin = ({ setLoggedIn, setIsAdmin }) => {
       localStorage.setItem("token", token["token"]); // Store the token in local storage
       setLoggedIn(true); // Update logged in state
       setIsAdmin(true); // Update admin state
-      //window.location.href = "/"; // Redirect to the home page for admin
+      window.location.hash = "/admin/home"; // Redirect to the home page for admin
     } catch (error) {
       setError("Invalid Email or Password.");
       console.error("Login failed:", error.message);
