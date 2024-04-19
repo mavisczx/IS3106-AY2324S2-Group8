@@ -104,6 +104,13 @@ public Post retrievePostById(Long postId) throws PostNotFoundException {
      //just to check whether post has been reported by any other Student
  }
  
+ @Override
+ public List<Post> getAllPost() {
+        Query query = em.createQuery("SELECT e FROM Post e");
+        return query.getResultList();
+ }
+ 
+ 
  
  
 
