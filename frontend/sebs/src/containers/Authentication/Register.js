@@ -93,7 +93,7 @@ const Register = () => {
               placeholder="Name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded focus:border-orange-600 focus:outline-none"
               required
             />
           </div>
@@ -104,7 +104,7 @@ const Register = () => {
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded focus:border-orange-600 focus:outline-none"
               required
             />
           </div>
@@ -115,7 +115,7 @@ const Register = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded focus:border-orange-600 focus:outline-none"
               required
             />
           </div>
@@ -126,7 +126,7 @@ const Register = () => {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded focus:border-orange-600 focus:outline-none"
               required
             />
             <PasswordStrengthBar password={formData.password} />

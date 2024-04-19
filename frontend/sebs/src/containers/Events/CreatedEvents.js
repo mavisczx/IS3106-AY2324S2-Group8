@@ -87,6 +87,11 @@ const CreatedEvents = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
+      {events.length === 0 && (
+        <div className="text-center text-gray-500">
+          You have not created any events yet. Start creating now!
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
         {events.map((event) => (
           <div

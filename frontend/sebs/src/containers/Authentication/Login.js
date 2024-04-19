@@ -59,7 +59,7 @@ const Login = ({ setLoggedIn }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded focus:border-orange-600 focus:outline-none"
               required
             />
           </div>
@@ -69,14 +69,14 @@ const Login = ({ setLoggedIn }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded focus:border-orange-600 focus:outline-none"
               required
             />
           </div>
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <button
             type="submit"
-            className="w-full p-3 bg-orange-600 text-white rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
+            className="w-full p-3 bg-orange-600 text-white rounded hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
           >
             Login
           </button>
@@ -107,3 +107,4 @@ const Login = ({ setLoggedIn }) => {
 };
 
 export default Login;
+
