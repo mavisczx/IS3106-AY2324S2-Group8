@@ -97,6 +97,20 @@ const ApiThread = {
       method: "GET",
     });
   },
+
+  
+  getAllThread()  {
+    return fetch(`${SERVER_PREFIX}/thread/all`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+},
+
+  
 };
+
+
 
 export default ApiThread;
