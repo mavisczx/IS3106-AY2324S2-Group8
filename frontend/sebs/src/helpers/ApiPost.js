@@ -1,8 +1,8 @@
 const SERVER_PREFIX = "http://localhost:8080/ebs-war/webresources";
 
-const ApiPost= {
-  createPost(data, token) {
-    return fetch(`${SERVER_PREFIX}/post`, {
+const ApiPost = {
+  studentCreatePost(tId, data, token) {
+    return fetch(`${SERVER_PREFIX}/post/${tId}`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
@@ -13,31 +13,20 @@ const ApiPost= {
     });
   },
 
-
-  getPostById(eId, token) {
-    return fetch(`${SERVER_PREFIX}/post/${eId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-    });
-  },
-
-  editPost(eId, data, token) {
-    return fetch(`${SERVER_PREFIX}/post/${eId}`, {
+  adminCreatePost(tId, data, token) {
+    return fetch(`${SERVER_PREFIX}/post/admin/${tId}`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      method: "PUT",
+      method: "POST",
       body: JSON.stringify(data),
     });
   },
 
-  deletePost(eId, token) {
-    return fetch(`${SERVER_PREFIX}/post/${eId}`, {
+  studentDeletePost(pId, token) {
+    return fetch(`${SERVER_PREFIX}/post/student/${pId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -46,26 +35,25 @@ const ApiPost= {
     });
   },
 
-  searchPost(searchValue) {
-    const queryString = searchValue.toString();
-    return fetch(`${SERVER_PREFIX}/post/query?${queryString}`, {
+  adminDeletePost(pId, token) {
+    return fetch(`${SERVER_PREFIX}/post/admin/${pId}`, {
       headers: {
-        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      method: "GET",
-    });
-  },
-  
-  searchAllPost() {
-    return fetch(`${SERVER_PREFIX}/post/all`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
+      method: "DELETE",
     });
   },
 
+  getPosts(token) {
+    return fetch(`${SERVER_PREFIX}/post/allPosts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
 };
 
 export default ApiPost;

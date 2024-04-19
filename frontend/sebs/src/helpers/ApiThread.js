@@ -1,7 +1,7 @@
 const SERVER_PREFIX = "http://localhost:8080/ebs-war/webresources";
 
-const ApiThread= {
-  createThead(data, token) {
+const ApiThread = {
+  studentCreateThread(data, token) {
     return fetch(`${SERVER_PREFIX}/thread`, {
       headers: {
         Accept: "application/json",
@@ -13,9 +13,20 @@ const ApiThread= {
     });
   },
 
+  adminCreateThread(data, token) {
+    return fetch(`${SERVER_PREFIX}/thread/admin`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
 
-  getThreadById(eId, token) {
-    return fetch(`${SERVER_PREFIX}/ehread/${eId}`, {
+  getThreadById(tId, token) {
+    return fetch(`${SERVER_PREFIX}/thread/${tId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -24,8 +35,28 @@ const ApiThread= {
     });
   },
 
-  editThread(eId, data, token) {
-    return fetch(`${SERVER_PREFIX}/thread/${eId}`, {
+  getThreads(token) {
+    return fetch(`${SERVER_PREFIX}/thread/allThreads`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
+  getPostsInThreads(tId, token) {
+    return fetch(`${SERVER_PREFIX}/thread/postsInThread/${tId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+  },
+
+  editThread(tId, data, token) {
+    return fetch(`${SERVER_PREFIX}/thread/${tId}`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
@@ -36,8 +67,18 @@ const ApiThread= {
     });
   },
 
-  deleteThread(eId, token) {
-    return fetch(`${SERVER_PREFIX}/thread/${eId}`, {
+  studentDeleteThread(tId, token) {
+    return fetch(`${SERVER_PREFIX}/thread/student/${tId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    });
+  },
+
+  adminDeleteThread(tId, token) {
+    return fetch(`${SERVER_PREFIX}/thread/admin/${tId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -56,7 +97,6 @@ const ApiThread= {
       method: "GET",
     });
   },
-
 };
 
 export default ApiThread;
