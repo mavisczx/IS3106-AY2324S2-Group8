@@ -3,6 +3,7 @@ package session;
 import entity.Thread;
 import entity.Student;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -82,6 +83,12 @@ public class ThreadSession implements ThreadSessionLocal {
       Student creatorStudent = thread.getStudentThreadCreator();
       
       return creatorStudent;
+    }
+    
+    @Override
+    public List<Thread> getAllThreads() {
+        Query query = em.createQuery("SELECT e FROM Thread e");
+        return query.getResultList();
     }
     
     
