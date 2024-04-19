@@ -9,18 +9,19 @@ import Searchbar from "./Searchbar/Searchbar";
 import Timeline from "./Timeline/Timeline";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import LandingBg from "./gradient.jpg"; 
 
 function Landing() {
   return (
-    <div className="bg-gray-900 text-white">
-      <div className="container mx-auto py-8">
-        <div className="flex flex-col">
-          <div className="bg-gray-800 rounded-lg shadow-md p-4 mb-4 ">
+    <div className="container mx-auto py-8">
+      <div className="flex flex-col">
+        <div className="bg-white rounded-lg shadow-md p-4 mb-4 border-4 border-gray-400 border-solid" style={{ backgroundImage: `url(${LandingBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div className="bg-transparent rounded-lg shadow-md p-4 mb-4 border-4 border-orange-500 border-solid">
             <Searchbar />
           </div>
-          <div className="border-t border-orange-200 my-4"></div>
-          <Timeline />
         </div>
+        <div className="border-t border-orange-500 my-4"></div>
+        <Timeline />
       </div>
     </div>
   );
