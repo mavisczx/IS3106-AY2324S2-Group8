@@ -6,6 +6,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,9 +33,10 @@ public class Thread implements Serializable {
 
     private String title;
     private String description; // Description of the Thread and what it entails, what the rules are, etc.
-    private ArrayList<String> tags;
+    private String tag;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
     private int postCount;
-    private int shareCount;
 
     @ManyToOne
     private Student studentThreadCreator;
@@ -40,12 +44,6 @@ public class Thread implements Serializable {
     @ManyToOne
     private Admin adminThreadCreator;
 
-    @OneToMany(mappedBy = "parentThread", fetch = FetchType.EAGER)
-    private List<Thread> subThreads = new ArrayList<>();
-    //If a student wishes to divulge in a subtopic of the thread, He/She can create a subThread.
-    @ManyToOne
-    private Thread parentThread;
-    //if the current thread is a subThread, this attribute pertains to the Parent Thread
     @OneToMany
     private List<Post> postsInThread = new ArrayList<>();
 
@@ -55,10 +53,10 @@ public class Thread implements Serializable {
     public Thread() {
     }
 
-    public Thread(String title, String desc, ArrayList<String> tags) {
+    public Thread(String title, String description, String tag) {
         this.title = title;
-        this.description = desc;
-        this.tags = tags;
+        this.description = description;
+        this.tag = tag;
     }
 
     public Long getId() {
@@ -123,17 +121,17 @@ public class Thread implements Serializable {
     }
 
     /**
-     * @return the tags
+     * @return the tag
      */
-    public ArrayList<String> getTags() {
-        return tags;
+    public String getTag() {
+        return tag;
     }
 
     /**
-     * @param tags the tags to set
+     * @param tag the tag to set
      */
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     /**
@@ -151,20 +149,6 @@ public class Thread implements Serializable {
     }
 
     /**
-     * @return the shareCount
-     */
-    public int getShareCount() {
-        return shareCount;
-    }
-
-    /**
-     * @param shareCount the shareCount to set
-     */
-    public void setShareCount(int shareCount) {
-        this.shareCount = shareCount;
-    }
-
-    /**
      * @return the studentThreadCreator
      */
     public Student getStudentThreadCreator() {
@@ -176,34 +160,6 @@ public class Thread implements Serializable {
      */
     public void setStudentThreadCreator(Student studentThreadCreator) {
         this.studentThreadCreator = studentThreadCreator;
-    }
-
-    /**
-     * @return the subThreads
-     */
-    public List<Thread> getSubThreads() {
-        return subThreads;
-    }
-
-    /**
-     * @param subThreads the subThreads to set
-     */
-    public void setSubThreads(List<Thread> subThreads) {
-        this.subThreads = subThreads;
-    }
-
-    /**
-     * @return the parentThread
-     */
-    public Thread getParentThread() {
-        return parentThread;
-    }
-
-    /**
-     * @param parentThread the parentThread to set
-     */
-    public void setParentThread(Thread parentThread) {
-        this.parentThread = parentThread;
     }
 
     /**
@@ -240,6 +196,14 @@ public class Thread implements Serializable {
 
     public void setAdminThreadCreator(Admin adminThreadCreator) {
         this.adminThreadCreator = adminThreadCreator;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
 }

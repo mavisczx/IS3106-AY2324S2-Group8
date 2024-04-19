@@ -1,30 +1,29 @@
 package session;
+
+import entity.Admin;
 import entity.Thread;
 import entity.Student;
-import java.util.ArrayList;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import util.exception.AdminNotFoundException;
 import util.exception.ThreadNotFoundException;
 import util.exception.StudentNotFoundException;
- 
+
 /**
  *
  * @author kaavya
  */
-
 public interface ThreadSessionLocal {
-     public void createThread(Long studentId, String title, String desc, ArrayList<String> tags) throws StudentNotFoundException;
-      
-      public void deleteThread(Long threadId) throws ThreadNotFoundException;
 
-      public void updateThread(Long threadId) throws ThreadNotFoundException;
-    
-      public void shareThread(Long threadId) throws ThreadNotFoundException;
-      
-      public Thread retrieveThreadById(Long threadId) throws ThreadNotFoundException;
+    public void studentCreateThread(Long studentId, String title, String description, String tag) throws StudentNotFoundException;
 
-      public Student retrieveStudentByThread(Long threadId) throws ThreadNotFoundException ;
+    public void adminCreateThread(Long adminId, String title, String description, String tag) throws AdminNotFoundException;
+
+    public void deleteThread(Long threadId) throws ThreadNotFoundException;
+
+    public void updateThread(Long threadId) throws ThreadNotFoundException;
+
+    public Thread retrieveThreadById(Long threadId) throws ThreadNotFoundException;
+
+    public Student retrieveStudentByThread(Long threadId) throws ThreadNotFoundException;
+
+    public Admin retrieveAdminByThread(Long threadId) throws ThreadNotFoundException;
 }

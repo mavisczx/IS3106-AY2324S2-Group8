@@ -6,13 +6,18 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,10 +32,13 @@ public class Post implements Serializable {
     private Long id;
 
     private String postDescription; //Post Description
-    private ArrayList<String> tags;
-    private ArrayList<String> imageURL;
+    private String tag;
+    @Lob
+    @Column
+    private String imageURL;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
     private int likeCount;
-    private int shareCount;
     private boolean ifReported; // To check if the post has been reported by another stu
 
     @ManyToOne
@@ -39,17 +47,12 @@ public class Post implements Serializable {
     @ManyToOne
     private Admin adminPostCreator;
 
-    @ManyToMany
-    private List<Post> replies = new ArrayList<>();
-    @ManyToOne
-    private Post prevPost; //If the current post was a reply to another post( This is the attribute pertaining to the previous post)
-
     public Post() {
     }
 
-    public Post(String postDescription, ArrayList<String> tags, ArrayList<String> imageURL) {
+    public Post(String postDescription, String tag, String imageURL) {
         this.postDescription = postDescription;
-        this.tags = tags;
+        this.tag = tag;
         this.imageURL = imageURL;
     }
 
@@ -87,30 +90,30 @@ public class Post implements Serializable {
     }
 
     /**
-     * @return the tags
+     * @return the tag
      */
-    public ArrayList<String> getTags() {
-        return tags;
+    public String getTag() {
+        return tag;
     }
 
     /**
-     * @param tags the tags to set
+     * @param tag the tag to set
      */
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     /**
      * @return the imageURL
      */
-    public ArrayList<String> getImageURL() {
+    public String getImageURL() {
         return imageURL;
     }
 
     /**
      * @param imageURL the imageURL to set
      */
-    public void setImageURL(ArrayList<String> imageURL) {
+    public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 
@@ -126,20 +129,6 @@ public class Post implements Serializable {
      */
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
-    }
-
-    /**
-     * @return the shareCount
-     */
-    public int getShareCount() {
-        return shareCount;
-    }
-
-    /**
-     * @param shareCount the shareCount to set
-     */
-    public void setShareCount(int shareCount) {
-        this.shareCount = shareCount;
     }
 
     /**
@@ -171,34 +160,6 @@ public class Post implements Serializable {
     }
 
     /**
-     * @return the replies
-     */
-    public List<Post> getReplies() {
-        return replies;
-    }
-
-    /**
-     * @param replies the replies to set
-     */
-    public void setReplies(List<Post> replies) {
-        this.replies = replies;
-    }
-
-    /**
-     * @return the prevPost
-     */
-    public Post getPrevPost() {
-        return prevPost;
-    }
-
-    /**
-     * @param prevPost the prevPost to set
-     */
-    public void setPrevPost(Post prevPost) {
-        this.prevPost = prevPost;
-    }
-
-    /**
      * @return the postDescription
      */
     public String getPostDescription() {
@@ -218,6 +179,14 @@ public class Post implements Serializable {
 
     public void setAdminPostCreator(Admin adminPostCreator) {
         this.adminPostCreator = adminPostCreator;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
 }
