@@ -11,7 +11,9 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.AdminNotFoundException;
 import util.exception.EventNotFoundException;
+import util.exception.PostNotFoundException;
 import util.exception.StudentNotFoundException;
+import util.exception.ThreadNotFoundException;
 
 /**
  *
@@ -32,9 +34,9 @@ public interface EventSessionLocal {
 
     public void editEvent(Event eventToUpdate) throws EventNotFoundException;
 
-    public void studentDeleteEvent(Long eventId) throws EventNotFoundException;
+    public void studentDeleteEvent(Long eventId) throws EventNotFoundException, ThreadNotFoundException, AdminNotFoundException, PostNotFoundException, StudentNotFoundException;
 
-    public void adminDeleteEvent(Long eventId) throws EventNotFoundException;
+    public void adminDeleteEvent(Long eventId) throws EventNotFoundException, ThreadNotFoundException, AdminNotFoundException, PostNotFoundException, StudentNotFoundException;
 
     public List<Student> viewAllRegistered(Long eventId) throws EventNotFoundException;
 
