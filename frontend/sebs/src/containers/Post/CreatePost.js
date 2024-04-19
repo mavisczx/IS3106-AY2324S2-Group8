@@ -1,26 +1,12 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-datepicker/dist/react-datepicker.css";
 import { Icon } from "@iconify/react";
 import ApiPost from "../../helpers/ApiPost";
 import createPostBg from "../Post/CreatePost.jpg";
 
 const CreatePost = () => {
-  const [postData, setPostData] = useState({
-    postDescription: "",
-    postImage: "",
-    postTags: "",
-  });
-
-  const handleChange = (name, value) => {
-    setPostData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [postDescription, setPostDescription] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +16,7 @@ const CreatePost = () => {
     }
 
     try {
-      await ApiPost.createPost(postData, token);
+      await ApiPost.createPost({ postDescription }, token);
       toast.success("🎉 Post created successfully!");
     } catch (error) {
       toast.error("❌ Error creating post: " + error.message);
@@ -68,38 +54,9 @@ const CreatePost = () => {
             </label>
             <input
               type="text"
-              name="postDescription"
-              value={postData.postDescription}
-              onChange={(e) => handleChange("postDescription", e.target.value)}
+              value={postDescription}
+              onChange={(e) => setPostDescription(e.target.value)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-white text-sm font-bold mb-2">
-              Enhance your Post with Images:
-            </label>
-            <input
-              type="text"
-              name="postImages"
-              value={postData.postImage}
-              onChange={(e) => handleChange("postImages", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-white text-sm font-bold mb-2">
-              Reach More Students by Adding Tags::
-            </label>
-            <input
-              type="text"
-              name="postTags"
-              value={postData.postTags}
-              onChange={(e) => handleChange("eventTgas", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
           </div>
