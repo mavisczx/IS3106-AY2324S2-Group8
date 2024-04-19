@@ -19,6 +19,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,8 +32,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import session.StudentSessionLocal;
 import session.PostSessionLocal;
-import util.exception.AdminNotFoundException;
-import util.exception.StudentNotFoundException;
+import util.exception.PostNotFoundException;
 
 /**
  *
@@ -66,6 +66,7 @@ public class PostResource {
     @Path("{threadId}")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response studentCreatePost(@PathParam("threadId") Long threadId, Post post, @Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         String userId = principal.getName();
@@ -84,9 +85,10 @@ public class PostResource {
     }
 
     @POST
-    @Path("/admin/{threadId")
+    @Path("/admin/{threadId}")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response adminCreatePost(@PathParam("threadId") Long threadId, Post post, @Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         String userId = principal.getName();
@@ -159,6 +161,22 @@ public class PostResource {
             }
         }
         return postList;
+    }
+
+    @GET
+    @Secured
+    @Path("/creatorName/{postId}")
+    public String getPostCreatorName(@PathParam("postId") Long postId) {
+        try {
+            Post p = postSession.retrievePostById(postId);
+            if (p.getAdminPostCreator() != null) {
+                return p.getAdminPostCreator().getUsername();
+            } else {
+                return p.getStudentPostCreator().getUsername();
+            }
+        } catch (PostNotFoundException ex) {
+            return "error";
+        }
     }
 
 }
