@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-datepicker/dist/react-datepicker.css";
 import { Icon } from "@iconify/react";
 import ApiThread from "../../helpers/ApiThread";
 import createPostBg from "../Post/CreatePost.jpg"; // Ensure the path is correct
@@ -12,7 +9,7 @@ const CreateThread = () => {
   const [threadData, setThreadData] = useState({
     threadTitle: "",
     threadDescription: "",
-    threadTags: "",
+    threadTags: "event", // Default value is event
   });
 
   const handleChange = (name, value) => {
@@ -62,16 +59,15 @@ const CreateThread = () => {
           </h1>
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <div>
             <label className="block text-white text-sm font-bold mb-2">
               Thread Title:
             </label>
             <input
-              type= "text"
+              type="text"
               name="threadTitle"
               value={threadData.threadTitle}
-              onChange={(e) => handleChange("postDescription",e.target.value)}
+              onChange={(e) => handleChange("threadTitle", e.target.value)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
@@ -85,7 +81,9 @@ const CreateThread = () => {
               type="text"
               name="threadDescription"
               value={threadData.threadDescription}
-              onChange={(e) => handleChange("postImages", e.target.value)}
+              onChange={(e) =>
+                handleChange("threadDescription", e.target.value)
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
@@ -93,16 +91,21 @@ const CreateThread = () => {
 
           <div>
             <label className="block text-white text-sm font-bold mb-2">
-              Reach More Students by Adding Tags:
+              Thread Tags:
             </label>
-            <input
-              type="text"
+            <select
               name="threadTags"
               value={threadData.threadTags}
-              onChange={(e) => handleChange("eventTags", e.target.value)}
+              onChange={(e) => handleChange("threadTags", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded"
               required
-            />
+            >
+              <option value="event">Event</option>
+              <option value="opinion">Opinion</option>
+              <option value="question">Question</option>
+              <option value="rant">Rant</option>
+              <option value="others">Others</option>
+            </select>
           </div>
 
           <button
