@@ -95,6 +95,7 @@ public class StudentSession implements StudentSessionLocal {
         student.setProfilePhoto(studentToUpdate.getProfilePhoto());
         student.setOriginUni(studentToUpdate.getOriginUni());
         student.setExchangeUni(studentToUpdate.getExchangeUni());
+        student.setPassword(studentToUpdate.getPassword());
     }
 
     @Override
