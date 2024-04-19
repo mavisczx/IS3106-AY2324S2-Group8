@@ -47,7 +47,7 @@ public class Thread implements Serializable {
     @OneToMany(mappedBy = "postThread")
     private List<Post> postsInThread = new ArrayList<>();
 
-    @OneToOne(mappedBy = "eventThread")
+    @OneToOne
     private Event eventCreated;
 
     public Thread() {
