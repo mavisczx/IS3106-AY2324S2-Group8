@@ -1,52 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ApiPost from "../../helpers/ApiPost";
-import ApiStudent from "../../helpers/ApiStudent";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import ApiPost from '../../helpers/ApiPost';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
-import { Icon } from "@iconify/react/dist/iconify.js";
+function Thread({ thread }) {
+  const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+    // Fetch posts for the selected thread
+    ApiPost.getPostsByThreadId(thread.id).then((response) => {
+      setPosts(response.data);
+    });
+  }, [thread.id]);
 
-
-function Thread({ user, postImage, likes, timestamp }) {
-  const { id } = useParams();
-  const [thread, setThread] = useState({});
-  const [owner, setOwner] = useState(false);
-
-
-  const userProfilePic = "https://64.media.tumblr.com/c1133f0cbab141081f6d1f19a12ff7de/tumblr_inline_qs7o9tjEB91r8mcco_540.jpg" //Placeholder
- 
   return (
-    <div className = "border m-4 p-4 bg-white rounded drop-shadow-md space-y-2">
-      <div className = "flex flex-row space-x-2 items-center text-sm" >
-        <div className = "items-center"> 
-          
+    <div className="bg-gray-700 rounded-lg shadow-md p-4 space-y-4">
+      {posts.map((post) => (
+        <div key={post.id} className="bg-gray-800 rounded-lg p-4">
+          <div className="flex items-center space-x-2">
+            <img
+              src={post.userProfilePic}
+              alt="User Profile"
+              className="w-8 h-8 rounded-full"
+            />
+            <div>
+              <h3 className="font-bold">{post.user}</h3>
+              <p className="text-sm text-gray-400">{post.timestamp}</p>
+            </div>
+          </div>
+          <img
+            src={post.postImage}
+            alt="Post"
+            className="w-full h-auto rounded-lg mt-4"
+          />
+          <div className="flex items-center space-x-2 mt-2">
+            <Icon icon="mdi:heart" className="text-red-500" />
+            <span>{post.likes} likes</span>
+          </div>
         </div>
-        <div className = "flex flex-col" >
-          <b>{user}</b>
-          <span className = "text-sm text-stone-500">{timestamp}</span>
-        </div>
-      </div>
-                <div> Created  by @{id}</div>
-      <div>
-      <span className="inline-block bg-green-200 text-green-800 text-xs px-2 ml-2 rounded-full uppercase font-semibold tracking-wide">
-               {thread.title}
-              </span>
-      <span className="inline-block bg-green-200 text-green-800 text-xs px-2 ml-2 rounded-full uppercase font-semibold tracking-wide">
-               {thread.description}
-              </span>
-              <span className="inline-block bg-green-200 text-green-800 text-xs px-2 ml-2 rounded-full uppercase font-semibold tracking-wide">
-               {thread.postsinThread}
-              </span>
-      
-=
-      <div className = "font-light text-sm flex flex-row space-x-2 items-center text-stone-500">
-        <Icon icon = "mdi:heart" /><div>Liked by {likes} people.</div>
-      </div>
-      <div className = "font-light text-sm flex flex-row space-x-2 items-center text-stone-500">
-      <Link to="/createthread" className="text-orange-600 hover:text-orange-800" > Add Post to Thread + </Link>
-      </div>
-      </div>
+      ))}
     </div>
   );
 }
