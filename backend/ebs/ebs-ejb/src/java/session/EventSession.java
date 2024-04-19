@@ -92,22 +92,28 @@ public class EventSession implements EventSessionLocal {
     public boolean isStudentEventOwner(Long eventId, Long studentId) throws EventNotFoundException {
         Event event = getEventById(eventId);
         Student creatorId = event.getStudentCreator();
-        if (studentId.equals(creatorId.getId())) {
-            return true;
-        } else {
-            return false;
+        if (creatorId != null) {
+            if (studentId.equals(creatorId.getId())) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
     }
 
     @Override
     public boolean isAdminEventOwner(Long eventId, Long adminId) throws EventNotFoundException {
         Event event = getEventById(eventId);
         Admin creatorId = event.getAdminCreator();
-        if (adminId.equals(creatorId.getId())) {
-            return true;
-        } else {
-            return false;
+        if (creatorId != null) {
+            if (adminId.equals(creatorId.getId())) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
     }
 
     @Override

@@ -141,9 +141,11 @@ public class AdminResource {
 
         try {
             List<Event> eventList = adminSession.listAllEventsCreated(aId);
-
             for (Event e : eventList) {
-                e.setAdminCreator(null);
+                Admin a = e.getAdminCreator();
+                a.setEventsCreated(new ArrayList<>());
+                a.setPostsCreated(new ArrayList<>());
+                a.setThreadsCreated(new ArrayList<>());
 
                 List<Student> studentsJoined = e.getStudentsJoined();
                 for (Student s : studentsJoined) {
@@ -154,11 +156,13 @@ public class AdminResource {
                 }
 
                 Thread thread = e.getEventThread();
-                thread.setEventCreated(null);
-                thread.setParentThread(null);
-                thread.setPostsInThread(new ArrayList<>());
-                thread.setSubThreads(new ArrayList<>());
-                thread.setStudentThreadCreator(null);
+                if (thread != null) {
+                    thread.setEventCreated(null);
+                    thread.setParentThread(null);
+                    thread.setPostsInThread(new ArrayList<>());
+                    thread.setSubThreads(new ArrayList<>());
+                    thread.setStudentThreadCreator(null);
+                }
             }
 
             return Response.ok(eventList).build();
