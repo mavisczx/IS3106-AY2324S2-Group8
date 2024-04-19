@@ -13,6 +13,7 @@ import attraction_image from "../../Images/attraction.jpg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomDialog from "../../components/CustomDialog";
+import RegisteredUsersTable from "./RegisteredUsersTable";
 
 function EventDetails() {
   const { id } = useParams();
@@ -253,11 +254,16 @@ function EventDetails() {
                   Register
                 </button>
               )}
-
               <span className="inline-block bg-red-200 text-red-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">
                 Deadline: {event.deadline}
               </span>
             </div>
+            {/* Conditional rendering of RegisteredUsersTable */}
+            {owner && (
+              <div className="mt-2">
+                <RegisteredUsersTable eventId={id} />
+              </div>
+            )}
           </div>
         </div>
       </div>
