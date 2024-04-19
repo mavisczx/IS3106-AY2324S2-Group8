@@ -57,43 +57,72 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
         <>
           {!isAdmin && (
             <>
-              <SidebarLink name="Profile" icon="mdi:account" link="/profile" />
               <SidebarLink
-                name="Add Event"
-                icon="mdi:plus"
-                link="/createevent"
-                isCollapsed={isCollapsed}
-              />
-              <SidebarLink
-                name="Created Events"
-                icon="mdi:clipboard-list"
-                link="/createdevents"
-                isCollapsed={isCollapsed}
-              />
-              <SidebarLink
-                name="Search"
-                icon="mdi:search"
-                link="/"
-                isCollapsed={isCollapsed}
-              />
-              <SidebarLink
-                name="Questions"
-                icon="mdi:question-mark"
-                link="/"
-                isCollapsed={isCollapsed}
-              />
-              <SidebarLink
-                name="Search Events"
-                icon="mdi:event"
-                link="/searchevents"
-                isCollapsed={isCollapsed}
-              />
-              <SidebarLink
-                name="Registered Events"
-                icon="mdi:heart-outline"
-                link="/registeredevents"
-                isCollapsed={isCollapsed}
-              />
+            name="Profile"
+            icon="mdi:account"
+            link="/profile"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Posts"
+            icon="mdi:plus"
+            link="/landing"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Threads"
+            icon="mdi:plus"
+            link="/thredlanding"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Add Event"
+            icon="mdi:plus"
+            link="/createevent"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Created Events"
+            icon="mdi:clipboard-list"
+            link="/createdevents"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Search"
+            icon="mdi:search"
+            link="/"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Search Events"
+            icon="mdi:event"
+            link="/searchevents"
+            isCollapsed={isCollapsed}
+          />
+          <SidebarLink
+            name="Registered Events"
+            icon="mdi:heart-outline"
+            link="/registeredevents"
+            isCollapsed={isCollapsed}
+          />
+          {isAdmin && (
+            <SidebarLink
+              name="Create Admin"
+              icon="mdi:account-plus"
+              link="/admin/create"
+              isCollapsed={isCollapsed}
+            />
+          )}
+          <SidebarLink
+            name="Log Out"
+            icon="mdi:logout"
+            onClick={() => {
+              localStorage.removeItem("token");
+              setLoggedIn(false);
+            }}
+            link="/login"
+            isCollapsed={isCollapsed}
+          />
             </>
           )}
           {isAdmin && (
