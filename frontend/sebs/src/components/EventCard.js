@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ApiEvent from "../helpers/ApiEvent";
 import { Link } from "react-router-dom";
-//import moment from "moment";
 import moment from "moment-timezone";
 import { Icon } from "@iconify/react";
 import workshop_image from "../Images/workshop.jpg";
@@ -106,6 +105,15 @@ function EventCard({ event }) {
           &nbsp;
           {eventPrice}
         </p>
+        {/* Button to link to the corresponding thread */}
+        <div className="text-left mt-4">
+          <Link
+            to={`/eventdetails/${id}/thread`}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Go to Thread
+          </Link>
+        </div>
       </div>
     </div>
   );
