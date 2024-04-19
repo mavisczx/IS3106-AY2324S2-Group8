@@ -135,6 +135,96 @@ const ProfileForm = ({
   );
 };
 
+const PasswordForm = ({
+    userInfo,
+    setUserInfo,
+    setPasswordDialog,
+    updateUser,
+  }) => {
+    const id = localStorage.getItem("token");
+
+    const [formInfo, setFormInfo] = useState({
+      "password": "",
+      "passwordConfirm": ""
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      e.target.setCustomValidity("");
+      //console.log("Setting form info...")
+      setFormInfo({
+        ...formInfo,
+        [name]: value,
+      });
+      //console.log(formInfo)
+    };
+  
+    const checkValidPassword = (password1, password2) => {
+      return password1 === password2; //dummy function; replace this with API.then() call later, don't actually use this please
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      // Validate the form for username
+  
+      if (
+        checkValidPassword(formInfo.password, formInfo.passwordConfirm) === false
+      ) {
+        // Set custom validity to trigger the browser-native popup
+        const inputElement = e.target[1];
+        inputElement.setCustomValidity("Passwords do not match");
+        inputElement.reportValidity();
+      } else {
+        // Reset form fields
+        //console.log(formInfo)
+  
+        let tempUserInfo = userInfo;
+        tempUserInfo.password = formInfo.password;
+        setUserInfo(tempUserInfo)
+        updateUser(tempUserInfo);
+        setPasswordDialog(false);
+      }
+    };
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <div className="space-y-2">
+          <div className="flex flex-row space-x-2">
+            <label>New Password:</label>
+            <input
+              className="px-1 border"
+              type="text"
+              name="password"
+              value={formInfo.password}
+              onChange={handleChange}
+              required
+              
+            />
+          </div>
+          <div className="flex flex-row space-x-2">
+            <label>Re-enter Password:</label>
+            <input
+              className="px-1 border"
+              type="text"
+              name="passwordConfirm"
+              value={formInfo.passwordConfirm}
+              onChange={handleChange}
+              required
+              
+            />
+            </div>
+          
+  
+          <div className="flex flex-row space-x-4">
+            <Button type="submit">Submit</Button>
+            <Button onClick={() => setPasswordDialog(false)}>Cancel</Button>
+          </div>
+        </div>
+      </form>
+    );
+  
+  };
+
 function Profile() {
   const id = localStorage.getItem("token");
 
@@ -165,6 +255,8 @@ function Profile() {
   const [imgDialog, setImgDialog] = useState(false);
 
   const [profileDialog, setProfileDialog] = useState(false);
+
+  const [passwordDialog, setPasswordDialog] = useState(false);
 
   const [currentFile, setCurrentFile] = useState();
 
@@ -292,7 +384,20 @@ function Profile() {
           />
         </div>
       </CustomDialog>
-
+      <CustomDialog
+        title="Update Password"
+        open={passwordDialog}
+        onClose={() => setPasswordDialog(false)}
+      >
+        <div className="p-4 space-y-4">
+        <PasswordForm
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            setPasswordDialog={setPasswordDialog}
+            updateUser={updateUser}
+          />
+        </div>
+      </CustomDialog>
       <div class="bg-gray-300 antialiased">
         <div class="container mx-auto my-36">
           <div>
@@ -340,14 +445,14 @@ function Profile() {
                   <div class="flex-col flex justify-between space-y-4">
                     {userInfo.originUni !== undefined && (
                       <p className="text-sm text-gray-700">
-                        {" "}
+                        
                         <b>{userInfo.name} is from:</b> <br />
                         {userInfo.originUni}
                       </p>
                     )}
                     {userInfo.originUni !== undefined && (
                       <p className="text-sm text-gray-700">
-                        {" "}
+                        
                         <b>Now on exchange at:</b> <br />
                         {userInfo.exchangeUni}
                       </p>
@@ -382,15 +487,18 @@ function Profile() {
                 </div>
 
                 {/*add check for if id = user's? needs token first though. */}
-                <div class="my-5 px-6 flex flex-row items-center justify-center space-x-1 text-xs">
+                <div class="my-5 px-6 flex flex-col items-center justify-center text-xs space-y-1">
+                    <div className = "flex flex-row space-x-1">
                   <Button onClick={() => setImgDialog(true)}>
-                    {" "}
-                    Upload Picture{" "}
+                    Upload Picture
                   </Button>
                   <Button onClick={() => setProfileDialog(true)}>
-                    {" "}
-                    Edit Profile{" "}
+                    Edit Profile
                   </Button>
+                  </div>
+                    <Button onClick = {() => setPasswordDialog(true)}> 
+                        Update Password 
+                    </Button>
                 </div>
               </div>
             </div>
