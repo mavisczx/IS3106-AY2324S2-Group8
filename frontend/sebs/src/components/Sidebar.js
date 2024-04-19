@@ -18,7 +18,7 @@ function SidebarLink({ name, icon, onClick, link, isCollapsed }) {
   );
 }
 
-function Sidebar({ loggedIn, setLoggedIn, isAdmin }) {
+function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleSidebar = () => {
