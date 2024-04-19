@@ -7,9 +7,9 @@ import createPostBg from "../Post/CreatePost.jpg"; // Ensure the path is correct
 
 const CreateThread = () => {
   const [threadData, setThreadData] = useState({
-    threadTitle: "",
-    threadDescription: "",
-    threadTags: "event", // Default value is event
+    title: "",
+    description: "",
+    tag: "event", // Default value is event
   });
 
   const handleChange = (name, value) => {
@@ -27,7 +27,7 @@ const CreateThread = () => {
     }
 
     try {
-      await ApiThread.createThread(threadData, token);
+      await ApiThread.studentCreateThread(threadData, token);
       toast.success("🎉 Thread created successfully!");
     } catch (error) {
       toast.error("❌ Thread creating event: " + error.message);
@@ -66,8 +66,8 @@ const CreateThread = () => {
             <input
               type="text"
               name="threadTitle"
-              value={threadData.threadTitle}
-              onChange={(e) => handleChange("threadTitle", e.target.value)}
+              value={threadData.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               className="form-input w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
@@ -80,10 +80,8 @@ const CreateThread = () => {
             <input
               type="text"
               name="threadDescription"
-              value={threadData.threadDescription}
-              onChange={(e) =>
-                handleChange("threadDescription", e.target.value)
-              }
+              value={threadData.description}
+              onChange={(e) => handleChange("description", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
@@ -95,8 +93,8 @@ const CreateThread = () => {
             </label>
             <select
               name="threadTags"
-              value={threadData.threadTags}
-              onChange={(e) => handleChange("threadTags", e.target.value)}
+              value={threadData.tag}
+              onChange={(e) => handleChange("tag", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded"
               required
             >
