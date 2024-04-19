@@ -153,7 +153,7 @@ public class EventResource {
         try {
             eventSession.studentDeleteEvent(eventId);
             return Response.ok("Event deleted successfully").build();
-        } catch (EventNotFoundException e) {
+        } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Event not found").build();
         }
     }
@@ -165,7 +165,7 @@ public class EventResource {
         try {
             eventSession.adminDeleteEvent(eventId);
             return Response.ok("Event deleted successfully").build();
-        } catch (EventNotFoundException e) {
+        } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity("Event not found").build();
         }
     }

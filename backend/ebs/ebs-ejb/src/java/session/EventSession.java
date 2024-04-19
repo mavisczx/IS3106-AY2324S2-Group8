@@ -7,6 +7,7 @@ package session;
 import entity.Admin;
 import entity.Event;
 import entity.Student;
+import entity.Thread;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,9 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import util.exception.AdminNotFoundException;
 import util.exception.EventNotFoundException;
+import util.exception.PostNotFoundException;
 import util.exception.StudentNotFoundException;
+import util.exception.ThreadNotFoundException;
 
 /**
  *
@@ -27,6 +30,9 @@ import util.exception.StudentNotFoundException;
  */
 @Stateless
 public class EventSession implements EventSessionLocal {
+
+    @EJB
+    private ThreadSessionLocal threadSessionLocal;
 
     @EJB
     private AdminSessionLocal adminSessionLocal;
@@ -137,7 +143,7 @@ public class EventSession implements EventSessionLocal {
     }
 
     @Override
-    public void studentDeleteEvent(Long eventId) throws EventNotFoundException {
+    public void studentDeleteEvent(Long eventId) throws EventNotFoundException, ThreadNotFoundException, AdminNotFoundException, PostNotFoundException, StudentNotFoundException {
         Event event = getEventById(eventId);
         Student studentCreator = event.getStudentCreator();
 
@@ -148,12 +154,17 @@ public class EventSession implements EventSessionLocal {
             studentsJoined.get(i).getEventsJoined().remove(event);
         }
 
+        Thread t = event.getEventThread();
+        if (t != null) {
+            threadSessionLocal.studentDeleteThread(t.getId(), studentCreator.getId());
+        }
+
         event.setStudentsJoined(new ArrayList<Student>());
         em.remove(event);
     }
 
     @Override
-    public void adminDeleteEvent(Long eventId) throws EventNotFoundException {
+    public void adminDeleteEvent(Long eventId) throws EventNotFoundException, ThreadNotFoundException, AdminNotFoundException, PostNotFoundException, StudentNotFoundException {
         Event event = getEventById(eventId);
         Admin adminCreator = event.getAdminCreator();
 
@@ -162,6 +173,11 @@ public class EventSession implements EventSessionLocal {
         List<Student> studentsJoined = event.getStudentsJoined();
         for (int i = 0; i < studentsJoined.size(); i++) {
             studentsJoined.get(i).getEventsJoined().remove(event);
+        }
+
+        Thread t = event.getEventThread();
+        if (t != null) {
+            threadSessionLocal.adminDeleteThread(t.getId(), adminCreator.getId());
         }
 
         event.setStudentsJoined(new ArrayList<Student>());
