@@ -144,6 +144,18 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
+                name="Threads"
+                icon="mdi:book"
+                link="/admin/adminlanding"
+                isCollapsed={isCollapsed}
+              />
+              <SidebarLink
+                name="Create Thread"
+                icon="mdi:book-plus-outline"
+                link="/admin/createthread"
+                isCollapsed={isCollapsed}
+              />
+              <SidebarLink
                 name="Add Event"
                 icon="mdi:plus"
                 link="/admin/createevent"

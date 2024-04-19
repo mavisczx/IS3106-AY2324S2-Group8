@@ -28,6 +28,8 @@ import AdminCreateEvent from "./containers/AdminPages/AdminCreateEvent";
 import AdminCreatedEvents from "./containers/AdminPages/AdminCreatedEvents";
 import AdminSearchEvents from "./containers/AdminPages/AdminSearchEvents";
 import AdminEventDetails from "./containers/AdminPages/AdminEventDetails";
+import AdminLanding from "./containers/AdminPages/AdminLanding";
+import AdminCreateThread from "./containers/AdminPages/AdminCreateThread";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -163,8 +165,33 @@ function App() {
               )
             }
           />
+          <Route
+            path="/admin/adminlanding"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminLanding />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
+           <Route
+            path="/admin/createthread"
+            element={
+              loggedIn && isAdmin ? (
+                <AdminCreateThread />
+              ) : (
+                <div>
+                  You need to be an admin to access this page.{" "}
+                  <Link to="/login">Login</Link>
+                </div>
+              )
+            }
+          />
           <Route path="/searchevents" element={<SearchEvents />} />
-
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/createthread" element={<CreateThread />} />
           <Route path="/threadlanding" element={<ThreadLanding />} />

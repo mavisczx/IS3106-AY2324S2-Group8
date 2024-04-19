@@ -106,6 +106,15 @@ function AdminEventCard({ event }) {
           &nbsp;
           {eventPrice}
         </p>
+        {/* Button to link to the corresponding thread */}
+        <div className="text-left mt-4">
+          <Link
+            to={`/eventdetails/${id}/thread`}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+          >
+            🧵 Go to Thread
+          </Link>
+        </div>
       </div>
     </div>
   );
