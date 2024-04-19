@@ -35,4 +35,6 @@ public interface ThreadSessionLocal {
     public List<Thread> getAllThreads();
 
     public List<Post> getPostInThreads(Long threadId) throws ThreadNotFoundException;
+
+    public List<Thread> searchThreadByTags(String Tag) ;
 }
