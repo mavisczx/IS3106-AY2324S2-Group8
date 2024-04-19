@@ -69,12 +69,6 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
-                name="Posts"
-                icon="mdi:post"
-                link="/landing"
-                isCollapsed={isCollapsed}
-              />
-              <SidebarLink
                 name="Create Post"
                 icon="mdi:note-plus-outline"
                 link="/createpost"
@@ -83,7 +77,7 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
               <SidebarLink
                 name="Threads"
                 icon="mdi:book"
-                link="/threadlanding"
+                link="/landing"
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
