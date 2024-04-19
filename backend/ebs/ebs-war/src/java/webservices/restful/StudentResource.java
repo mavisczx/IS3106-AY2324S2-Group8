@@ -97,10 +97,78 @@ public class StudentResource {
     }
 
     @GET
+    @Secured
+    @Path("/threadSize")
+    public int getThreadSize(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+        try {
+            Student student = studentSession.retrieveStudentById(studentId);
+            int size = student.getThreadsCreated().size();
+
+            return size;
+        } catch (StudentNotFoundException e) {
+            return 0;
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/postSize")
+    public int getPostSize(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+        try {
+            Student student = studentSession.retrieveStudentById(studentId);
+            int size = student.getPostsCreated().size();
+
+            return size;
+        } catch (StudentNotFoundException e) {
+            return 0;
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/createdEventSize")
+    public int getCreatedEventSize(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+        try {
+            Student student = studentSession.retrieveStudentById(studentId);
+            int size = student.getEventsCreated().size();
+
+            return size;
+        } catch (StudentNotFoundException e) {
+            return 0;
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/joinedEventsSize")
+    public int getJoinedEventsSize(@Context SecurityContext securityContext) {
+        Principal principal = securityContext.getUserPrincipal();
+        String userId = principal.getName();
+        Long studentId = Long.parseLong(userId);
+        try {
+            Student student = studentSession.retrieveStudentById(studentId);
+            int size = student.getEventsJoined().size();
+
+            return size;
+        } catch (StudentNotFoundException e) {
+            return 0;
+        }
+    }
+
+    @GET
     @Path("/checkUsername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response checkUsernameTaken(@PathParam("username") String username) {
-        
+
         boolean isTaken = studentSession.checkUsernameTaken(username);
         return Response.ok(isTaken).build();
     }
