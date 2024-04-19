@@ -12,12 +12,14 @@ import food_image from "../../Images/food.jpg";
 import attraction_image from "../../Images/attraction.jpg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CustomDialog from "../../components/CustomDialog";
 
 function EventDetails() {
   const { id } = useParams();
   const [event, setEvent] = useState({});
   const [owner, setOwner] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const categoryImages = {
     attractions: attraction_image,
@@ -131,31 +133,35 @@ function EventDetails() {
     });
   };
 
+  const openUnregister = () => {
+    setIsDialogOpen(true);
+  };
+
   const handleDelete = () => {
     const token = localStorage.getItem("token");
-    if (window.confirm(`Do you want to unregister from event?`)) {
-      try {
-        ApiStudent.unregisterForEvent(id, token).then((res) => {
-          if (res.ok) {
-            toast.success("Unregistered from event successfully", {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-            });
-            reloadData();
-          } else if (res.status === 404) {
-            toast.error("Error unregistering from event", {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-            });
-          }
-        });
-      } catch (error) {
-        console.error("Error unregistering from event", error);
-      }
+
+    try {
+      ApiStudent.unregisterForEvent(id, token).then((res) => {
+        if (res.ok) {
+          toast.success("Unregistered from event successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
+          reloadData();
+          setIsDialogOpen(false);
+        } else if (res.status === 404) {
+          toast.error("Error unregistering from event", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error unregistering from event", error);
     }
   };
 
@@ -202,10 +208,42 @@ function EventDetails() {
               {registered && !owner && (
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => handleDelete()}
+                  onClick={() => openUnregister()}
                 >
                   <p>Registered</p>
                 </button>
+              )}
+              {isDialogOpen && (
+                <CustomDialog
+                  title="Unregister from Event"
+                  open={isDialogOpen}
+                  onClose={() => setIsDialogOpen(false)}
+                >
+                  {/* Content of the dialog */}
+                  <div className="space-y-4 p-5">
+                    <div className="mt-3 text-center">
+                      <p class="text-md text-gray-500">
+                        Are you sure you want to unregister from this event?
+                      </p>
+                    </div>
+                    <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                      <button
+                        type="button"
+                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        onClick={() => setIsDialogOpen(false)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        onClick={() => handleDelete()}
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </div>
+                </CustomDialog>
               )}
               {!registered && !owner && (
                 <button

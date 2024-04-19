@@ -20,9 +20,14 @@ function SidebarLink({ name, icon, onClick, link, isCollapsed }) {
 
 function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isEventsExpanded, setIsEventsExpanded] = useState(false);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const toggleEvents = () => {
+    setIsEventsExpanded(!isEventsExpanded);
   };
 
   return (
@@ -57,43 +62,77 @@ function Sidebar({ loggedIn, setLoggedIn, isAdmin, setIsAdmin }) {
         <>
           {!isAdmin && (
             <>
-              <SidebarLink name="Profile" icon="mdi:account" link="/profile" />
               <SidebarLink
-                name="Add Event"
-                icon="mdi:plus"
-                link="/createevent"
+                name="Profile"
+                icon="mdi:account"
+                link="/profile"
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
-                name="Created Events"
-                icon="mdi:clipboard-list"
-                link="/createdevents"
+                name="Posts"
+                icon="mdi:post"
+                link="/landing"
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
-                name="Search"
-                icon="mdi:search"
-                link="/"
+                name="Create Post"
+                icon="mdi:note-plus-outline"
+                link="/createpost"
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
-                name="Questions"
-                icon="mdi:question-mark"
-                link="/"
+                name="Threads"
+                icon="mdi:book"
+                link="/threadlanding"
                 isCollapsed={isCollapsed}
               />
               <SidebarLink
-                name="Search Events"
-                icon="mdi:event"
-                link="/searchevents"
+                name="Create Thread"
+                icon="mdi:book-plus-outline"
+                link="/createthread"
                 isCollapsed={isCollapsed}
               />
-              <SidebarLink
-                name="Registered Events"
-                icon="mdi:heart-outline"
-                link="/registeredevents"
-                isCollapsed={isCollapsed}
-              />
+              <div className="group">
+                <div
+                  className={`flex items-center p-2.5 mt-3 rounded-md cursor-pointer hover:bg-orange-600 text-white`}
+                  onClick={toggleEvents}
+                >
+                  <Icon icon="mdi:calendar" className="text-lg" />
+                  {!isCollapsed && (
+                    <span className="ml-4 font-bold">Events</span>
+                  )}
+                  {!isCollapsed && (
+                    <Icon
+                      icon={
+                        isEventsExpanded ? "mdi:chevron-up" : "mdi:chevron-down"
+                      }
+                      className="ml-auto text-lg"
+                    />
+                  )}
+                </div>
+                {!isCollapsed && isEventsExpanded && (
+                  <div className="pl-8">
+                    <SidebarLink
+                      name="Add Event"
+                      icon="mdi:plus"
+                      link="/createevent"
+                      isCollapsed={isCollapsed}
+                    />
+                    <SidebarLink
+                      name="Created Events"
+                      icon="mdi:clipboard-list"
+                      link="/createdevents"
+                      isCollapsed={isCollapsed}
+                    />
+                    <SidebarLink
+                      name="Search Events"
+                      icon="mdi:event"
+                      link="/searchevents"
+                      isCollapsed={isCollapsed}
+                    />
+                  </div>
+                )}
+              </div>
             </>
           )}
           {isAdmin && (
